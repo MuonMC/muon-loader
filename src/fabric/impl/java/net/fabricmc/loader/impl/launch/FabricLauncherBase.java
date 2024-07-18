@@ -21,13 +21,12 @@ import net.fabricmc.loader.impl.launch.knot.Knot;
 
 import net.fabricmc.api.EnvType;
 
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.Manifest;

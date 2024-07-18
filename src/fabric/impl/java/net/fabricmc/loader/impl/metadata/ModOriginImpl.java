@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.quiltmc.loader.api.ModContainer;
+import org.muonmc.loader.api.ModContainer;
 
 @Deprecated
 public final class ModOriginImpl implements net.fabricmc.loader.api.metadata.ModOrigin {

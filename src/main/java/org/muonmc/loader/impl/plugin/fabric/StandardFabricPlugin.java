@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.gui.QuiltDisplayedError;
 import org.muonmc.loader.api.gui.QuiltLoaderGui;
 import org.muonmc.loader.api.gui.QuiltLoaderIcon;
@@ -104,7 +104,7 @@ public class StandardFabricPlugin extends BuiltinQuiltPlugin {
 			boolean mandatory = location.isDirect();
 			// a mod needs to be remapped if we are in a development environment, and the mod
 			// did not come from the classpath
-			boolean requiresRemap = !location.onClasspath() && QuiltLoader.isDevelopmentEnvironment();
+			boolean requiresRemap = !location.onClasspath() && MuonLoader.isDevelopmentEnvironment();
 			return new ModLoadOption[] { new FabricModOption(context(), meta, from, fileIcon, root, mandatory, requiresRemap) };
 		} catch (ParseMetadataException parse) {
 			QuiltLoaderText title = QuiltLoaderText.translate("gui.text.invalid_metadata.title", "fabric.mod.json", parse.getMessage());

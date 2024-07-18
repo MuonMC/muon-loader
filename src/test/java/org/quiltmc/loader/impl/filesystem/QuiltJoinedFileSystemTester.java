@@ -31,13 +31,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystem;
+import org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystem;
 
 public class QuiltJoinedFileSystemTester {
 	@ParameterizedTest
 	@MethodSource("getPaths")
 	public void test(Path rw1, Path rw2) throws IOException {
 		// note, rw2 is mounted at the "sub" subdirectory in the joined filesystem
-		try (QuiltJoinedFileSystem jfs = new QuiltJoinedFileSystem(
+		try (
+				QuiltJoinedFileSystem jfs = new QuiltJoinedFileSystem(
 				"jfs", Arrays.asList(rw1, rw2.resolve("sub"))
 		)) {
 			Assertions.assertFalse(Files.newDirectoryStream(rw1).iterator().hasNext());

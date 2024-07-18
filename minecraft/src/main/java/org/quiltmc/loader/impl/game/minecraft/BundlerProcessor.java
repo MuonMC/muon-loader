@@ -24,8 +24,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import org.quiltmc.loader.impl.game.LibClassifier;
-import org.quiltmc.loader.impl.util.LoaderUtil;
+import org.muonmc.loader.impl.game.LibClassifier;
+import org.muonmc.loader.impl.util.LoaderUtil;
 
 
 final class BundlerProcessor {

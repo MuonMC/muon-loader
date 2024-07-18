@@ -33,7 +33,7 @@ import net.fabricmc.loader.api.metadata.version.VersionInterval;
 import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 import net.fabricmc.loader.api.metadata.version.VersionPredicate.PredicateTerm;
 
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricVersionInterval;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricVersionInterval;
 
 @Deprecated
 public final class VersionPredicateParser {

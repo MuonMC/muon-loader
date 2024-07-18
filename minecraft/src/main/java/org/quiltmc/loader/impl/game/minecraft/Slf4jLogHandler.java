@@ -19,10 +19,9 @@ package org.quiltmc.loader.impl.game.minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
-import org.quiltmc.loader.impl.util.log.LogHandler;
-import org.quiltmc.loader.impl.util.log.LogLevel;
+import org.muonmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.util.log.LogHandler;
+import org.muonmc.loader.impl.util.log.LogLevel;
 
 
 public final class Slf4jLogHandler implements LogHandler {

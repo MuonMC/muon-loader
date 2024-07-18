@@ -27,12 +27,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.loader.api.QuiltLoader;
-import org.quiltmc.loader.api.plugin.ModContainerExt;
-import org.quiltmc.loader.api.plugin.ModMetadataExt;
-import org.quiltmc.loader.impl.metadata.GeneralExt2FabricMetadata;
-import org.quiltmc.loader.impl.metadata.qmj.ConvertibleModMetadata;
+import org.muonmc.loader.api.ModContainer;
+import org.muonmc.loader.api.MuonLoader;
+import org.muonmc.loader.api.plugin.ModContainerExt;
+import org.muonmc.loader.api.plugin.ModMetadataExt;
+import org.muonmc.loader.impl.metadata.GeneralExt2FabricMetadata;
+import org.muonmc.loader.impl.metadata.qmj.ConvertibleModMetadata;
 
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fabricmc.loader.api.metadata.ModOrigin;
@@ -88,7 +88,7 @@ public final class ModContainerImpl extends net.fabricmc.loader.ModContainer {
 			}
 			List<Path> subtracted = new ArrayList<>(paths);
 			subtracted.remove(subtracted.size() - 1);
-			for (ModContainer container : QuiltLoader.getAllMods()) {
+			for (ModContainer container : MuonLoader.getAllMods()) {
 				if (container.getSourcePaths().contains(subtracted)) {
 					return Optional.of(new ModContainerImpl(quilt));
 				}
@@ -100,7 +100,7 @@ public final class ModContainerImpl extends net.fabricmc.loader.ModContainer {
 	@Override
 	public Collection<net.fabricmc.loader.api.ModContainer> getContainedMods() {
 		List<net.fabricmc.loader.api.ModContainer> contained = new ArrayList<>();
-		for (ModContainer other : QuiltLoader.getAllMods()) {
+		for (ModContainer other : MuonLoader.getAllMods()) {
 			if (other == quilt) {
 				continue;
 			}

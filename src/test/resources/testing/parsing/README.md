@@ -1,6 +1,6 @@
 # Mod metadata parser test files
 
-## These are `fabric.mod.json` and `quilt.mod.json` files used for testing the mod metadata parser.
+## These are `fabric.mod.json` and `muon.mod.json` files used for testing the mod metadata parser.
 
 There are two categories of files:
 - Spec-compliant -> `spec`

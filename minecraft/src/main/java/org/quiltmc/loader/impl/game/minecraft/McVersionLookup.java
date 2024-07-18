@@ -37,11 +37,11 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
-import org.quiltmc.loader.api.Version;
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
-import org.quiltmc.loader.impl.util.ExceptionUtil;
-import org.quiltmc.loader.impl.util.LoaderUtil;
-import org.quiltmc.loader.impl.util.SimpleClassPath;
+import org.muonmc.loader.api.Version;
+import org.muonmc.loader.impl.MuonLoaderImpl;
+import org.muonmc.loader.impl.util.ExceptionUtil;
+import org.muonmc.loader.impl.util.LoaderUtil;
+import org.muonmc.loader.impl.util.SimpleClassPath;
 
 public final class McVersionLookup {
 	private static final Pattern VERSION_PATTERN = Pattern.compile(
@@ -602,7 +602,7 @@ public final class McVersionLookup {
 		private String result;
 
 		FieldStringConstantVisitor(String fieldName) {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 
 			this.fieldName = fieldName;
 		}
@@ -673,7 +673,7 @@ public final class McVersionLookup {
 		private String result;
 
 		MethodStringConstantContainsVisitor(String methodOwner, String methodName) {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 
 			this.methodOwner = methodOwner;
 			this.methodName = methodName;
@@ -727,7 +727,7 @@ public final class McVersionLookup {
 		private String result;
 
 		MethodConstantRetVisitor(String methodName) {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 
 			this.methodName = methodName;
 		}
@@ -789,7 +789,7 @@ public final class McVersionLookup {
 		private boolean foundInMethodHint;
 
 		MethodConstantVisitor(String methodNameHint) {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 
 			this.methodNameHint = methodNameHint;
 		}
@@ -807,7 +807,7 @@ public final class McVersionLookup {
 				return null;
 			}
 
-			return new MethodVisitor(QuiltLoaderImpl.ASM_VERSION) {
+			return new MethodVisitor(MuonLoaderImpl.ASM_VERSION) {
 				@Override
 				public void visitLdcInsn(Object value) {
 					if ((result == null || !foundInMethodHint && isRequestedMethod) && value instanceof String) {
@@ -847,7 +847,7 @@ public final class McVersionLookup {
 
 	private abstract static class InsnFwdMethodVisitor extends MethodVisitor {
 		InsnFwdMethodVisitor() {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 		}
 
 		protected abstract void visitAnyInsn();
@@ -922,7 +922,7 @@ public final class McVersionLookup {
 		private String type;
 
 		FieldTypeCaptureVisitor() {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 		}
 
 		@Override

@@ -19,12 +19,12 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
 
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
-import org.quiltmc.loader.impl.entrypoint.EntrypointUtils;
-import org.quiltmc.loader.impl.util.QuiltLoaderInternal;
-import org.quiltmc.loader.impl.util.QuiltLoaderInternalType;
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.MuonLoaderImpl;
+import org.muonmc.loader.impl.entrypoint.EntrypointUtils;
+import org.muonmc.loader.impl.util.QuiltLoaderInternal;
+import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
 
 import java.io.File;
 
@@ -51,7 +51,7 @@ public final class Hooks {
 			runDir = new File(".");
 		}
 
-		QuiltLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
+		MuonLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
 		EntrypointUtils.invoke("main", ModInitializer.class, it -> it.onInitialize());
 		EntrypointUtils.invoke("client", ClientModInitializer.class, it -> it.onInitializeClient());
 	}
@@ -61,12 +61,12 @@ public final class Hooks {
 			runDir = new File(".");
 		}
 
-		QuiltLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
+		MuonLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
 		EntrypointUtils.invoke("main", ModInitializer.class, it -> it.onInitialize());
 		EntrypointUtils.invoke("server", DedicatedServerModInitializer.class, it -> it.onInitializeServer());
 	}
 
 	public static void setGameInstance(Object gameInstance) {
-		QuiltLoaderImpl.INSTANCE.setGameInstance(gameInstance);
+		MuonLoaderImpl.INSTANCE.setGameInstance(gameInstance);
 	}
 }

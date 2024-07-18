@@ -19,7 +19,7 @@ package org.muonmc.loader.api.config;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.muonmc.loader.impl.config.QuiltConfigImpl;
+import org.muonmc.loader.impl.config.MuonConfigImpl;
 import org.quiltmc.config.api.Config;
 import org.quiltmc.config.api.WrappedConfig;
 import org.quiltmc.config.api.annotations.ConfigFieldAnnotationProcessor;
@@ -43,7 +43,7 @@ public final class QuiltConfig {
 	 * @param creators any number of {@link Config.Creator}s that can be used to configure the resulting config
 	 */
 	public static Config create(String family, String id, Path path, Config.Creator... creators) {
-		return ConfigImpl.create(QuiltConfigImpl.getConfigEnvironment(), family, id, path, creators);
+		return ConfigImpl.create(MuonConfigImpl.getConfigEnvironment(), family, id, path, creators);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public final class QuiltConfig {
 	 * @return a {@link WrappedConfig <C>}
 	 */
 	public static <C extends WrappedConfig> C create(String family, String id, Path path, Config.Creator before, Class<C> configCreatorClass, Config.Creator after) {
-		return Config.create(QuiltConfigImpl.getConfigEnvironment(), family, id, path, before, configCreatorClass, after);
+		return Config.create(MuonConfigImpl.getConfigEnvironment(), family, id, path, before, configCreatorClass, after);
 	}
 
 	/**

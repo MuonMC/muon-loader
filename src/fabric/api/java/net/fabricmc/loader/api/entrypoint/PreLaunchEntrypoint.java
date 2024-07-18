@@ -16,7 +16,7 @@
 
 package net.fabricmc.loader.api.entrypoint;
 
-import org.quiltmc.loader.api.entrypoint.GameEntrypoint;
+import org.muonmc.loader.api.entrypoint.GameEntrypoint;
 
 /**
  * Entrypoint getting invoked just before launching the game.
@@ -30,7 +30,7 @@ import org.quiltmc.loader.api.entrypoint.GameEntrypoint;
  * executes several seconds before the {@code main}/{@code client}/{@code server} entrypoints.
  * 
  * @see net.fabricmc.loader.api.FabricLoader#getEntrypointContainers(String, Class)
- * @deprecated Please migrate to the Quilt version of this interface: {@link org.quiltmc.loader.api.entrypoint.PreLaunchEntrypoint} 
+ * @deprecated Please migrate to the Quilt version of this interface: {@link org.muonmc.loader.api.entrypoint.PreLaunchEntrypoint}
  */
 @Deprecated
 @FunctionalInterface

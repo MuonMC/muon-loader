@@ -74,7 +74,7 @@ import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModMetadata.ProvidedMod;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionFormatException;
 import org.muonmc.loader.api.gui.QuiltDisplayedError;
@@ -101,7 +101,7 @@ import org.muonmc.loader.api.plugin.solver.ModSolveResult.SpecificLoadOptionResu
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.api.plugin.solver.TentativeLoadOption;
 import org.muonmc.loader.impl.QuiltLoaderConfig;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.filesystem.QuiltBaseFileSystem;
 import org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystem;
 import org.muonmc.loader.impl.filesystem.QuiltJoinedPath;
@@ -130,7 +130,7 @@ import net.fabricmc.api.EnvType;
 
 /** The main manager for loader plugins, and the mod finding process in general.
  * <p>
- * Unlike {@link QuiltLoader} itself, it does make sense to have multiple of these at once: one for loading plugins that
+ * Unlike {@link MuonLoader} itself, it does make sense to have multiple of these at once: one for loading plugins that
  * will be used, and many more for "simulating" mod loading. */
 @QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
 public class QuiltPluginManagerImpl implements QuiltPluginManager {
@@ -796,7 +796,7 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 
 		// It's arguably the most important version - if anything goes wrong while writing this report
 		// at least we know what code was used to generate it.
-		report.overview("Quilt Loader Version: " + QuiltLoaderImpl.VERSION);
+		report.overview("Quilt Loader Version: " + MuonLoaderImpl.VERSION);
 
 		if (!errors.isEmpty()) {
 			int number = 1;
@@ -936,11 +936,11 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 
 		List<ModLoadOption> mods = new ArrayList<>();
 
-		if (!modIds.containsKey(QuiltLoaderImpl.MOD_ID)) {
+		if (!modIds.containsKey(MuonLoaderImpl.MOD_ID)) {
 			AsciiTableRow row = table.addRow();
 			row.put(modColumn, "Quilt Loader");
-			row.put(id, QuiltLoaderImpl.MOD_ID);
-			row.put(version, QuiltLoaderImpl.VERSION);
+			row.put(id, MuonLoaderImpl.MOD_ID);
+			row.put(version, MuonLoaderImpl.VERSION);
 			row.put(plugin, "!missing!");
 		}
 
@@ -960,8 +960,8 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 			row.put(version, mod.metadata().version());
 			row.put(plugin, mod.loader().pluginId());
 			StringBuilder flagStr = new StringBuilder();
-			flagStr.append(theQuiltPlugin.hasDepsChanged(mod) ? QuiltLoaderImpl.FLAG_DEPS_CHANGED : '.');
-			flagStr.append(theQuiltPlugin.hasDepsRemoved(mod) ? QuiltLoaderImpl.FLAG_DEPS_REMOVED : '.');
+			flagStr.append(theQuiltPlugin.hasDepsChanged(mod) ? MuonLoaderImpl.FLAG_DEPS_CHANGED : '.');
+			flagStr.append(theQuiltPlugin.hasDepsRemoved(mod) ? MuonLoaderImpl.FLAG_DEPS_REMOVED : '.');
 			row.put(flags, flagStr);
 
 			List<List<Path>> allPaths = InternalModContainerBase.walkSourcePaths(this, mod.from());
@@ -984,7 +984,7 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 					row = table.addRow();
 				}
 
-				row.put(file, QuiltLoaderImpl.prefixPath(absGameDir, absModsDir, paths.get(0)));
+				row.put(file, MuonLoaderImpl.prefixPath(absGameDir, absModsDir, paths.get(0)));
 
 				if (paths.size() > 1) {
 					if (subFile == null) {
@@ -994,7 +994,7 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 					Iterator<Path> pathsIter = paths.iterator();
 					pathsIter.next(); // skip first element
 					while (pathsIter.hasNext()) {
-						subPathStr.append(QuiltLoaderImpl.prefixPath(absGameDir, absModsDir, pathsIter.next()));
+						subPathStr.append(MuonLoaderImpl.prefixPath(absGameDir, absModsDir, pathsIter.next()));
 						if (pathsIter.hasNext()) {
 							subPathStr.append("!");
 						}
@@ -1103,11 +1103,11 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 				Collection<Path> roots = getJoinedPaths(root);
 				to.accept("Joined path [" + roots.size() + "]:");
 				for (Path in : roots) {
-					to.accept(" - '" + QuiltLoaderImpl.prefixPath(absGameDir, absModsDir, in) + "'");
+					to.accept(" - '" + MuonLoaderImpl.prefixPath(absGameDir, absModsDir, in) + "'");
 				}
 				to.accept("mod:");
 			} else {
-				to.accept(QuiltLoaderImpl.prefixPath(absGameDir, absModsDir, root) + ":");
+				to.accept(MuonLoaderImpl.prefixPath(absGameDir, absModsDir, root) + ":");
 			}
 
 			for (String line : processDetail(pathMap, insideBox, root, 0)) {
@@ -1250,7 +1250,7 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 		theQuiltPluginContext.addFolderToScan(modsDir);
 
 		scanAdditionalMods(System.getProperty(SystemProperties.ADD_MODS), "system property");
-		scanAdditionalMods(QuiltLoaderImpl.InitHelper.get().getAdditionalModsArgument(), "argument");
+		scanAdditionalMods(MuonLoaderImpl.InitHelper.get().getAdditionalModsArgument(), "argument");
 
 		for (int cycle = 0; cycle < 1000; cycle++) {
 			this.cycleNumber = cycle + 1;
@@ -2293,7 +2293,7 @@ public class QuiltPluginManagerImpl implements QuiltPluginManager {
 		PotentialModSet set = modIds.computeIfAbsent(id, k -> new PotentialModSet());
 
 		ModLoadOption current = set.byVersionSingles.get(version);
-		if (current != null && current.isMandatory() && mod.isMandatory() && current.getClass() == mod.getClass() && QuiltLoader.isDevelopmentEnvironment()) {
+		if (current != null && current.isMandatory() && mod.isMandatory() && current.getClass() == mod.getClass() && MuonLoader.isDevelopmentEnvironment()) {
 			Log.warn(LogCategory.SOLVING, String.format("Ignoring duplicate mod %s of the same version %s loaded from %s", id, version, from));
 			return false;
 		}

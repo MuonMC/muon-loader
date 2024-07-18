@@ -4,8 +4,8 @@ import net.fabricmc.api.EnvType;
 
 import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.LauncherSessionListener;
-import org.quiltmc.loader.impl.launch.knot.Knot;
-import org.quiltmc.loader.impl.util.SystemProperties;
+import org.muonmc.loader.impl.launch.knot.Knot;
+import org.muonmc.loader.impl.util.SystemProperties;
 
 import java.util.Locale;
 

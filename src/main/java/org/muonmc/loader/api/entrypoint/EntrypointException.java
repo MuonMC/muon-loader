@@ -17,14 +17,13 @@
 
 package org.muonmc.loader.api.entrypoint;
 
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /**
  * Represents an exception that arises when obtaining entrypoints.
  * 
- * @see QuiltLoader#getEntrypointContainers(String, Class) 
+ * @see MuonLoader#getEntrypointContainers(String, Class)
  */
-@SuppressWarnings("serial")
 public abstract class EntrypointException extends RuntimeException {
 
 	public EntrypointException() {}

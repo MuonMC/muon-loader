@@ -37,9 +37,9 @@ import org.junit.jupiter.api.Test;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.metadata.CustomValue;
 
-import org.quiltmc.loader.impl.fabric.metadata.FabricModMetadataReader;
-import org.quiltmc.loader.impl.fabric.metadata.ParseMetadataException;
-import org.quiltmc.loader.impl.metadata.FabricLoaderModMetadata;
+import org.muonmc.loader.impl.fabric.metadata.FabricModMetadataReader;
+import org.muonmc.loader.impl.fabric.metadata.ParseMetadataException;
+import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 
 @Disabled // TODO needs fixing.
 final class V1ModJsonParsingTests {

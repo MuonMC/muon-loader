@@ -32,7 +32,7 @@ import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.ModContainer.BasicSourceType;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.ModMetadata;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
@@ -65,7 +65,7 @@ public final class QuiltMixinBootstrap {
 		Mixins.addConfiguration(configuration);
 	}
 
-	static Set<String> getMixinConfigs(QuiltLoaderImpl loader, EnvType type) {
+	static Set<String> getMixinConfigs(MuonLoaderImpl loader, EnvType type) {
 		return loader.getAllMods().stream()
 				.map(ModContainer::metadata)
 				.filter((m) -> m instanceof FabricLoaderModMetadata)
@@ -74,7 +74,7 @@ public final class QuiltMixinBootstrap {
 				.collect(Collectors.toSet());
 	}
 
-	public static void init(EnvType side, QuiltLoaderImpl loader) {
+	public static void init(EnvType side, MuonLoaderImpl loader) {
 		if (initialized) {
 			throw new IllegalStateException("QuiltMixinBootstrap has already been initialized!");
 		}

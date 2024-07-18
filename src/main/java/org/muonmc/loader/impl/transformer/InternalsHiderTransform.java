@@ -35,7 +35,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.muonmc.loader.api.ModInternal;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
@@ -74,7 +74,7 @@ public class InternalsHiderTransform {
 		}
 		String className = reader.getClassName();
 		boolean isPackageInfo = className.endsWith("/package-info");
-		ClassVisitor visitor = new ClassVisitor(QuiltLoaderImpl.ASM_VERSION) {
+		ClassVisitor visitor = new ClassVisitor(MuonLoaderImpl.ASM_VERSION) {
 
 			@Override
 			public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
@@ -151,7 +151,7 @@ public class InternalsHiderTransform {
 		}
 
 		boolean[] hasClassInit = { false };
-		ClassVisitor visitor = new ClassVisitor(QuiltLoaderImpl.ASM_VERSION, writer) {
+		ClassVisitor visitor = new ClassVisitor(MuonLoaderImpl.ASM_VERSION, writer) {
 			@Override
 			public MethodVisitor visitMethod(int access, String mthName, String mthDescriptor, String signature,
 				String[] exceptions) {
@@ -530,7 +530,7 @@ public class InternalsHiderTransform {
 		final List<String> classReplacements = new ArrayList<>();
 
 		protected ScanningAnnotationVisitor() {
-			super(QuiltLoaderImpl.ASM_VERSION);
+			super(MuonLoaderImpl.ASM_VERSION);
 		}
 
 		@Override

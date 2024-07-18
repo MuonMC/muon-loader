@@ -38,7 +38,7 @@ import org.muonmc.loader.api.ExtendedFiles;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -63,7 +63,7 @@ class TransformCache {
 	public TransformCache(Path root, List<ModLoadOption> orderedMods) {
 		this.root = root;
 		this.allMods = orderedMods;
-		this.modsInCache = orderedMods.stream().filter(mod -> mod.needsTransforming() && !QuiltLoaderImpl.MOD_ID.equals(mod.id())).collect(Collectors.toList());
+		this.modsInCache = orderedMods.stream().filter(mod -> mod.needsTransforming() && !MuonLoaderImpl.MOD_ID.equals(mod.id())).collect(Collectors.toList());
 
 		for (ModLoadOption mod : this.modsInCache) {
 			Path modSrc = mod.createTransformRoot();

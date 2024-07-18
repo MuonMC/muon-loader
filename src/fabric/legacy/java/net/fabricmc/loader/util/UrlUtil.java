@@ -16,7 +16,7 @@
 
 package net.fabricmc.loader.util;
 
-import org.quiltmc.loader.impl.util.ExceptionUtil;
+import org.muonmc.loader.impl.util.ExceptionUtil;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -30,7 +30,7 @@ public final class UrlUtil {
 
 	public static Path asPath(URL url) throws UrlConversionException {
 		try {
-			return org.quiltmc.loader.impl.util.UrlUtil.asPath(url);
+			return org.muonmc.loader.impl.util.UrlUtil.asPath(url);
 		} catch (ExceptionUtil.WrappedException e) {
 			throw new UrlConversionException(e.getCause());
 		}

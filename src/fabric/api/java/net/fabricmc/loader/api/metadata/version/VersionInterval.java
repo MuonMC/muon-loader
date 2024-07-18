@@ -23,8 +23,7 @@ import java.util.List;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
 
-import org.jetbrains.annotations.ApiStatus;
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricVersionInterval;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricVersionInterval;
 
 /**
  * Representation of a version interval, closed or open.

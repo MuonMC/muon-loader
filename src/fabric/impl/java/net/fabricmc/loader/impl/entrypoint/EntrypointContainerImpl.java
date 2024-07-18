@@ -23,9 +23,9 @@ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 @Deprecated
 public final class EntrypointContainerImpl<T> implements EntrypointContainer<T> {
 
-	private final org.quiltmc.loader.api.entrypoint.EntrypointContainer<T> quilt;
+	private final org.muonmc.loader.api.entrypoint.EntrypointContainer<T> quilt;
 
-	public EntrypointContainerImpl(org.quiltmc.loader.api.entrypoint.EntrypointContainer<T> quilt) {
+	public EntrypointContainerImpl(org.muonmc.loader.api.entrypoint.EntrypointContainer<T> quilt) {
 		this.quilt = quilt;
 	}
 

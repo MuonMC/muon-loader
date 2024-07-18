@@ -20,9 +20,9 @@ import net.fabricmc.mapping.tree.TinyTree;
 
 @Deprecated
 public final class MappingConfiguration {
-	private final org.quiltmc.loader.impl.launch.common.MappingConfiguration delegate;
+	private final org.muonmc.loader.impl.launch.common.MappingConfiguration delegate;
 
-	public MappingConfiguration(org.quiltmc.loader.impl.launch.common.MappingConfiguration delegate) {
+	public MappingConfiguration(org.muonmc.loader.impl.launch.common.MappingConfiguration delegate) {
 		this.delegate = delegate;
 	}
 

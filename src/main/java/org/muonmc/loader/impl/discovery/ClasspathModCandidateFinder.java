@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -166,7 +166,7 @@ public class ClasspathModCandidateFinder {
 
 	public static Path getGameProviderPath() {
 		try {
-			return UrlUtil.asPath(QuiltLoaderImpl.INSTANCE.getGameProvider().getClass().getProtectionDomain().getCodeSource().getLocation());
+			return UrlUtil.asPath(MuonLoaderImpl.INSTANCE.getGameProvider().getClass().getProtectionDomain().getCodeSource().getLocation());
 		} catch (Throwable t) {
 			Log.debug(LogCategory.DISCOVERY, "Could not retrieve launcher code source!", t);
 			return null;

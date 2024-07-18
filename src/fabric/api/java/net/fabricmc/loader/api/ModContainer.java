@@ -16,13 +16,12 @@
 
 package net.fabricmc.loader.api;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.quiltmc.loader.api.FasterFiles;
+import org.muonmc.loader.api.FasterFiles;
 
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fabricmc.loader.api.metadata.ModOrigin;

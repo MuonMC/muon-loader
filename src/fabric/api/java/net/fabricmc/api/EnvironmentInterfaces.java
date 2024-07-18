@@ -22,8 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.loader.api.minecraft.DedicatedServerOnly;
+import org.muonmc.loader.api.minecraft.ClientOnly;
+import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
 
 /**
  * A container of multiple {@link EnvironmentInterface} annotations on a class, often defined implicitly.

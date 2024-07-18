@@ -2,11 +2,11 @@ package net.fabricmc.minecraft.test.plugin;
 
 import java.util.Map;
 
-import org.quiltmc.loader.api.LoaderValue;
-import org.quiltmc.loader.api.plugin.QuiltLoaderPlugin;
-import org.quiltmc.loader.api.plugin.QuiltPluginContext;
-import org.quiltmc.loader.api.plugin.solver.LoadOption;
-import org.quiltmc.loader.api.plugin.solver.ModLoadOption;
+import org.muonmc.loader.api.LoaderValue;
+import org.muonmc.loader.api.plugin.QuiltLoaderPlugin;
+import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.plugin.solver.LoadOption;
+import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 
 public class TestLoaderPlugin implements QuiltLoaderPlugin {
 

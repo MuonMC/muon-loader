@@ -21,11 +21,10 @@ import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.quiltmc.json5.JsonReader;
-import org.quiltmc.loader.api.VersionFormatException;
-import org.quiltmc.loader.impl.metadata.qmj.SemanticVersionImpl;
+import org.muonmc.loader.api.VersionFormatException;
+import org.muonmc.loader.impl.metadata.qmj.SemanticVersionImpl;
 
 import net.fabricmc.loader.api.SemanticVersion;
-import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
 
 public class VersionParsingTests extends JsonTestBase {

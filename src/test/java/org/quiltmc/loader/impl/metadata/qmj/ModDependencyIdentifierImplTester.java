@@ -18,6 +18,7 @@ package org.quiltmc.loader.impl.metadata.qmj;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.muonmc.loader.impl.metadata.qmj.ModDependencyIdentifierImpl;
 
 public class ModDependencyIdentifierImplTester {
 	@Test

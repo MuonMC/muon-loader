@@ -17,7 +17,7 @@
 
 package org.muonmc.loader.api.minecraft;
 
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 import net.fabricmc.api.EnvType;
 
@@ -32,7 +32,7 @@ public final class MinecraftQuiltLoader {
 	 */
 	public static EnvType getEnvironmentType() {
 		// TODO: Get this from a plugin instead!
-		QuiltLoaderImpl impl = QuiltLoaderImpl.INSTANCE;
+		MuonLoaderImpl impl = MuonLoaderImpl.INSTANCE;
 		if (impl == null) {
 			throw new IllegalStateException("Accessed QuiltLoader too early!");
 		}

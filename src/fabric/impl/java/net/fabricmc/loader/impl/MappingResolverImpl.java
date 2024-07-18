@@ -19,7 +19,7 @@ package net.fabricmc.loader.impl;
 
 import java.util.Collection;
 
-import org.quiltmc.loader.api.MappingResolver;
+import org.muonmc.loader.api.MappingResolver;
 
 @Deprecated
 public class MappingResolverImpl implements net.fabricmc.loader.api.MappingResolver {

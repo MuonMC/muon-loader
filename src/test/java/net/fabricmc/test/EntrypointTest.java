@@ -16,8 +16,8 @@
 
 package net.fabricmc.test;
 
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
 
 public final class EntrypointTest {
 	public static final CustomEntry FIELD_ENTRY = EntrypointTest::fieldEntry;

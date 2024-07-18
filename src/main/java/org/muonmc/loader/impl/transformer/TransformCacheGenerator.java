@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.impl.filesystem.QuiltMapFileSystem;
@@ -58,7 +58,7 @@ final class TransformCacheGenerator {
 			}
 
 			return QuiltTransformer.transform(
-					QuiltLoader.isDevelopmentEnvironment(),
+					MuonLoader.isDevelopmentEnvironment(),
 					QuiltLauncherBase.getLauncher().getEnvironmentType(),
 					cache,
 					accessWidener,
@@ -112,7 +112,7 @@ final class TransformCacheGenerator {
 				}
 
 				try (BufferedReader reader = Files.newBufferedReader(path)) {
-					accessWidenerReader.read(reader, QuiltLoader.getMappingResolver().getCurrentRuntimeNamespace());
+					accessWidenerReader.read(reader, MuonLoader.getMappingResolver().getCurrentRuntimeNamespace());
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to read accessWidener file from mod " + mod.metadata().id(), e);
 				}

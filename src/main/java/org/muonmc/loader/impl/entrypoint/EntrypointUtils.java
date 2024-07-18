@@ -19,7 +19,7 @@ package org.muonmc.loader.impl.entrypoint;
 
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.ExceptionUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
@@ -41,7 +41,7 @@ public final class EntrypointUtils {
 	}
 
 	public static <T> void invokeContainer(String name, Class<T> type, Consumer<EntrypointContainer<T>> invoker) {
-		QuiltLoaderImpl loader = QuiltLoaderImpl.INSTANCE;
+		MuonLoaderImpl loader = MuonLoaderImpl.INSTANCE;
 
 		if (!loader.hasEntrypoints(name)) {
 			Log.debug(LogCategory.ENTRYPOINT, "No subscribers for entrypoint '" + name + "'");
@@ -51,7 +51,7 @@ public final class EntrypointUtils {
 	}
 
 	private static <T> void invoke0(String name, Class<T> type, Consumer<EntrypointContainer<T>> invoker) {
-		QuiltLoaderImpl loader = QuiltLoaderImpl.INSTANCE;
+		MuonLoaderImpl loader = MuonLoaderImpl.INSTANCE;
 		RuntimeException exception = null;
 		Collection<EntrypointContainer<T>> entrypoints = loader.getEntrypointContainers(name, type);
 

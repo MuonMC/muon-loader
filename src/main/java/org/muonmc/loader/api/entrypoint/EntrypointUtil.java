@@ -23,7 +23,7 @@ import org.muonmc.loader.impl.entrypoint.EntrypointUtils;
 import org.muonmc.loader.api.ModContainer;
 
 /** Various methods for invoking entrypoints. This is intended for use whenever you want to invoke a method on each
- * returned entrypoint, likely via method reference. For example Quilt Loader uses this to invoke the "pre_launch"
+ * returned entrypoint, likely via method reference. For example Muon Loader uses this to invoke the "pre_launch"
  * entrypoint:<br>
  * <code>
  * EntrypointUtil.invoke("pre_launch", PreLaunchEntrypoint.class, PreLaunchEntrypoint::onPreLaunch);

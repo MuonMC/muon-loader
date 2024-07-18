@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.muonmc.loader.impl.patch.reflections.ReflectionsClassPatcher;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
@@ -39,7 +39,7 @@ public abstract class PatchLoader {
 		ReflectionsClassPatcher.load(patchedClasses);
 
 		if (Boolean.getBoolean(SystemProperties.DEBUG_DUMP_PATCHED_CLASSES)) {
-			Path root = QuiltLoader.getGameDir().resolve("quilt_loader_patched_classes");
+			Path root = MuonLoader.getGameDir().resolve("quilt_loader_patched_classes");
 			try {
 				Files.createDirectories(root);
 				Files.write(root.resolve("FILE_LIST.txt"), patchedClasses.keySet().stream().sorted().collect(Collectors.toList()));

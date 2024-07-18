@@ -26,14 +26,14 @@ import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.gui.LoaderGuiException;
 import org.muonmc.loader.api.gui.QuiltBasicWindow;
 import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
 import org.muonmc.loader.api.gui.QuiltGuiMessagesTab;
 import org.muonmc.loader.api.gui.QuiltLoaderGui;
 import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 /** The main entry point for all quilt-based stuff. */
 @QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
@@ -46,17 +46,17 @@ public final class QuiltGuiEntry {
 			Log.error(LogCategory.GUI, "An error occurred: " + mainText, exception);
 		}
 
-		GameProvider provider = QuiltLoaderImpl.INSTANCE.tryGetGameProvider();
+		GameProvider provider = MuonLoaderImpl.INSTANCE.tryGetGameProvider();
 
 		if ((provider == null || provider.canOpenGui()) && !GraphicsEnvironment.isHeadless()) {
 
 			QuiltReport report = new QuiltReport("Crashed!");
 			// It's arguably the most important version - if anything goes wrong while writing this report
 			// at least we know what code was used to generate it.
-			report.overview("Quilt Loader Version: " + QuiltLoaderImpl.VERSION);
+			report.overview("Quilt Loader Version: " + MuonLoaderImpl.VERSION);
 			report.addStacktraceSection("Crash", 0, exception);
 			try {
-				QuiltLoaderImpl.INSTANCE.appendModTable(report.addStringSection("Mods", 0)::lines);
+				MuonLoaderImpl.INSTANCE.appendModTable(report.addStringSection("Mods", 0)::lines);
 			} catch (Throwable t) {
 				report.addStacktraceSection("Exception while building the mods table", 0, t);
 			}
@@ -64,12 +64,12 @@ public final class QuiltGuiEntry {
 			Path crashReportFile = null;
 			String crashReportText = null;
 			try {
-				crashReportFile = report.writeInDirectory(QuiltLoader.getGameDir());
+				crashReportFile = report.writeInDirectory(MuonLoader.getGameDir());
 			} catch (QuiltReport.CrashReportSaveFailed e) {
 				crashReportText = e.fullReportText;
 			}
 
-			String title = "Quilt Loader " + QuiltLoaderImpl.VERSION;
+			String title = "Quilt Loader " + MuonLoaderImpl.VERSION;
 			QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
 			window.title(QuiltLoaderText.of(title));
 			window.mainText(QuiltLoaderText.of(mainText));
@@ -97,7 +97,7 @@ public final class QuiltGuiEntry {
 				window.addCopyFileToClipboardButton(QuiltLoaderText.translate("button.copy_crash_report"), crashReportFile);
 			}
 
-			window.addFolderViewButton(QuiltLoaderText.translate("button.open_mods_folder"), QuiltLoaderImpl.INSTANCE.getModsDir());
+			window.addFolderViewButton(QuiltLoaderText.translate("button.open_mods_folder"), MuonLoaderImpl.INSTANCE.getModsDir());
 
 			QuiltErrorButton continueBtn = window.addContinueButton();
 			continueBtn.text(QuiltLoaderText.translate("button.exit"));

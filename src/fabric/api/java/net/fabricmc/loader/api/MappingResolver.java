@@ -30,7 +30,7 @@ import java.util.Collection;
  * such as {@code "mypackage.MyClass$Inner"}.</p>
  *
  * @since 0.4.1
- * @deprecated Please migrate to the quilt version {@link org.quiltmc.loader.api.MappingResolver}
+ * @deprecated Please migrate to the quilt version {@link org.muonmc.loader.api.MappingResolver}
  */
 @Deprecated
 public interface MappingResolver {

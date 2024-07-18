@@ -16,7 +16,7 @@
 
 package org.muonmc.loader.api.config.v2;
 
-import org.muonmc.loader.impl.config.QuiltConfigImpl;
+import org.muonmc.loader.impl.config.MuonConfigImpl;
 import org.quiltmc.config.api.Config;
 import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.impl.ConfigImpl;
@@ -25,7 +25,7 @@ import org.quiltmc.config.implementor_api.ConfigFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public final class QuiltConfig {
+public final class MuonConfig {
 	/**
 	 * Creates and registers a config file
 	 *
@@ -37,7 +37,7 @@ public final class QuiltConfig {
 	 * @param creators any number of {@link Config.Creator}s that can be used to configure the resulting config
 	 */
 	public static Config create(String family, String id, Path path, Config.Creator... creators) {
-		return ConfigImpl.create(QuiltConfigImpl.getConfigEnvironment(), family, id, path, creators);
+		return ConfigImpl.create(MuonConfigImpl.getConfigEnvironment(), family, id, path, creators);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public final class QuiltConfig {
 	 * @return a {@link ReflectiveConfig <C>}
 	 */
 	public static <C extends ReflectiveConfig> C create(String family, String id, Path path, Config.Creator before, Class<C> configCreatorClass, Config.Creator after) {
-		return ConfigFactory.create(QuiltConfigImpl.getConfigEnvironment(), family, id, path, before, configCreatorClass, after);
+		return ConfigFactory.create(MuonConfigImpl.getConfigEnvironment(), family, id, path, before, configCreatorClass, after);
 	}
 
 	/**
@@ -167,6 +167,6 @@ public final class QuiltConfig {
 		return create(family, id, Paths.get(""), builder -> {}, configCreatorClass, builder -> {});
 	}
 
-	private QuiltConfig() {
+	private MuonConfig() {
 	}
 }

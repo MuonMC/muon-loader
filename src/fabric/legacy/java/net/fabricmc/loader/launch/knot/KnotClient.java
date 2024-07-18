@@ -19,10 +19,10 @@ package net.fabricmc.loader.launch.knot;
 
 import net.fabricmc.api.EnvType;
 
-import org.quiltmc.loader.impl.launch.knot.Knot;
+import org.muonmc.loader.impl.launch.knot.Knot;
 
 /**
- * @deprecated Use {@link org.quiltmc.loader.impl.launch.knot.KnotClient} instead
+ * @deprecated Use {@link org.muonmc.loader.impl.launch.knot.KnotClient} instead
  */
 @Deprecated
 // Kept for old Quilt installs that still use this class

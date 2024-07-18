@@ -35,7 +35,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
@@ -145,7 +145,7 @@ public class TransformCacheManager {
 			return null;
 		}
 
-		if (QuiltLoader.isDevelopmentEnvironment()) {
+		if (MuonLoader.isDevelopmentEnvironment()) {
 			Log.info(LogCategory.CACHE, "Not reusing previous transform cache since we're in a development environment");
 			erasePreviousTransformCache(transformCacheFolder, cacheFile, null);
 			return null;

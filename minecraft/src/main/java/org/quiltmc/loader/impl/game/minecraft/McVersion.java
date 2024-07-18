@@ -19,8 +19,8 @@ package org.quiltmc.loader.impl.game.minecraft;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
 
 import java.util.OptionalInt;
 

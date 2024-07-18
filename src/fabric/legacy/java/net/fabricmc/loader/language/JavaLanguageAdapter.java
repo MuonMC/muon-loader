@@ -22,8 +22,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import org.objectweb.asm.ClassReader;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.quiltmc.loader.impl.util.LoaderUtil;
+import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.util.LoaderUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

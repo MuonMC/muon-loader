@@ -32,24 +32,24 @@ import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
-import org.quiltmc.loader.api.gui.QuiltBasicWindow;
-import org.quiltmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
-import org.quiltmc.loader.api.gui.QuiltGuiTab;
-import org.quiltmc.loader.api.gui.QuiltGuiTreeTab;
-import org.quiltmc.loader.api.gui.QuiltLoaderGui;
-import org.quiltmc.loader.api.gui.QuiltLoaderIcon;
-import org.quiltmc.loader.api.gui.QuiltLoaderText;
-import org.quiltmc.loader.api.gui.QuiltTreeNode;
-import org.quiltmc.loader.api.gui.QuiltWarningLevel;
-import org.quiltmc.loader.impl.FormattedException;
-import org.quiltmc.loader.impl.gui.PluginIconImpl;
-import org.quiltmc.loader.impl.gui.QuiltStatusNode;
+import org.muonmc.loader.api.gui.QuiltBasicWindow;
+import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.QuiltGuiTab;
+import org.muonmc.loader.api.gui.QuiltGuiTreeTab;
+import org.muonmc.loader.api.gui.QuiltLoaderGui;
+import org.muonmc.loader.api.gui.QuiltLoaderIcon;
+import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.QuiltTreeNode;
+import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.impl.FormattedException;
+import org.muonmc.loader.impl.gui.PluginIconImpl;
+import org.muonmc.loader.impl.gui.QuiltStatusNode;
 
 /** @deprecated Replaced by the public APIs {@link QuiltLoaderGui}, notably {@link QuiltLoaderGui#createBasicWindow()}
  *             and {@link QuiltLoaderGui#createTreeNode()} */
 @Deprecated
 public final class FabricStatusTree {
-	/** @deprecated Replaced by {@link org.quiltmc.loader.api.gui.QuiltWarningLevel} */
+	/** @deprecated Replaced by {@link QuiltWarningLevel} */
 	@Deprecated
 	public enum FabricTreeWarningLevel {
 		ERROR,

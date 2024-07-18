@@ -48,7 +48,7 @@ import org.muonmc.loader.api.gui.QuiltLoaderGui;
 import org.muonmc.loader.api.gui.QuiltLoaderText;
 import org.muonmc.loader.api.gui.QuiltLoaderWindow;
 import org.muonmc.loader.api.plugin.LoaderValueFactory;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 @QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
 public class QuiltFork {
@@ -59,7 +59,7 @@ public class QuiltFork {
 	private static Error previousServerError;
 
 	static {
-		GameProvider provider = QuiltLoaderImpl.INSTANCE.getGameProvider();
+		GameProvider provider = MuonLoaderImpl.INSTANCE.getGameProvider();
 		if (Boolean.getBoolean(SystemProperties.DISABLE_FORKED_GUIS) || !provider.canOpenGui()) {
 			COMMS = null;
 			FORK_EXCEPTION = null;
@@ -67,7 +67,7 @@ public class QuiltFork {
 			QuiltForkComms comms = null;
 			IOException error = null;
 			try {
-				File base = QuiltLoaderImpl.INSTANCE.getQuiltLoaderCacheDir().resolve("comms").toFile();
+				File base = MuonLoaderImpl.INSTANCE.getQuiltLoaderCacheDir().resolve("comms").toFile();
 				comms = QuiltForkComms.connect(base, QuiltFork::handleMessageFromServer);
 			} catch (IOException e) {
 				Log.error(LogCategory.GUI, "Failed to spawn the child process!", e);
@@ -90,7 +90,7 @@ public class QuiltFork {
 
 	public static void openErrorGui(List<QuiltDisplayedError> errors) throws LoaderGuiException, LoaderGuiClosed {
 		QuiltBasicWindow<Boolean> window = QuiltLoaderGui.createBasicWindow(false);
-		window.title(QuiltLoaderText.of("Quilt Loader " + QuiltLoaderImpl.VERSION));
+		window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
 		window.addOpenQuiltSupportButton();
 		QuiltErrorButton continueButton = window.addContinueButton();
 		continueButton.text(QuiltLoaderText.translate("button.ignore"));

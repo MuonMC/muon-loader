@@ -16,10 +16,10 @@
 
 package org.quiltmc.loader.impl.config;
 
-import org.quiltmc.loader.impl.entrypoint.GameTransformer;
-import org.quiltmc.loader.impl.game.GameProvider;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
-import org.quiltmc.loader.impl.util.Arguments;
+import org.muonmc.loader.impl.entrypoint.GameTransformer;
+import org.muonmc.loader.impl.game.GameProvider;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.util.Arguments;
 
 import java.nio.file.Path;
 import java.util.Collection;

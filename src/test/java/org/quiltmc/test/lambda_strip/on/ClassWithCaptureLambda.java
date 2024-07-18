@@ -16,7 +16,7 @@
 
 package org.quiltmc.test.lambda_strip.on;
 
-import org.quiltmc.loader.api.minecraft.ClientOnly;
+import org.muonmc.loader.api.minecraft.ClientOnly;
 
 public class ClassWithCaptureLambda {
 

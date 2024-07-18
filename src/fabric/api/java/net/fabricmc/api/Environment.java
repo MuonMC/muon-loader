@@ -22,8 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.loader.api.minecraft.DedicatedServerOnly;
+import org.muonmc.loader.api.minecraft.ClientOnly;
+import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
 
 /**
  * Applied to declare that the annotated element is present only in the specified environment.

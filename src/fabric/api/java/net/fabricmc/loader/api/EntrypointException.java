@@ -16,7 +16,7 @@
 
 package net.fabricmc.loader.api;
 
-import org.quiltmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /**
  * Represents an exception that arises when obtaining entrypoints.
@@ -65,8 +65,8 @@ public class EntrypointException extends RuntimeException {
 		this.key = "";
 	}
 
-	/** @param quiltLoader used to differentiate this from other constructors. */
-	public EntrypointException(QuiltLoader quiltLoader, org.quiltmc.loader.api.entrypoint.EntrypointException t) {
+	/** @param muonLoader used to differentiate this from other constructors. */
+	public EntrypointException(MuonLoader muonLoader, org.muonmc.loader.api.entrypoint.EntrypointException t) {
 		super(t);
 		this.key = t.getKey();
 	}

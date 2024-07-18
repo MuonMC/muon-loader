@@ -31,7 +31,7 @@ import java.util.zip.ZipError;
 import net.fabricmc.mapping.tree.TinyMappingFactory;
 import net.fabricmc.mapping.tree.TinyTree;
 
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.ManifestUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -80,7 +80,7 @@ public final class MappingConfiguration {
 	}
 
 	public String getTargetNamespace() {
-		GameProvider gameProvider = QuiltLoaderImpl.INSTANCE.tryGetGameProvider();
+		GameProvider gameProvider = MuonLoaderImpl.INSTANCE.tryGetGameProvider();
 		if (gameProvider != null)
 			return gameProvider.getNamespace();
 		// else

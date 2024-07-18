@@ -17,7 +17,7 @@
 package net.fabricmc.loader.launch.server;
 
 
-import org.quiltmc.loader.impl.launch.server.QuiltServerLauncher;
+import org.muonmc.loader.impl.launch.server.QuiltServerLauncher;
 
 /**
  * @deprecated Use {@link QuiltServerLauncher} instead

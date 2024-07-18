@@ -36,7 +36,7 @@ import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 
 import org.muonmc.loader.impl.FormattedException;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.UrlConversionException;
 import org.muonmc.loader.impl.util.UrlUtil;
@@ -253,10 +253,10 @@ public final class GameProviderHelper {
 	}
 
 	private static Path getDeobfJarDir(Path gameDir, String gameId, String gameVersion) {
-		QuiltLoaderImpl loader = QuiltLoaderImpl.INSTANCE;
+		MuonLoaderImpl loader = MuonLoaderImpl.INSTANCE;
 
 		loader.setGameDir(gameDir);
-		Path ret = loader.getCacheDir().resolve(QuiltLoaderImpl.CACHE_DIR_NAME).resolve(QuiltLoaderImpl.REMAPPED_JARS_DIR_NAME);
+		Path ret = loader.getCacheDir().resolve(MuonLoaderImpl.CACHE_DIR_NAME).resolve(MuonLoaderImpl.REMAPPED_JARS_DIR_NAME);
 
 		StringBuilder versionDirName = new StringBuilder();
 
@@ -270,7 +270,7 @@ public final class GameProviderHelper {
 		}
 
 		if (versionDirName.length() > 0) versionDirName.append('-');
-		versionDirName.append(QuiltLoaderImpl.VERSION);
+		versionDirName.append(MuonLoaderImpl.VERSION);
 
 		return ret.resolve(versionDirName.toString().replaceAll("[^\\w\\-\\. ]+", "_"));
 	}

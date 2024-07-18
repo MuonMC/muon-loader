@@ -26,10 +26,10 @@ import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
-import org.quiltmc.loader.api.QuiltLoader;
-import org.quiltmc.loader.impl.entrypoint.GamePatch;
-import org.quiltmc.loader.impl.entrypoint.GamePatchContext;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.api.MuonLoader;
+import org.muonmc.loader.impl.entrypoint.GamePatch;
+import org.muonmc.loader.impl.entrypoint.GamePatchContext;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
 
 import net.fabricmc.api.EnvType;
 
@@ -55,8 +55,8 @@ public final class TinyFDPatch extends GamePatch {
 
 		// Only remap the classname when needed to prevent loading the mappings when not required in prod.
 		if (!launcher.getMappingConfiguration().getTargetNamespace().equals("intermediary")
-				&& QuiltLoader.getMappingResolver().getNamespaces().contains("intermediary")) {
-			className = QuiltLoader.getMappingResolver().mapClassName("intermediary", MORE_OPTIONS_DIALOG_CLASS_NAME);
+				&& MuonLoader.getMappingResolver().getNamespaces().contains("intermediary")) {
+			className = MuonLoader.getMappingResolver().mapClassName("intermediary", MORE_OPTIONS_DIALOG_CLASS_NAME);
 		}
 
 		final ClassNode classNode = context.getClassNode(className);

@@ -22,7 +22,7 @@ import org.muonmc.loader.impl.launch.common.QuiltCodeSource;
 import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.patch.PatchLoader;
 import org.muonmc.loader.impl.util.FileSystemUtil;
@@ -105,7 +105,7 @@ class KnotClassDelegate {
 
 		@Override
 		public Optional<ModContainer> getQuiltMod() {
-			return QuiltLoader.getModContainer(modId);
+			return MuonLoader.getModContainer(modId);
 		}
 	}
 

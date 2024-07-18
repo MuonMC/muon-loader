@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
@@ -120,7 +120,7 @@ public class QuiltClassPath {
 				return;
 			}
 
-			if (!QuiltLoader.isDevelopmentEnvironment()) { // Directory and other unique filesystems expected in a dev environment
+			if (!MuonLoader.isDevelopmentEnvironment()) { // Directory and other unique filesystems expected in a dev environment
 				Log.warn(LogCategory.GENERAL, "Adding unknown root to the classpath, this may slow down class loading: " + root.getFileSystem() + " " + root);
 			}
 

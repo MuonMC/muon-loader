@@ -97,10 +97,10 @@ import net.fabricmc.loader.impl.util.DefaultLanguageAdapter;
  *   </li>
  * </ul>
  *
- * @deprecated Please move to quilt's {@link org.quiltmc.loader.api.LanguageAdapter}.
+ * @deprecated Please move to quilt's {@link org.muonmc.loader.api.LanguageAdapter}.
  */
 @Deprecated
-public interface LanguageAdapter extends org.quiltmc.loader.api.LanguageAdapter {
+public interface LanguageAdapter extends org.muonmc.loader.api.LanguageAdapter {
 	static LanguageAdapter getDefault() {
 		return DefaultLanguageAdapter.INSTANCE;
 	}
@@ -117,13 +117,13 @@ public interface LanguageAdapter extends org.quiltmc.loader.api.LanguageAdapter 
 	<T> T create(ModContainer mod, String value, Class<T> type) throws LanguageAdapterException;
 
 	@Override
-	default <T> T create(org.quiltmc.loader.api.ModContainer mod, String value, Class<T> type)
-			throws org.quiltmc.loader.api.LanguageAdapterException {
+	default <T> T create(org.muonmc.loader.api.ModContainer mod, String value, Class<T> type)
+			throws org.muonmc.loader.api.LanguageAdapterException {
 
 		try {
 			return create(new ModContainerImpl(mod), value, type);
 		} catch (LanguageAdapterException e) {
-			throw new org.quiltmc.loader.api.LanguageAdapterException(e);
+			throw new org.muonmc.loader.api.LanguageAdapterException(e);
 		}
 	}
 }

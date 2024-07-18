@@ -1,8 +1,7 @@
 package org.quiltmc.loader.impl.game.minecraft.applet;
 
-import org.quiltmc.loader.impl.entrypoint.GameTransformer;
 import org.quiltmc.loader.impl.game.minecraft.Hooks;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.awt.BorderLayout;

@@ -20,7 +20,7 @@ package org.muonmc.loader.impl.launch.knot;
 import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
@@ -204,7 +204,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 			if (colon > 0) {
 				String mod = name.substring(1, colon);
 				String resource = name.substring(colon + 1);
-				Optional<ModContainer> modContainer = QuiltLoader.getModContainer(mod);
+				Optional<ModContainer> modContainer = MuonLoader.getModContainer(mod);
 				if (modContainer.isPresent()) {
 					Path modResource = modContainer.get().rootPath().resolve(resource);
 					try {

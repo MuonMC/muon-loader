@@ -24,8 +24,8 @@ import org.muonmc.loader.impl.launch.common.QuiltMixinBootstrap;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.ModContainer.BasicSourceType;
 import org.muonmc.loader.impl.FormattedException;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
-import org.muonmc.loader.impl.config.QuiltConfigImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
+import org.muonmc.loader.impl.config.MuonConfigImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.FileUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -128,7 +128,7 @@ public final class Knot extends QuiltLauncherBase {
 		}
 
 		provider = createGameProvider(args);
-		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with Quilt Loader %s", provider.getGameName(), provider.getRawGameVersion(), QuiltLoaderImpl.VERSION);
+		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with Quilt Loader %s", provider.getGameName(), provider.getRawGameVersion(), MuonLoaderImpl.VERSION);
 
 		isDevelopment = Boolean.parseBoolean(System.getProperty(SystemProperties.DEVELOPMENT, "false"));
 
@@ -142,7 +142,7 @@ public final class Knot extends QuiltLauncherBase {
 
 		Thread.currentThread().setContextClassLoader(cl);
 
-		QuiltLoaderImpl loader = QuiltLoaderImpl.INSTANCE;
+		MuonLoaderImpl loader = MuonLoaderImpl.INSTANCE;
 		loader.setGameProvider(provider);
 		loader.load();
 		loader.freeze();
@@ -156,7 +156,7 @@ public final class Knot extends QuiltLauncherBase {
 		provider.unlockClassPath(this);
 		unlocked = true;
 
-		QuiltConfigImpl.init();
+		MuonConfigImpl.init();
 
 		try {
 			// If the very first class transformed by mixin is also referenced by a mixin config

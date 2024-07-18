@@ -28,13 +28,13 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.util.TraceClassVisitor;
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
-import org.quiltmc.loader.impl.transformer.ClassStripper;
-import org.quiltmc.loader.impl.transformer.LambdaStripCalculator;
+import org.muonmc.loader.impl.MuonLoaderImpl;
+import org.muonmc.loader.impl.transformer.ClassStripper;
+import org.muonmc.loader.impl.transformer.LambdaStripCalculator;
 
 import net.fabricmc.api.EnvType;
 
-import org.quiltmc.loader.impl.transformer.ClassStrippingData;
+import org.muonmc.loader.impl.transformer.ClassStrippingData;
 
 public class LambdaStripTester {
 
@@ -81,7 +81,7 @@ public class LambdaStripTester {
 
 			ClassWriter classWriter = new ClassWriter(null, 0);
 			ClassStripper visitor = new ClassStripper(
-				QuiltLoaderImpl.ASM_VERSION, classWriter, strip.getStripInterfaces(), strip.getStripFields(),
+				MuonLoaderImpl.ASM_VERSION, classWriter, strip.getStripInterfaces(), strip.getStripFields(),
 				stripMethods
 			);
 			reader.accept(visitor, 0);

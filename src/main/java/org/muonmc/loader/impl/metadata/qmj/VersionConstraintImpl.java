@@ -19,7 +19,7 @@ package org.muonmc.loader.impl.metadata.qmj;
 
 import java.util.Objects;
 
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionConstraint;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -108,7 +108,7 @@ public final class VersionConstraintImpl implements VersionConstraint {
 			return true;
 		}
 
-		if (version.raw().equals("${version}") && QuiltLoader.isDevelopmentEnvironment()) {
+		if (version.raw().equals("${version}") && MuonLoader.isDevelopmentEnvironment()) {
 			// Special cased by QMJ
 			return true;
 		}

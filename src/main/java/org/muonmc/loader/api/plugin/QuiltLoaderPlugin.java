@@ -34,7 +34,7 @@ import org.muonmc.loader.api.plugin.solver.TentativeLoadOption;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.api.LoaderValue;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /** The base type for all plugins.
  * <p>
@@ -55,7 +55,7 @@ import org.muonmc.loader.api.QuiltLoader;
  * <li>{@link #beforeSolve()} is called.</li>
  * <li>Loader will begin solving the rules added</li>
  * </ol>
- * In particular, plugins must never call {@link QuiltLoader} directly - that's designed solely for mods to use after
+ * In particular, plugins must never call {@link MuonLoader} directly - that's designed solely for mods to use after
  * mod loading is complete. */
 @QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
 public interface QuiltLoaderPlugin {

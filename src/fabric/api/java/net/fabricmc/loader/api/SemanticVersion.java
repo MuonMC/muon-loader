@@ -19,8 +19,8 @@ package net.fabricmc.loader.api;
 
 import java.util.Optional;
 
-import org.quiltmc.loader.api.VersionFormatException;
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
+import org.muonmc.loader.api.VersionFormatException;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
 
 /**
  * Represents a <a href="https://semver.org/">Semantic Version</a>.
@@ -108,7 +108,7 @@ public interface SemanticVersion extends Version {
 			throw new VersionParsingException("Version must be a non-empty string!");
 		}
 		try {
-			return Quilt2FabricSemanticVersion.toFabric(org.quiltmc.loader.api.Version.Semantic.of(s));
+			return Quilt2FabricSemanticVersion.toFabric(org.muonmc.loader.api.Version.Semantic.of(s));
 		} catch (VersionFormatException e) {
 			throw new VersionParsingException(e);
 		}

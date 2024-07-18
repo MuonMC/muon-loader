@@ -38,7 +38,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.FileUtil;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
@@ -165,7 +165,7 @@ public final class FabricModMetadataReader {
 			final FabricLoaderModMetadata ret = readModMetadata(reader, schemaVersion);
 			reader.endObject();
 
-			if (QuiltLoaderImpl.INSTANCE.isDevelopmentEnvironment()) {
+			if (MuonLoaderImpl.INSTANCE.isDevelopmentEnvironment()) {
 				Log.warn(LogCategory.METADATA, "\"fabric.mod.json\" from mod %s did not have \"schemaVersion\" as first field.", ret.getId());
 			}
 

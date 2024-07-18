@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.muonmc.loader.impl.config.MuonConfigImpl;
 import org.quiltmc.config.api.Config;
 import org.quiltmc.config.api.Constraint;
 import org.quiltmc.config.api.annotations.Comment;
@@ -31,8 +32,8 @@ import org.quiltmc.config.api.exceptions.TrackedValueException;
 import org.quiltmc.config.api.values.TrackedValue;
 import org.quiltmc.config.api.values.ValueList;
 import org.quiltmc.config.api.values.ValueMap;
-import org.quiltmc.loader.api.config.QuiltConfig;
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.api.config.QuiltConfig;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 public class ConfigTester {
 	@TempDir
@@ -46,8 +47,8 @@ public class ConfigTester {
 
 	@BeforeEach
 	public void initializeConfigDir() {
-		QuiltLoaderImpl.INSTANCE.setGameProvider(new DummyGameProvider(temp));
-		QuiltConfigImpl.init();
+		MuonLoaderImpl.INSTANCE.setGameProvider(new DummyGameProvider(temp));
+		MuonConfigImpl.init();
 	}
 
 	@Test

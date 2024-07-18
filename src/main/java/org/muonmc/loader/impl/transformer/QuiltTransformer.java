@@ -24,7 +24,7 @@ import net.fabricmc.api.EnvType;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
@@ -37,7 +37,7 @@ import net.fabricmc.accesswidener.AccessWidenerClassVisitor;
 @QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
 final class QuiltTransformer {
 	public static byte @Nullable [] transform(boolean isDevelopment, EnvType envType, TransformCache cache, AccessWidener accessWidener, String name, ModLoadOption mod, byte[] bytes) {
-		boolean isGameClass = mod.id().equals(QuiltLoaderImpl.INSTANCE.getGameProvider().getGameId());
+		boolean isGameClass = mod.id().equals(MuonLoaderImpl.INSTANCE.getGameProvider().getGameId());
 		boolean transformAccess = isGameClass && QuiltLauncherBase.getLauncher().getMappingConfiguration().requiresPackageAccessHack();
 		boolean strip = !isGameClass || isDevelopment;
 		boolean applyAccessWidener = isGameClass && accessWidener.getTargets().contains(name);
@@ -52,7 +52,7 @@ final class QuiltTransformer {
 		int visitorCount = 0;
 
 		if (strip) {
-			ClassStrippingData data = new ClassStrippingData(QuiltLoaderImpl.ASM_VERSION, envType, cache.getAllMods());
+			ClassStrippingData data = new ClassStrippingData(MuonLoaderImpl.ASM_VERSION, envType, cache.getAllMods());
 			classReader.accept(data, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
 
 			if (data.stripEntireClass()) {
@@ -65,7 +65,7 @@ final class QuiltTransformer {
 			boolean stripAnyLambdas = false;
 
 			if (!data.getStripMethodLambdas().isEmpty()) {
-				LambdaStripCalculator calc = new LambdaStripCalculator(QuiltLoaderImpl.ASM_VERSION, data.getStripMethodLambdas());
+				LambdaStripCalculator calc = new LambdaStripCalculator(MuonLoaderImpl.ASM_VERSION, data.getStripMethodLambdas());
 				classReader.accept(calc, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 				Collection<String> additionalStripMethods = calc.computeAdditionalMethodsToStrip();
 
@@ -90,7 +90,7 @@ final class QuiltTransformer {
 					classWriter = new ClassWriter(classReader, 0);
 				}
 
-				visitor = new ClassStripper(QuiltLoaderImpl.ASM_VERSION, classWriter, data.getStripInterfaces(), data.getStripFields(), stripMethods);
+				visitor = new ClassStripper(MuonLoaderImpl.ASM_VERSION, classWriter, data.getStripInterfaces(), data.getStripFields(), stripMethods);
 				visitorCount++;
 			}
 		}
@@ -101,12 +101,12 @@ final class QuiltTransformer {
 		}
 
 		if (applyAccessWidener) {
-			visitor = AccessWidenerClassVisitor.createClassVisitor(QuiltLoaderImpl.ASM_VERSION, visitor, accessWidener);
+			visitor = AccessWidenerClassVisitor.createClassVisitor(MuonLoaderImpl.ASM_VERSION, visitor, accessWidener);
 			visitorCount++;
 		}
 
 		if (transformAccess) {
-			visitor = new PackageAccessFixer(QuiltLoaderImpl.ASM_VERSION, visitor);
+			visitor = new PackageAccessFixer(MuonLoaderImpl.ASM_VERSION, visitor);
 			visitorCount++;
 		}
 

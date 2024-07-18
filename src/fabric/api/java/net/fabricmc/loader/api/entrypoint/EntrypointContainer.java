@@ -23,7 +23,7 @@ import net.fabricmc.loader.api.ModContainer;
  *
  * @param <T> The type of the entrypoint
  * @see net.fabricmc.loader.api.FabricLoader#getEntrypointContainers(String, Class)
- * @deprecated Please migrate to the quilt version: {@link org.quiltmc.loader.api.entrypoint.EntrypointContainer}. 
+ * @deprecated Please migrate to the quilt version: {@link org.muonmc.loader.api.entrypoint.EntrypointContainer}.
  */
 @Deprecated
 public interface EntrypointContainer<T> {

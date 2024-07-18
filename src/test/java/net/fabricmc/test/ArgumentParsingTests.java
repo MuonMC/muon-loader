@@ -19,7 +19,7 @@ package net.fabricmc.test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import org.quiltmc.loader.impl.util.Arguments;
+import org.muonmc.loader.impl.util.Arguments;
 
 public class ArgumentParsingTests {
 	@Test

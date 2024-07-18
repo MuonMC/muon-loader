@@ -124,8 +124,8 @@ import net.fabricmc.loader.api.ObjectShare;
 import net.fabricmc.api.EnvType;
 
 @QuiltLoaderInternal(value = QuiltLoaderInternalType.LEGACY_EXPOSED, replacements = MuonLoader.class)
-public final class QuiltLoaderImpl {
-	public static final QuiltLoaderImpl INSTANCE = InitHelper.get();
+public final class MuonLoaderImpl {
+	public static final MuonLoaderImpl INSTANCE = InitHelper.get();
 
 	public static final int ASM_VERSION = Opcodes.ASM9;
 
@@ -179,7 +179,7 @@ public final class QuiltLoaderImpl {
 	private ModLoadOption[] temporaryOrderedModList;
 	private Map<Path, List<List<Path>>> temporarySourcePaths;
 
-	protected QuiltLoaderImpl() {
+	protected MuonLoaderImpl() {
 	}
 
 	/**
@@ -679,7 +679,7 @@ public final class QuiltLoaderImpl {
 
 		String msg = "crash.during_setup." + provider.getGameId();
 		QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
-		window.title(QuiltLoaderText.of("Quilt Loader " + QuiltLoaderImpl.VERSION));
+		window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
 		window.mainText(QuiltLoaderText.translate(msg));
 
 		QuiltGuiMessagesTab messagesTab = window.addMessagesTab(QuiltLoaderText.translate("tab.messages"));
@@ -733,7 +733,7 @@ public final class QuiltLoaderImpl {
 
 		{
 			QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
-			window.title(QuiltLoaderText.of("Quilt Loader " + QuiltLoaderImpl.VERSION));
+			window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
 			window.addFolderViewButton(QuiltLoaderText.translate("button.open_mods_folder"), getModsDir());
 			window.addOpenQuiltSupportButton();
 			QuiltErrorButton continueButton = window.addContinueButton();
@@ -1255,10 +1255,10 @@ public final class QuiltLoaderImpl {
 	 * Provides singleton for static init assignment regardless of load order.
 	 */
 	public static class InitHelper {
-		private static QuiltLoaderImpl instance;
+		private static MuonLoaderImpl instance;
 
-		public static QuiltLoaderImpl get() {
-			if (instance == null) instance = new QuiltLoaderImpl();
+		public static MuonLoaderImpl get() {
+			if (instance == null) instance = new MuonLoaderImpl();
 
 			return instance;
 		}

@@ -16,8 +16,8 @@
 
 package net.fabricmc.loader.api.metadata.version;
 
-import org.quiltmc.loader.api.VersionFormatException;
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
+import org.muonmc.loader.api.VersionFormatException;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
@@ -102,7 +102,7 @@ public enum VersionComparisonOperator {
 		public SemanticVersion maxVersion(SemanticVersion version) {
 			int[] components = { version.getVersionComponent(0), version.getVersionComponent(1) + 1 };
 			try {
-				return Quilt2FabricSemanticVersion.toFabric(org.quiltmc.loader.api.Version.Semantic.of(components, "", null));
+				return Quilt2FabricSemanticVersion.toFabric(org.muonmc.loader.api.Version.Semantic.of(components, "", null));
 			} catch (VersionFormatException e) {
 				throw new IllegalStateException(e);
 			}
@@ -124,7 +124,7 @@ public enum VersionComparisonOperator {
 		public SemanticVersion maxVersion(SemanticVersion version) {
 			int[] components = { version.getVersionComponent(0) + 1 };
 			try {
-				return Quilt2FabricSemanticVersion.toFabric(org.quiltmc.loader.api.Version.Semantic.of(components, "", null));
+				return Quilt2FabricSemanticVersion.toFabric(org.muonmc.loader.api.Version.Semantic.of(components, "", null));
 			} catch (VersionFormatException e) {
 				throw new IllegalStateException(e);
 			}

@@ -16,7 +16,7 @@
 
 package net.fabricmc.api;
 
-import org.quiltmc.loader.api.entrypoint.GameEntrypoint;
+import org.muonmc.loader.api.entrypoint.GameEntrypoint;
 
 /**
  * A mod initializer.

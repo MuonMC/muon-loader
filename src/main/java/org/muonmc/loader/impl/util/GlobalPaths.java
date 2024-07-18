@@ -22,8 +22,8 @@ import java.util.Locale;
 
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
-import org.muonmc.loader.api.QuiltLoader;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.api.MuonLoader;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 @QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
 public class GlobalPaths {
@@ -48,16 +48,16 @@ public class GlobalPaths {
 				config = pathFromEnv("XDG_CONFIG_HOME", ".config").resolve("quilt_loader_and_mods");
 			}
 
-			QuiltLoaderImpl.ensureDirExists(cache, "global cache");
-			QuiltLoaderImpl.ensureDirExists(config, "global config");
+			MuonLoaderImpl.ensureDirExists(cache, "global cache");
+			MuonLoaderImpl.ensureDirExists(config, "global config");
 		} catch (Throwable throwable) {
 			Log.warn(LogCategory.GENERAL, "Unable to create global config and cache directories. Falling back to per-instance directories.", throwable);
 			actuallyGlobal = false;
 
-			cache = QuiltLoader.getCacheDir().resolve("global");
-			config = QuiltLoader.getConfigDir().resolve("global");
-			QuiltLoaderImpl.ensureDirExists(cache, "fake global cache");
-			QuiltLoaderImpl.ensureDirExists(config, "fake global config");
+			cache = MuonLoader.getCacheDir().resolve("global");
+			config = MuonLoader.getConfigDir().resolve("global");
+			MuonLoaderImpl.ensureDirExists(cache, "fake global cache");
+			MuonLoaderImpl.ensureDirExists(config, "fake global config");
 		}
 	}
 

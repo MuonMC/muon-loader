@@ -27,10 +27,10 @@ import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.fabricmc.loader.impl.entrypoint.EntrypointContainerImpl;
 
 import org.jetbrains.annotations.Nullable;
-import org.quiltmc.loader.api.QuiltLoader;
-import org.quiltmc.loader.api.entrypoint.EntrypointException;
-import org.quiltmc.loader.api.entrypoint.EntrypointUtil;
-import org.quiltmc.loader.api.minecraft.MinecraftQuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
+import org.muonmc.loader.api.entrypoint.EntrypointException;
+import org.muonmc.loader.api.entrypoint.EntrypointUtil;
+import org.muonmc.loader.api.minecraft.MinecraftQuiltLoader;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -49,15 +49,15 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public <T> List<T> getEntrypoints(String key, Class<T> type) {
-		return QuiltLoader.getEntrypoints(key, type);
+		return MuonLoader.getEntrypoints(key, type);
 	}
 
 	@Override
 	public <T> List<EntrypointContainer<T>> getEntrypointContainers(String key, Class<T> type) {
-		List<org.quiltmc.loader.api.entrypoint.EntrypointContainer<T>> from = QuiltLoader.getEntrypointContainers(key, type);
+		List<org.muonmc.loader.api.entrypoint.EntrypointContainer<T>> from = MuonLoader.getEntrypointContainers(key, type);
 		List<EntrypointContainer<T>> out = new ArrayList<>(from.size());
 		try {
-			for (org.quiltmc.loader.api.entrypoint.EntrypointContainer<T> c : from) {
+			for (org.muonmc.loader.api.entrypoint.EntrypointContainer<T> c : from) {
 				out.add(new EntrypointContainerImpl<>(c));
 			}
 			return out;
@@ -73,28 +73,28 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public ObjectShare getObjectShare() {
-		return QuiltLoader.getObjectShare();
+		return MuonLoader.getObjectShare();
 	}
 
 	@Override
 	public MappingResolver getMappingResolver() {
-		return new MappingResolverImpl(QuiltLoader.getMappingResolver());
+		return new MappingResolverImpl(MuonLoader.getMappingResolver());
 	}
 
 	@Override
 	public Optional<ModContainer> getModContainer(String id) {
-		return QuiltLoader.getModContainer(id).map(ModContainerImpl::new);
+		return MuonLoader.getModContainer(id).map(ModContainerImpl::new);
 	}
 
 	@Override
 	public Optional<ModContainer> quilt_getModContainer(Class<?> clazz) {
-		return QuiltLoader.getModContainer(clazz).map(ModContainerImpl::new);
+		return MuonLoader.getModContainer(clazz).map(ModContainerImpl::new);
 	}
 
 	@Override
 	public Collection<ModContainer> getAllMods() {
 		Collection<ModContainer> out = new ArrayList<>();
-		for (org.quiltmc.loader.api.ModContainer mc : QuiltLoader.getAllMods()) {
+		for (org.muonmc.loader.api.ModContainer mc : MuonLoader.getAllMods()) {
 			out.add(new ModContainerImpl(mc));
 		}
 		return Collections.unmodifiableCollection(out);
@@ -102,12 +102,12 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public boolean isModLoaded(String id) {
-		return QuiltLoader.isModLoaded(id);
+		return MuonLoader.isModLoaded(id);
 	}
 
 	@Override
 	public boolean isDevelopmentEnvironment() {
-		return QuiltLoader.isDevelopmentEnvironment();
+		return MuonLoader.isDevelopmentEnvironment();
 	}
 
 	@Override
@@ -117,12 +117,12 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public @Nullable Object getGameInstance() {
-		return QuiltLoader.getGameInstance();
+		return MuonLoader.getGameInstance();
 	}
 
 	@Override
 	public Path getGameDir() {
-		return QuiltLoader.getGameDir();
+		return MuonLoader.getGameDir();
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public Path getConfigDir() {
-		return QuiltLoader.getConfigDir();
+		return MuonLoader.getConfigDir();
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public String[] getLaunchArguments(boolean sanitize) {
-		return QuiltLoader.getLaunchArguments(sanitize);
+		return MuonLoader.getLaunchArguments(sanitize);
 	}
 
 	/**

@@ -17,7 +17,7 @@
 
 package net.fabricmc.loader.api;
 
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricVersion;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricVersion;
 
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
@@ -43,6 +43,6 @@ public interface Version extends Comparable<Version> {
 		if (string == null || string.isEmpty()) {
 			throw new VersionParsingException("Version must be a non-empty string!");
 		}
-		return Quilt2FabricVersion.toFabric(org.quiltmc.loader.api.Version.of(string));
+		return Quilt2FabricVersion.toFabric(org.muonmc.loader.api.Version.of(string));
 	}
 }

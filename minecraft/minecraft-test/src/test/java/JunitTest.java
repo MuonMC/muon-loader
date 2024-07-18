@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.quiltmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -57,7 +57,7 @@ public class JunitTest {
 	@Test
 	@SuppressWarnings("deprecation")
 	public void testAccessLoader() {
-		QuiltLoader.getAllMods();
+		MuonLoader.getAllMods();
 		FabricLoader.getInstance().getAllMods();
 	}
 }

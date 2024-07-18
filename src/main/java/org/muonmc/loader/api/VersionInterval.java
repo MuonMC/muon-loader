@@ -79,7 +79,7 @@ public interface VersionInterval extends Comparable<VersionInterval> {
 
 	default boolean isSatisfiedBy(Version version) {
 
-		if (version.raw().equals("${version}") && QuiltLoader.isDevelopmentEnvironment()) {
+		if (version.raw().equals("${version}") && MuonLoader.isDevelopmentEnvironment()) {
 			// Special cased by QMJ
 			return true;
 		}

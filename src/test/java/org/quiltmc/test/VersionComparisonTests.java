@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
-import org.quiltmc.loader.api.VersionFormatException;
-import org.quiltmc.loader.impl.metadata.qmj.SemanticVersionImpl;
+import org.muonmc.loader.api.VersionFormatException;
+import org.muonmc.loader.impl.metadata.qmj.SemanticVersionImpl;
 
 public class VersionComparisonTests extends JsonTestBase {
 

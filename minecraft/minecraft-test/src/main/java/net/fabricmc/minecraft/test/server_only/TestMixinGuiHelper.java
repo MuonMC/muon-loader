@@ -1,6 +1,6 @@
 package net.fabricmc.minecraft.test.server_only;
 
-import org.quiltmc.loader.api.minecraft.DedicatedServerOnly;
+import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
 
 @DedicatedServerOnly
 public class TestMixinGuiHelper {

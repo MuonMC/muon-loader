@@ -19,16 +19,17 @@ package net.fabricmc.loader.impl.entrypoint;
 
 import java.util.function.Consumer;
 
-import org.quiltmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.entrypoint.EntrypointException;
+import org.muonmc.loader.api.MuonLoader;
 
 @Deprecated
 public class EntrypointUtils {
 
 	public static <T> void invoke(String name, Class<T> type, Consumer<? super T> invoker) {
 		try {
-			org.quiltmc.loader.impl.entrypoint.EntrypointUtils.invoke(name, type, invoker);
-		} catch (org.quiltmc.loader.api.entrypoint.EntrypointException e) {
-			throw new net.fabricmc.loader.api.EntrypointException((QuiltLoader) null, e);
+			org.muonmc.loader.impl.entrypoint.EntrypointUtils.invoke(name, type, invoker);
+		} catch (EntrypointException e) {
+			throw new net.fabricmc.loader.api.EntrypointException((MuonLoader) null, e);
 		}
 	}
 }

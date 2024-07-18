@@ -1,4 +1,4 @@
-org.quiltmc.loader.impl.filesystem.QuiltMemoryFileSystemProvider
-org.quiltmc.loader.impl.filesystem.QuiltJoinedFileSystemProvider
-org.quiltmc.loader.impl.filesystem.QuiltZipFileSystemProvider
-org.quiltmc.loader.impl.filesystem.QuiltUnifiedFileSystemProvider
+org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystemProvider
+org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystemProvider
+org.muonmc.loader.impl.filesystem.QuiltZipFileSystemProvider
+org.muonmc.loader.impl.filesystem.QuiltUnifiedFileSystemProvider

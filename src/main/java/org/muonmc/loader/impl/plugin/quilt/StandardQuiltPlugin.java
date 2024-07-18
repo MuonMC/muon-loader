@@ -49,7 +49,7 @@ import org.muonmc.loader.api.gui.QuiltDisplayedError;
 import org.muonmc.loader.api.gui.QuiltLoaderGui;
 import org.muonmc.loader.api.gui.QuiltLoaderIcon;
 import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionRange;
 import org.muonmc.loader.api.plugin.ModLocation;
@@ -62,7 +62,7 @@ import org.muonmc.loader.api.plugin.solver.AliasedLoadOption;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.RuleContext;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.game.GameProvider.BuiltinMod;
 import org.muonmc.loader.impl.plugin.BuiltinQuiltPlugin;
@@ -305,7 +305,7 @@ public class StandardQuiltPlugin extends BuiltinQuiltPlugin {
 
 				PluginGuiTreeNode jarNode = guiNode.addChild(QuiltLoaderText.of(jar), SortOrder.ALPHABETICAL_ORDER);
 				if (DISBALE_BUILTIN_MIXIN_EXTRAS) {
-					if (QuiltLoaderImpl.MOD_ID.equals(meta.id())) {
+					if (MuonLoaderImpl.MOD_ID.equals(meta.id())) {
 						if (inner.toString().startsWith("/META-INF/jars/mixinextras-")) {
 							Log.info(LogCategory.GENERAL, "Disabling loader's builtin mixin extras library due to command line flag");
 							jarNode.addChild(QuiltLoaderText.translate("mixin_extras.disabled"));
@@ -319,7 +319,7 @@ public class StandardQuiltPlugin extends BuiltinQuiltPlugin {
 
 			// a mod needs to be remapped if we are in a development environment, and the mod
 			// did not come from the classpath
-			boolean requiresRemap = !location.onClasspath() && QuiltLoader.isDevelopmentEnvironment();
+			boolean requiresRemap = !location.onClasspath() && MuonLoader.isDevelopmentEnvironment();
 			return new ModLoadOption[] { new QuiltModOption(
 				context(), meta, from, fileIcon, root, location.isDirect(), requiresRemap
 			) };
@@ -420,7 +420,7 @@ public class StandardQuiltPlugin extends BuiltinQuiltPlugin {
 					replace(override.fuzzy, override.overrides.breakOverrides, breaks);
 				}
 
-				if (QuiltLoaderImpl.MOD_ID.equals(metadata.id())) {
+				if (MuonLoaderImpl.MOD_ID.equals(metadata.id())) {
 					if (DISBALE_BUILTIN_MIXIN_EXTRAS) {
 						depends.removeIf(dep -> dep instanceof ModDependency.Only && ((ModDependency.Only) dep).id().id().equals("mixinextras"));
 					}

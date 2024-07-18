@@ -28,16 +28,16 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
 import org.muonmc.loader.api.entrypoint.EntrypointException;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.GlobalPaths;
 
 import net.fabricmc.api.EnvType;
 
 /**
- * The public-facing QuiltLoader instance.
+ * The public-facing MuonLoader instance.
  */
-public final class QuiltLoader {
-	private QuiltLoader() {}
+public final class MuonLoader {
+	private MuonLoader() {}
 
 	/**
 	 * Returns all entrypoints declared under a {@code key}, assuming they are of a specific type.
@@ -132,7 +132,7 @@ public final class QuiltLoader {
 	 * Checks if a mod with a given ID is loaded.
 	 *
 	 * @param id the ID of the mod, as defined in {@code fabric.mod.json}
-	 * @return whether or not the mod is present in this Fabric Loader instance
+	 * @return whether the mod is present in this Fabric Loader instance
 	 */
 	public static boolean isModLoaded(String id) {
 		return impl().isModLoaded(id);
@@ -148,13 +148,13 @@ public final class QuiltLoader {
 	}
 
 	/**
-	 * Checks if Fabric Loader is currently running in a "development"
+	 * Checks if Muon Loader is currently running in a "development"
 	 * environment. Can be used for enabling debug mode or additional checks.
 	 *
 	 * <p>This should not be used to make assumptions on certain features,
 	 * such as mappings, but as a toggle for certain functionalities.</p>
 	 *
-	 * @return whether or not Loader is currently in a "development"
+	 * @return whether Loader is currently in a "development"
 	 * environment
 	 */
 	public static boolean isDevelopmentEnvironment() {
@@ -169,7 +169,7 @@ public final class QuiltLoader {
 	 * <p>The game instance may not always be available depending on the game version and {@link EnvType environment}.
 	 *
 	 * @return A client or server instance object
-	 * @deprecated This method is experimental and it's use is discouraged.
+	 * @deprecated This method is experimental, and it's use is discouraged.
 	 */
 	@Nullable
 	@Deprecated
@@ -189,10 +189,10 @@ public final class QuiltLoader {
 	}
 
 	/**
-	 * Gets the game version, unnormalised. This generally won't be
+	 * Gets the game version, denormalized. This generally won't be
 	 * usefully comparable to other versions of the same game.
 
-	 * @return A string. This wont be empty or null.
+	 * @return A string. This won't be empty or null.
 	 * @see #getNormalizedGameVersion()
 	 */
 	public static String getRawGameVersion() {
@@ -278,17 +278,17 @@ public final class QuiltLoader {
 
 	/**
 	 * Creates a table describing the mods currently loaded, suitable for printing in log files or in crash reports.
-	 * All of the information contained here is available through {@link #getAllMods()}.
+	 * All the information contained here is available through {@link #getAllMods()}.
 	 */
 	public static String createModTable() {
 		return impl().createModTable();
 	}
 
-	private static QuiltLoaderImpl impl() {
-		if (QuiltLoaderImpl.INSTANCE == null) {
-			throw new RuntimeException("Accessed QuiltLoader too early!");
+	private static MuonLoaderImpl impl() {
+		if (MuonLoaderImpl.INSTANCE == null) {
+			throw new RuntimeException("Accessed MuonLoader too early!");
  		}
 
-		return QuiltLoaderImpl.INSTANCE;
+		return MuonLoaderImpl.INSTANCE;
 	}
 }

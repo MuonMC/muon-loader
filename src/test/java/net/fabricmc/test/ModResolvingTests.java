@@ -26,14 +26,13 @@ import java.util.Map.Entry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.quiltmc.loader.api.plugin.solver.ModLoadOption;
-import org.quiltmc.loader.api.plugin.solver.ModSolveResult;
+import org.muonmc.loader.api.plugin.solver.ModLoadOption;
+import org.muonmc.loader.api.plugin.solver.ModSolveResult;
 import org.quiltmc.loader.impl.QuiltPluginManagerForTests;
-import org.quiltmc.loader.impl.discovery.ModResolutionException;
-import org.quiltmc.loader.impl.discovery.ModSolvingException;
-import org.quiltmc.loader.impl.plugin.QuiltPluginManagerImpl;
-import org.quiltmc.loader.impl.report.QuiltReportedError;
-import org.quiltmc.loader.impl.solver.ModSolveResultImpl;
+import org.muonmc.loader.impl.discovery.ModResolutionException;
+import org.muonmc.loader.impl.plugin.QuiltPluginManagerImpl;
+import org.muonmc.loader.impl.report.QuiltReportedError;
+import org.muonmc.loader.impl.solver.ModSolveResultImpl;
 
 public final class ModResolvingTests {
 

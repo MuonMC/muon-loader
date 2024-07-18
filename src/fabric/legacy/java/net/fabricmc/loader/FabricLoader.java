@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 
 /**
  * The main class for mod loading operations.
@@ -60,6 +60,6 @@ public abstract class FabricLoader implements net.fabricmc.loader.api.FabricLoad
 		if (runDir == null) {
 			runDir = new File(".");
 		}
-		QuiltLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
+		MuonLoaderImpl.INSTANCE.prepareModInit(runDir.toPath(), gameInstance);
 	}
 }

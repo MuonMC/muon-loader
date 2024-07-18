@@ -26,8 +26,8 @@ java {
 	withSourcesJar()
 }
 
-archivesBaseName = "quilt-loader"
-version = project.quilt_loader
+archivesBaseName = "muon-loader"
+version = project.muon_loader
 def ENV = System.getenv()
 
 allprojects {
@@ -45,6 +45,10 @@ allprojects {
 		maven {
 			name = 'Fabric'
 			url = 'https://maven.fabricmc.net/'
+		}
+		maven {
+			name = 'MuonMC'
+			url = 'https://maven.muonmc.org/releases'
 		}
 		maven {
 			name = 'Quilt'
@@ -123,7 +127,7 @@ processResources {
 	inputs.property "quilt_config", project.quilt_config
 	inputs.property "mixin_extras", project.mixin_extras
 
-	filesMatching("quilt.mod.json") {
+	filesMatching("muon.mod.json") {
 		expand "version": project.version
 	}
 

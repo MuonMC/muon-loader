@@ -17,7 +17,7 @@
 package org.quiltmc.test;
 
 import org.junit.jupiter.api.*;
-import org.quiltmc.loader.impl.metadata.qmj.ModMetadataReader;
+import org.muonmc.loader.impl.metadata.qmj.ModMetadataReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class ModJsonParsingTests {
 				p -> p.getFileName().toString(), p -> {
 					try {
 						ModMetadataReader.read(p);
-						Assertions.fail("Erroneous quilt.mod.json was parsed successfully (" + p + ")");
+						Assertions.fail("Erroneous muon.mod.json was parsed successfully (" + p + ")");
 					} catch (Exception ex) {
 						// do nothing
 					}

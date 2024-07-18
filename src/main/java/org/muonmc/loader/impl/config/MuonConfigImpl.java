@@ -31,10 +31,10 @@ import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
 @QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
-public final class QuiltConfigImpl {
+public final class MuonConfigImpl {
 	private static ConfigEnvironment ENV;
 
-	private QuiltConfigImpl() {
+	private MuonConfigImpl() {
 	}
 
 	public static void init() {

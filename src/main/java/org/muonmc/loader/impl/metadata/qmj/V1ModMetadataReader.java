@@ -42,7 +42,7 @@ import org.muonmc.loader.api.LoaderValue.LType;
 import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModDependencyIdentifier;
 import org.muonmc.loader.api.ModLicense;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionFormatException;
 import org.muonmc.loader.api.VersionRange;
@@ -131,7 +131,7 @@ public final class V1ModMetadataReader {
 			throw parseException(root, "quilt_loader is a required field");
 		}
 
-		if (QuiltLoader.isDevelopmentEnvironment() && !Boolean.getBoolean(SystemProperties.DISABLE_STRICT_PARSING)) {
+		if (MuonLoader.isDevelopmentEnvironment() && !Boolean.getBoolean(SystemProperties.DISABLE_STRICT_PARSING)) {
 			for (String s : quiltLoader.keySet()) {
 				if (!QLKeys.VALID_KEYS.contains(s)) {
 					throw parseException(Objects.requireNonNull(quiltLoader.get(s)), "Invalid key " + s + " in the quilt_loader object! (To disable this message, " +

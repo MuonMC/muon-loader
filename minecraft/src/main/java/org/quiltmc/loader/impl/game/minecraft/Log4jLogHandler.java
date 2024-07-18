@@ -30,11 +30,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.spi.LoggerContext;
-import org.quiltmc.loader.impl.util.ManifestUtil;
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
-import org.quiltmc.loader.impl.util.log.LogHandler;
-import org.quiltmc.loader.impl.util.log.LogLevel;
+import org.muonmc.loader.impl.util.ManifestUtil;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.util.log.LogHandler;
+import org.muonmc.loader.impl.util.log.LogLevel;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;

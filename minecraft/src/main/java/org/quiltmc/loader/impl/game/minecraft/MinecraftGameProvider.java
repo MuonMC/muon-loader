@@ -36,29 +36,29 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.quiltmc.loader.api.ModDependency;
-import org.quiltmc.loader.api.ModDependencyIdentifier;
-import org.quiltmc.loader.api.Version;
-import org.quiltmc.loader.api.VersionRange;
-import org.quiltmc.loader.impl.FormattedException;
-import org.quiltmc.loader.impl.QuiltLoaderImpl;
-import org.quiltmc.loader.impl.entrypoint.GameTransformer;
-import org.quiltmc.loader.impl.game.GameProvider;
-import org.quiltmc.loader.impl.game.GameProviderHelper;
-import org.quiltmc.loader.impl.game.LibClassifier;
+import org.muonmc.loader.api.ModDependency;
+import org.muonmc.loader.api.ModDependencyIdentifier;
+import org.muonmc.loader.api.Version;
+import org.muonmc.loader.api.VersionRange;
+import org.muonmc.loader.impl.FormattedException;
+import org.muonmc.loader.impl.MuonLoaderImpl;
+import org.muonmc.loader.impl.entrypoint.GameTransformer;
+import org.muonmc.loader.impl.game.GameProvider;
+import org.muonmc.loader.impl.game.GameProviderHelper;
+import org.muonmc.loader.impl.game.LibClassifier;
 import org.quiltmc.loader.impl.game.minecraft.patch.BrandingPatch;
 import org.quiltmc.loader.impl.game.minecraft.patch.EntrypointPatch;
 import org.quiltmc.loader.impl.game.minecraft.patch.TinyFDPatch;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.quiltmc.loader.impl.metadata.qmj.V1ModMetadataBuilder;
-import org.quiltmc.loader.impl.util.Arguments;
-import org.quiltmc.loader.impl.util.ExceptionUtil;
-import org.quiltmc.loader.impl.util.LoaderUtil;
-import org.quiltmc.loader.impl.util.SystemProperties;
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
-import org.quiltmc.loader.impl.util.log.LogHandler;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.metadata.qmj.V1ModMetadataBuilder;
+import org.muonmc.loader.impl.util.Arguments;
+import org.muonmc.loader.impl.util.ExceptionUtil;
+import org.muonmc.loader.impl.util.LoaderUtil;
+import org.muonmc.loader.impl.util.SystemProperties;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.util.log.LogHandler;
 
 import net.fabricmc.loader.api.ObjectShare;
 
@@ -304,7 +304,7 @@ public class MinecraftGameProvider implements GameProvider {
 		}
 
 		// expose obfuscated jar locations for mods to more easily remap code from obfuscated to intermediary
-		ObjectShare share = QuiltLoaderImpl.INSTANCE.getObjectShare();
+		ObjectShare share = MuonLoaderImpl.INSTANCE.getObjectShare();
 		share.put("fabric-loader:inputGameJar", gameJars.get(0)); // deprecated
 		share.put("fabric-loader:inputGameJars", Collections.unmodifiableList(new ArrayList<>(gameJars))); // need to make copy as gameJars is later mutated to hold the remapped jars
 		if (realmsJar != null) share.put("fabric-loader:inputRealmsJar", realmsJar);
@@ -336,7 +336,7 @@ public class MinecraftGameProvider implements GameProvider {
 				versionType = argMap.get("versionType") + "/";
 			}
 
-			argMap.put("versionType", versionType + "Quilt Loader " + QuiltLoaderImpl.VERSION);
+			argMap.put("versionType", versionType + "Quilt Loader " + MuonLoaderImpl.VERSION);
 
 			if (!argMap.containsKey("gameDir")) {
 				argMap.put("gameDir", getLaunchDirectory(argMap).toAbsolutePath().normalize().toString());

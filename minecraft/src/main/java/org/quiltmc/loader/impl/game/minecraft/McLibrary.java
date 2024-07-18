@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.quiltmc.loader.impl.game.LibClassifier;
+import org.muonmc.loader.impl.game.LibClassifier;
 
 enum McLibrary implements LibClassifier.LibraryType {
 	MC_CLIENT(EnvType.CLIENT, "net/minecraft/client/main/Main.class", "net/minecraft/client/MinecraftApplet.class", "com/mojang/minecraft/MinecraftApplet.class"),

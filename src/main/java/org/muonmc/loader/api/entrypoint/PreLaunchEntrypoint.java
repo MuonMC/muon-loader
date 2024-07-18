@@ -18,7 +18,7 @@
 package org.muonmc.loader.api.entrypoint;
 
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /**
  * Entrypoint getting invoked just before launching the game.
@@ -31,7 +31,7 @@ import org.muonmc.loader.api.QuiltLoader;
  * <p>The entrypoint is exposed with {@code pre_launch} key in the mod json and runs for any environment. It usually
  * executes several seconds before the {@code main}/{@code client}/{@code server} entrypoints.
  * 
- * @see QuiltLoader#getEntrypointContainers(String, Class) 
+ * @see MuonLoader#getEntrypointContainers(String, Class)
  */
 @FunctionalInterface
 public interface PreLaunchEntrypoint extends GameEntrypoint {

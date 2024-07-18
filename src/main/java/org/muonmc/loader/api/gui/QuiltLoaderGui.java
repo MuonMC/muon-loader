@@ -27,7 +27,7 @@ import org.muonmc.loader.impl.gui.QuiltFork;
 import org.muonmc.loader.impl.gui.QuiltJsonGuiMessage;
 import org.muonmc.loader.impl.gui.QuiltLoaderGuiImpl;
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /** Central API for dealing with opening guis on a separate process. Used since some games don't work properly on MacOS
  * if we open a swing window in the main process. */
@@ -120,7 +120,7 @@ public class QuiltLoaderGui {
 	}
 
 	public static QuiltLoaderIcon getModIcon(String modid) {
-		return getModIcon(QuiltLoader.getModContainer(modid).orElse(null));
+		return getModIcon(MuonLoader.getModContainer(modid).orElse(null));
 	}
 
 	// Builtin Icons

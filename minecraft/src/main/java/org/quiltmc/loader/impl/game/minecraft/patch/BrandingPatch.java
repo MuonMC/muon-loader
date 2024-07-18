@@ -20,11 +20,11 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
-import org.quiltmc.loader.impl.entrypoint.GamePatch;
-import org.quiltmc.loader.impl.entrypoint.GamePatchContext;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.entrypoint.GamePatch;
+import org.muonmc.loader.impl.entrypoint.GamePatchContext;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
 
 import java.util.ListIterator;
 

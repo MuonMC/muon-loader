@@ -19,7 +19,7 @@ package net.fabricmc.loader.api.metadata;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.quiltmc.loader.api.ModContainer;
+import org.muonmc.loader.api.ModContainer;
 
 /** Representation of the various locations a mod was loaded from originally.
  * <p>

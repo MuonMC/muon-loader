@@ -18,10 +18,8 @@ package org.quiltmc.loader.impl.game.minecraft.patch;
 
 import java.util.List;
 import java.util.ListIterator;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
 import net.fabricmc.loader.api.metadata.version.VersionPredicate;
@@ -38,13 +36,13 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
-import org.quiltmc.loader.impl.entrypoint.GamePatch;
-import org.quiltmc.loader.impl.entrypoint.GamePatchContext;
-import org.quiltmc.loader.impl.fabric.util.version.VersionPredicateParser;
+import org.muonmc.loader.impl.entrypoint.GamePatch;
+import org.muonmc.loader.impl.entrypoint.GamePatchContext;
+import org.muonmc.loader.impl.fabric.util.version.VersionPredicateParser;
 import org.quiltmc.loader.impl.game.minecraft.MinecraftGameProvider;
-import org.quiltmc.loader.impl.launch.common.QuiltLauncher;
-import org.quiltmc.loader.impl.util.log.Log;
-import org.quiltmc.loader.impl.util.log.LogCategory;
+import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.util.log.Log;
+import org.muonmc.loader.impl.util.log.LogCategory;
 
 import net.fabricmc.api.EnvType;
 import org.quiltmc.loader.impl.game.minecraft.Hooks;

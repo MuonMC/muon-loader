@@ -1,5 +1,5 @@
 package org.quiltmc.loader.impl.game.minecraft.applet;
-import org.quiltmc.loader.impl.util.Arguments;
+import org.muonmc.loader.impl.util.Arguments;
 
 import javax.swing.*;
 import java.awt.*;

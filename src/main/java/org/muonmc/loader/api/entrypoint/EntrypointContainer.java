@@ -18,13 +18,13 @@
 package org.muonmc.loader.api.entrypoint;
 
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 
 /**
  * A container holding both an entrypoint instance and the {@link ModContainer} which has provided the entrypoint.
  *
  * @param <T> The type of the entrypoint
- * @see QuiltLoader#getEntrypointContainers(String, Class)
+ * @see MuonLoader#getEntrypointContainers(String, Class)
  */
 public interface EntrypointContainer<T> {
 	/**

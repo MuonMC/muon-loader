@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.muonmc.loader.impl.FormattedException;
-import org.muonmc.loader.impl.QuiltLoaderImpl;
+import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.gui.QuiltGuiEntry;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
@@ -81,7 +81,7 @@ public abstract class QuiltLauncherBase implements QuiltLauncher {
 		Throwable actualExc = exc.getMessage() != null ? exc : exc.getCause();
 		Log.error(LogCategory.GENERAL, exc.getMainText(), actualExc);
 
-		GameProvider gameProvider = QuiltLoaderImpl.INSTANCE.tryGetGameProvider();
+		GameProvider gameProvider = MuonLoaderImpl.INSTANCE.tryGetGameProvider();
 
 		if (gameProvider == null || !gameProvider.displayCrash(actualExc, exc.getMainText())) {
 			QuiltGuiEntry.displayError(exc.getMainText(), actualExc, false, true);
@@ -102,7 +102,7 @@ public abstract class QuiltLauncherBase implements QuiltLauncher {
 					String mainText = String.format("Uncaught exception in thread \"%s\"", t.getName());
 					Log.error(LogCategory.GENERAL, mainText, e);
 
-					GameProvider gameProvider = QuiltLoaderImpl.INSTANCE.tryGetGameProvider();
+					GameProvider gameProvider = MuonLoaderImpl.INSTANCE.tryGetGameProvider();
 
 					if (Thread.currentThread() == mainThread
 							&& (gameProvider == null || !gameProvider.displayCrash(e, mainText))) {

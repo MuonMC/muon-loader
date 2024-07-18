@@ -34,7 +34,7 @@ import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.util.QuiltLoaderInternal;
 import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.QuiltLoader;
+import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 
 import net.fabricmc.api.EnvType;
@@ -237,14 +237,14 @@ public interface QuiltPluginManager {
 	@Deprecated
 	EnvType getEnvironment();
 
-	/** @return The current folder which will become {@link QuiltLoader#getGameDir()}. Modifying this via [todo] changes
+	/** @return The current folder which will become {@link MuonLoader#getGameDir()}. Modifying this via [todo] changes
 	 *         this value after the VM has been restarted. */
 	Path getGameDirectory();
 
-	/** @return The current folder which will become {@link QuiltLoader#getConfigDir()}. */
+	/** @return The current folder which will become {@link MuonLoader#getConfigDir()}. */
 	Path getConfigDirectory();
 
-	/** @return The current folder which will become {@link QuiltLoader#getCacheDir()}. */
+	/** @return The current folder which will become {@link MuonLoader#getCacheDir()}. */
 	Path getCacheDirectory();
 
 	// #######

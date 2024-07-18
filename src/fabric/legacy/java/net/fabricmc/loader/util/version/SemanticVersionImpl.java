@@ -19,8 +19,8 @@ package net.fabricmc.loader.util.version;
 
 import java.util.Optional;
 
-import org.quiltmc.loader.api.VersionFormatException;
-import org.quiltmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
+import org.muonmc.loader.api.VersionFormatException;
+import org.muonmc.loader.impl.fabric.util.version.Quilt2FabricSemanticVersion;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
@@ -43,15 +43,15 @@ public class SemanticVersionImpl extends Quilt2FabricSemanticVersion implements 
 		parent = null;
 	}
 
-	private static org.quiltmc.loader.api.Version.Semantic parseQuilt(String version) throws VersionParsingException {
+	private static org.muonmc.loader.api.Version.Semantic parseQuilt(String version) throws VersionParsingException {
 		try {
-			return org.quiltmc.loader.api.Version.Semantic.of(version);
+			return org.muonmc.loader.api.Version.Semantic.of(version);
 		} catch (VersionFormatException e) {
 			throw new VersionParsingException(e);
 		}
 	}
 
-	public SemanticVersionImpl(org.quiltmc.loader.api.Version.Semantic quilt) {
+	public SemanticVersionImpl(org.muonmc.loader.api.Version.Semantic quilt) {
 		super(quilt);
 		this.parent = null;
 	}
