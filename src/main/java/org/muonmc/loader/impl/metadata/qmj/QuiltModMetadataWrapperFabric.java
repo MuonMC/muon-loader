@@ -17,16 +17,25 @@
 package org.muonmc.loader.impl.metadata.qmj;
 
 import org.muonmc.loader.api.ModContainer;
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.GeneralExt2FabricMetadata;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltModMetadataWrapperFabric extends GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 
 	public QuiltModMetadataWrapperFabric(InternalModMetadata quiltMeta, ModContainer quiltContainer) {
 		super(quiltMeta, (ModContainerExt) quiltContainer);
+	}
+
+	@Override
+	public Collection<String> getMixinConfigs(Environment environment) {
+		return Collections.emptyList();
 	}
 }

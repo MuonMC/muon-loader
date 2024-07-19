@@ -321,7 +321,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 	}
 
 	@Override
-	public Collection<String> getMixinConfigs(EnvType type) {
+	public Collection<String> getMixinConfigs(Environment environment) {
 		throw internalError();
 	}
 

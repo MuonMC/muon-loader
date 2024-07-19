@@ -17,6 +17,7 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
@@ -25,6 +26,6 @@ import net.fabricmc.api.EnvType;
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class KnotClient {
 	public static void main(String[] args) {
-		Knot.launch(args, EnvType.CLIENT);
+		Knot.launch(args, Environment.CLIENT);
 	}
 }

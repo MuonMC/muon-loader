@@ -33,6 +33,7 @@ import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModLicense;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionRange;
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.fabric.metadata.ParseMetadataException;
 import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
@@ -276,8 +277,8 @@ public class FabricModMetadataWrapper implements InternalModMetadata {
 	}
 
 	@Override
-	public Collection<String> mixins(EnvType env) {
-		return fabricMeta.getMixinConfigs(env);
+	public Collection<String> mixins(Environment environment) {
+		return fabricMeta.getMixinConfigs(environment);
 	}
 
 	@Override
