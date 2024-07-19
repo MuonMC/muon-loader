@@ -48,11 +48,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-public abstract class QuiltMapFileSystemProvider<FS extends QuiltMapFileSystem<FS, P>, P extends QuiltMapPath<FS, P>> extends FileSystemProvider {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public abstract class QuiltMapFileSystemProvider<FS extends MuonMapFileSystem<FS, P>, P extends MuonMapPath<FS, P>> extends FileSystemProvider {
 
 	static final String READ_ONLY_EXCEPTION = "This FileSystem is read-only";
 
@@ -290,13 +290,13 @@ public abstract class QuiltMapFileSystemProvider<FS extends QuiltMapFileSystem<F
 	public DirectoryStream<Path> newDirectoryStream(Path dir, Filter<? super Path> filter) throws IOException {
 		P qmp = toAbsolutePath(dir);
 
-		final QuiltMapPath<?, ?>[] entries;
+		final MuonMapPath<?, ?>[] entries;
 		QuiltUnifiedEntry entry = qmp.fs.getEntry(qmp);
 		if (entry instanceof QuiltUnifiedEntry.QuiltUnifiedFolderReadOnly) {
 			entries = ((QuiltUnifiedEntry.QuiltUnifiedFolderReadOnly) entry).children;
 		} else if (entry instanceof QuiltUnifiedEntry.QuiltUnifiedFolderWriteable) {
 			entries = ((QuiltUnifiedEntry.QuiltUnifiedFolderWriteable) entry).children
-					.toArray(new QuiltMapPath[0]);
+					.toArray(new MuonMapPath[0]);
 		} else {
 			throw new NotDirectoryException("Not a directory: " + dir);
 		}

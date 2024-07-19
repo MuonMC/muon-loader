@@ -52,17 +52,17 @@ import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 @SuppressWarnings("unchecked") // TODO make more specific
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 	public QuiltJoinedFileSystemProvider() {}
 
 	public static final String SCHEME = "quilt.jfs";
 
-	private static final Map<String, WeakReference<QuiltJoinedFileSystem>> ACTIVE_FILESYSTEMS = new HashMap<>();
+	private static final Map<String, WeakReference<MuonJoinedFileSystem>> ACTIVE_FILESYSTEMS = new HashMap<>();
 
 	static {
 		// Java requires we create a class named "Handler"
@@ -78,14 +78,14 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 		}
 	}
 
-	synchronized static void register(QuiltJoinedFileSystem fs) {
+	synchronized static void register(MuonJoinedFileSystem fs) {
 		URI uri = URI.create(SCHEME + "://" + fs.name + "/hello");
 		if (!"/hello".equals(uri.getPath())) {
 			throw new IllegalArgumentException("Not a valid name - it includes a path! '" + fs.name + "'");
 		}
-		WeakReference<QuiltJoinedFileSystem> oldRef = ACTIVE_FILESYSTEMS.get(fs.name);
+		WeakReference<MuonJoinedFileSystem> oldRef = ACTIVE_FILESYSTEMS.get(fs.name);
 		if (oldRef != null) {
-			QuiltJoinedFileSystem old = oldRef.get();
+			MuonJoinedFileSystem old = oldRef.get();
 			if (old != null) {
 				throw new IllegalStateException("Multiple registered file systems for name '" + fs.name + "'");
 			}
@@ -94,13 +94,13 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 	}
 
 	@Nullable
-	synchronized static QuiltJoinedFileSystem getFileSystem(String name) {
-		WeakReference<QuiltJoinedFileSystem> ref = ACTIVE_FILESYSTEMS.get(name);
+	synchronized static MuonJoinedFileSystem getFileSystem(String name) {
+		WeakReference<MuonJoinedFileSystem> ref = ACTIVE_FILESYSTEMS.get(name);
 		return ref != null ? ref.get() : null;
 	}
 
-	static synchronized void closeFileSystem(QuiltJoinedFileSystem fs) {
-		WeakReference<QuiltJoinedFileSystem> removedRef = ACTIVE_FILESYSTEMS.remove(fs.name);
+	static synchronized void closeFileSystem(MuonJoinedFileSystem fs) {
+		WeakReference<MuonJoinedFileSystem> removedRef = ACTIVE_FILESYSTEMS.remove(fs.name);
 		if (removedRef.get() != fs) {
 			throw new IllegalStateException("FileSystem already removed!");
 		}
@@ -131,7 +131,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 	}
 
 	@Override
-	public QuiltJoinedPath getPath(URI uri) {
+	public MuonJoinedPath getPath(URI uri) {
 		if (!SCHEME.equals(uri.getScheme())) {
 			throw new IllegalArgumentException("Wrong scheme! " + uri);
 		}
@@ -142,11 +142,11 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 			// We add a (useless) port to allow URI.authority and host to be populated
 			authority = authority.substring(0, authority.length() - 2);
 		}
-		WeakReference<QuiltJoinedFileSystem> fsRef;
+		WeakReference<MuonJoinedFileSystem> fsRef;
 		synchronized (this) {
 			fsRef = ACTIVE_FILESYSTEMS.get(authority);
 		}
-		QuiltJoinedFileSystem fs;
+		MuonJoinedFileSystem fs;
 		if (fsRef == null || (fs = fsRef.get()) == null) {
 			throw new IllegalArgumentException("Unknown file system name '" + authority + "'");
 		}
@@ -161,11 +161,11 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 			}
 		}
 
-		if (!(path instanceof QuiltJoinedPath)) {
+		if (!(path instanceof MuonJoinedPath)) {
 			throw new IllegalArgumentException("The given path is not a QuiltJoinedPath!");
 		}
 
-		QuiltJoinedPath p = (QuiltJoinedPath) path;
+		MuonJoinedPath p = (MuonJoinedPath) path;
 
 		int count = p.fs.getBackingPathCount();
 		for (int i = 0; i < count; i++) {
@@ -192,11 +192,11 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 			}
 		}
 
-		if (!(path instanceof QuiltJoinedPath)) {
+		if (!(path instanceof MuonJoinedPath)) {
 			throw new IllegalArgumentException("The given path is not a QuiltJoinedPath!");
 		}
 
-		QuiltJoinedPath p = (QuiltJoinedPath) path;
+		MuonJoinedPath p = (MuonJoinedPath) path;
 
 		int count = p.fs.getBackingPathCount();
 		for (int i = 0; i < count; i++) {
@@ -215,7 +215,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 
 	@Override
 	public DirectoryStream<Path> newDirectoryStream(Path dir, Filter<? super Path> filter) throws IOException {
-		QuiltJoinedPath qmp = (QuiltJoinedPath) dir;
+		MuonJoinedPath qmp = (MuonJoinedPath) dir;
 		return new DirectoryStream<Path>() {
 
 			final List<Path> backingPaths = new ArrayList<>();
@@ -243,9 +243,9 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 				}
 			}
 
-			private QuiltJoinedPath toJoinedPath(Path backing, Path path) {
+			private MuonJoinedPath toJoinedPath(Path backing, Path path) {
 				Path relative = backing.relativize(path);
-				QuiltJoinedPath joined;
+				MuonJoinedPath joined;
 				if (relative.getFileSystem().getSeparator().equals(qmp.fs.getSeparator())) {
 					joined = qmp.resolve(relative.toString());
 				} else {
@@ -360,10 +360,10 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 		};
 	}
 
-	private static QuiltJoinedPath toAbsQuiltPath(Path path) {
+	private static MuonJoinedPath toAbsQuiltPath(Path path) {
 		Path p = path.toAbsolutePath().normalize();
-		if (p instanceof QuiltJoinedPath) {
-			return (QuiltJoinedPath) p;
+		if (p instanceof MuonJoinedPath) {
+			return (MuonJoinedPath) p;
 		} else {
 			throw new IllegalArgumentException("Only 'QuiltJoinedPath' is supported!");
 		}
@@ -409,7 +409,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 
 	@Override
 	public FileStore getFileStore(Path path) throws IOException {
-		return ((QuiltJoinedPath) path).fs.getFileStores().iterator().next();
+		return ((MuonJoinedPath) path).fs.getFileStores().iterator().next();
 	}
 
 	@Override
@@ -419,7 +419,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 				throw new IOException("Cannot create new files or directories!");
 			}
 		}
-		QuiltJoinedPath quiltPath = toAbsQuiltPath(path);
+		MuonJoinedPath quiltPath = toAbsQuiltPath(path);
 		for (int i = 0; i < quiltPath.fs.getBackingPathCount(); i++) {
 			Path real = quiltPath.fs.getBackingPath(i, quiltPath);
 			try {
@@ -435,7 +435,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 	@Override
 	public <V extends FileAttributeView> V getFileAttributeView(Path path, Class<V> type, LinkOption... options) {
 
-		QuiltJoinedPath quiltPath = toAbsQuiltPath(path);
+		MuonJoinedPath quiltPath = toAbsQuiltPath(path);
 		for (int i = 0; i < quiltPath.fs.getBackingPathCount(); i++) {
 			Path real = quiltPath.fs.getBackingPath(i, quiltPath);
 			V view = Files.getFileAttributeView(real, type, options);
@@ -450,7 +450,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 	public <A extends BasicFileAttributes> A readAttributes(Path path, Class<A> type, LinkOption... options)
 		throws IOException {
 
-		QuiltJoinedPath quiltPath = toAbsQuiltPath(path);
+		MuonJoinedPath quiltPath = toAbsQuiltPath(path);
 		for (int i = 0; i < quiltPath.fs.getBackingPathCount(); i++) {
 			Path real = quiltPath.fs.getBackingPath(i, quiltPath);
 			try {
@@ -465,7 +465,7 @@ public final class QuiltJoinedFileSystemProvider extends FileSystemProvider {
 
 	@Override
 	public Map<String, Object> readAttributes(Path path, String attributes, LinkOption... options) throws IOException {
-		QuiltJoinedPath quiltPath = toAbsQuiltPath(path);
+		MuonJoinedPath quiltPath = toAbsQuiltPath(path);
 		for (int i = 0; i < quiltPath.fs.getBackingPathCount(); i++) {
 			Path real = quiltPath.fs.getBackingPath(i, quiltPath);
 			try {

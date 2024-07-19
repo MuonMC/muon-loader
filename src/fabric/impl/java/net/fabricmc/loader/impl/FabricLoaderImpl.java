@@ -30,7 +30,8 @@ import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.entrypoint.EntrypointException;
 import org.muonmc.loader.api.entrypoint.EntrypointUtil;
-import org.muonmc.loader.api.minecraft.MinecraftQuiltLoader;
+import org.muonmc.loader.api.minecraft.MinecraftMuonLoader;
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -112,7 +113,7 @@ public class FabricLoaderImpl extends FabricLoader {
 
 	@Override
 	public EnvType getEnvironmentType() {
-		return MinecraftQuiltLoader.getEnvironmentType();
+		return EnvTypeUtil.toEnvType(MinecraftMuonLoader.getEnvironmentType());
 	}
 
 	@Override

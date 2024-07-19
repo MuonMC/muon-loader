@@ -16,12 +16,12 @@
 
 package org.muonmc.loader.api.plugin;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.ModContainer;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface ModContainerExt extends ModContainer {
 	@Override
 	ModMetadataExt metadata();
@@ -44,6 +44,6 @@ public interface ModContainerExt extends ModContainer {
 
 	@Override
 	default ClassLoader getClassLoader() {
-		return QuiltLauncherBase.getLauncher().getClassLoader(this);
+		return MuonLauncherBase.getLauncher().getClassLoader(this);
 	}
 }

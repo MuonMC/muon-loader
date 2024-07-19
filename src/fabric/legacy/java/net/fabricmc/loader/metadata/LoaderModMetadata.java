@@ -23,12 +23,14 @@ import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
+import org.muonmc.loader.api.minecraft.Environment;
+
 /**
  * @deprecated Use {@link ModMetadata} instead
  */
 @Deprecated
 public interface LoaderModMetadata extends ModMetadata {
-	boolean loadsInEnvironment(EnvType type);
+	boolean loadsInEnvironment(Environment environment);
 	List<? extends EntrypointMetadata> getEntrypoints(String type);
 	Collection<String> getEntrypointKeys();
 }

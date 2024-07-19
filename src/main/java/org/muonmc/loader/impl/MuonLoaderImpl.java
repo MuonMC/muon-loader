@@ -54,31 +54,32 @@ import java.util.zip.ZipOutputStream;
 
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.entrypoint.PreLaunchEntrypoint;
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.discovery.ClasspathModCandidateFinder;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.impl.discovery.ModSolvingError;
 import org.muonmc.loader.impl.entrypoint.EntrypointStorage;
 import org.muonmc.loader.impl.entrypoint.EntrypointUtils;
-import org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltJoinedPath;
-import org.muonmc.loader.impl.filesystem.QuiltZipFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltZipPath;
+import org.muonmc.loader.impl.filesystem.MuonJoinedFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonJoinedPath;
+import org.muonmc.loader.impl.filesystem.MuonZipFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonZipPath;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.gui.GuiManagerImpl;
-import org.muonmc.loader.impl.gui.QuiltJsonGuiMessage;
+import org.muonmc.loader.impl.gui.MuonJsonGuiMessage;
 import org.muonmc.loader.impl.launch.common.QuiltCodeSource;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.muonmc.loader.impl.launch.common.QuiltMixinBootstrap;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonMixinBootstrap;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
 import org.muonmc.loader.impl.metadata.qmj.ProvidedModContainer;
 import org.muonmc.loader.impl.metadata.qmj.ProvidedModMetadata;
 import org.muonmc.loader.impl.patch.PatchLoader;
-import org.muonmc.loader.impl.plugin.QuiltPluginManagerImpl;
+import org.muonmc.loader.impl.plugin.MuonPluginManagerImpl;
 import org.muonmc.loader.impl.plugin.fabric.FabricModOption;
-import org.muonmc.loader.impl.report.QuiltReport;
-import org.muonmc.loader.impl.report.QuiltReportedError;
+import org.muonmc.loader.impl.report.MuonReport;
+import org.muonmc.loader.impl.report.MuonReportedError;
 import org.muonmc.loader.impl.solver.ModSolveResultImpl;
 import org.muonmc.loader.impl.transformer.TransformCacheManager;
 import org.muonmc.loader.impl.transformer.TransformCacheResult;
@@ -94,13 +95,13 @@ import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
 import org.muonmc.loader.api.gui.LoaderGuiException;
-import org.muonmc.loader.api.gui.QuiltBasicWindow;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltGuiMessagesTab;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonBasicWindow;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonGuiMessagesTab;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModEntrypoint;
@@ -114,28 +115,26 @@ import org.muonmc.loader.impl.util.DefaultLanguageAdapter;
 import org.muonmc.loader.impl.util.FileHasherImpl;
 import org.muonmc.loader.impl.util.FilePreloadHelper;
 import org.muonmc.loader.impl.util.HashUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.spongepowered.asm.mixin.FabricUtil;
 
 import net.fabricmc.loader.api.ObjectShare;
 
-import net.fabricmc.api.EnvType;
-
-@QuiltLoaderInternal(value = QuiltLoaderInternalType.LEGACY_EXPOSED, replacements = MuonLoader.class)
+@MuonLoaderInternal(value = MuonLoaderInternalType.INTERNAL, replacements = MuonLoader.class)
 public final class MuonLoaderImpl {
 	public static final MuonLoaderImpl INSTANCE = InitHelper.get();
 
 	public static final int ASM_VERSION = Opcodes.ASM9;
 
 	public static final String VERSION = "0.26.1-beta.2";
-	public static final String MOD_ID = "quilt_loader";
+	public static final String MOD_ID = "muon_loader";
 	public static final String DEFAULT_MODS_DIR = "mods";
 	public static final String DEFAULT_CACHE_DIR = ".cache";
 	public static final String DEFAULT_CONFIG_DIR = "config";
 
-	public static final String CACHE_DIR_NAME = "quilt_loader"; // inside global cache dir
+	public static final String CACHE_DIR_NAME = "muon_loader"; // inside global cache dir
 	private static final String PROCESSED_MODS_DIR_NAME = "processedMods"; // relative to loader cache dir
 	public static final String REMAPPED_JARS_DIR_NAME = "remappedJars"; // relative to loader cache dir
 	private static final String TMP_DIR_NAME = "tmp"; // relative to loader cache dir
@@ -144,12 +143,12 @@ public final class MuonLoaderImpl {
 	public static final char FLAG_DEPS_CHANGED = 'o';
 	public static final char FLAG_DEPS_REMOVED = 'R';
 
-	protected final Map<String, ModContainerExt> modMap = new HashMap<>();
+	private final Map<String, ModContainerExt> modMap = new HashMap<>();
 
-	protected final Map<String, String> modOriginHash = new HashMap<>();
-	protected final Map<Path, String> pathOriginHash = new HashMap<>();
+	private final Map<String, String> modOriginHash = new HashMap<>();
+	private final Map<Path, String> pathOriginHash = new HashMap<>();
 
-	protected List<ModContainerExt> mods = new ArrayList<>();
+	private final List<ModContainerExt> mods = new ArrayList<>();
 
 	private final Map<String, LanguageAdapter> adapterMap = new HashMap<>();
 	private final EntrypointStorage entrypointStorage = new EntrypointStorage();
@@ -179,7 +178,7 @@ public final class MuonLoaderImpl {
 	private ModLoadOption[] temporaryOrderedModList;
 	private Map<Path, List<List<Path>>> temporarySourcePaths;
 
-	protected MuonLoaderImpl() {
+	private MuonLoaderImpl() {
 	}
 
 	/**
@@ -233,8 +232,8 @@ public final class MuonLoaderImpl {
 		return gameInstance;
 	}
 
-	public EnvType getEnvironmentType() {
-		return QuiltLauncherBase.getLauncher().getEnvironmentType();
+	public Environment getEnvironmentType() {
+		return MuonLauncherBase.getLauncher().getEnvironmentType();
 	}
 
 	/**
@@ -373,13 +372,13 @@ public final class MuonLoaderImpl {
 
 		Path transformCacheFolder = getCacheDir().resolve(CACHE_DIR_NAME).resolve("transform-cache-" + suffix);
 		TransformCacheResult cacheResult = TransformCacheManager.populateTransformBundle(transformCacheFolder, modList, modOriginHash, result);
-		QuiltZipPath transformedModBundle = cacheResult.transformCacheRoot;
+		MuonZipPath transformedModBundle = cacheResult.transformCacheRoot;
 
 		long zipEnd = System.nanoTime();
 
 		try {
-			QuiltLauncherBase.getLauncher().setTransformCache(transformedModBundle.toUri().toURL());
-			QuiltLauncherBase.getLauncher().setHiddenClasses(cacheResult.hiddenClasses);
+			MuonLauncherBase.getLauncher().setTransformCache(transformedModBundle.toUri().toURL());
+			MuonLauncherBase.getLauncher().setHiddenClasses(cacheResult.hiddenClasses);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
@@ -415,7 +414,7 @@ public final class MuonLoaderImpl {
 
 					long start = System.nanoTime();
 					String fsName = modid + "-" + modOption.version();
-					paths.add(new QuiltZipFileSystem(fsName, transformedModBundle.resolve(modid)).getRoot());
+					paths.add(new MuonZipFileSystem(fsName, transformedModBundle.resolve(modid)).getRoot());
 					if (modOption.couldResourcesChange()) {
 						paths.add(modOption.resourceRoot());
 					}
@@ -430,7 +429,7 @@ public final class MuonLoaderImpl {
 					 if (paths.size() == 1) {
 						 resourceRoot = paths.get(0);
 					 } else {
-						 resourceRoot = new QuiltJoinedFileSystem("_" + fsName, paths).getRoot();
+						 resourceRoot = new MuonJoinedFileSystem("_" + fsName, paths).getRoot();
 					 }
 				}
 			}
@@ -586,7 +585,7 @@ public final class MuonLoaderImpl {
 
 	private ModSolveResult runPlugins() {
 		QuiltLoaderConfig config = new QuiltLoaderConfig(getConfigDir().resolve("quilt-loader.txt"));
-		QuiltPluginManagerImpl plugins = new QuiltPluginManagerImpl(getGameDir(), getConfigDir(), getModsDir(), getCacheDir(), provider, config);
+		MuonPluginManagerImpl plugins = new MuonPluginManagerImpl(getGameDir(), getConfigDir(), getModsDir(), getCacheDir(), provider, config);
 
 		Path crashReportFile = null;
 		String fullCrashText = null;
@@ -601,7 +600,7 @@ public final class MuonLoaderImpl {
 				temporarySourcePaths.put(mod.from(), plugins.convertToSourcePaths(mod.from()));
 			}
 
-			QuiltLauncherBase.getLauncher().setPluginPackages(plugins.getPluginPackages());
+			MuonLauncherBase.getLauncher().setPluginPackages(plugins.getPluginPackages());
 
 			if (displayedMessage) {
 				return result;
@@ -620,11 +619,11 @@ public final class MuonLoaderImpl {
 
 			boolean anyWarnings = false;
 
-			if (plugins.guiFileRoot.maximumLevel().ordinal() <= QuiltWarningLevel.WARN.ordinal()) {
+			if (plugins.guiFileRoot.maximumLevel().ordinal() <= MuonWarningLevel.WARN.ordinal()) {
 				anyWarnings = true;
 			}
 
-			if (plugins.guiModsRoot.maximumLevel().ordinal() <= QuiltWarningLevel.WARN.ordinal()) {
+			if (plugins.guiModsRoot.maximumLevel().ordinal() <= MuonWarningLevel.WARN.ordinal()) {
 				anyWarnings = true;
 			}
 
@@ -632,35 +631,35 @@ public final class MuonLoaderImpl {
 				return result;
 			}
 
-			final QuiltLoaderText msg;
+			final MuonLoaderText msg;
 			if (anyWarnings) {
-				int count = plugins.guiModsRoot.countAtLevel(QuiltWarningLevel.WARN)//
-					+ plugins.guiFileRoot.countAtLevel(QuiltWarningLevel.WARN);
-				msg = QuiltLoaderText.translate("msg.load_state.warns", count);
+				int count = plugins.guiModsRoot.countAtLevel(MuonWarningLevel.WARN)//
+					+ plugins.guiFileRoot.countAtLevel(MuonWarningLevel.WARN);
+				msg = MuonLoaderText.translate("msg.load_state.warns", count);
 			} else {
-				msg = QuiltLoaderText.translate("msg.load_state");
+				msg = MuonLoaderText.translate("msg.load_state");
 			}
 
-			QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
-			window.title(QuiltLoaderText.of("Quilt Loader " + VERSION));
+			MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
+			window.title(MuonLoaderText.of("Quilt Loader " + VERSION));
 			window.mainText(msg);
-			window.addTreeTab(QuiltLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
-			window.addTreeTab(QuiltLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
-			window.addContinueButton().text(QuiltLoaderText.translate("button.continue_to", getGameProvider().getGameName()));
+			window.addTreeTab(MuonLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
+			window.addTreeTab(MuonLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
+			window.addContinueButton().text(MuonLoaderText.translate("button.continue_to", getGameProvider().getGameName()));
 
 			// TODO: Look into writing a report!
 
 			try {
-				QuiltLoaderGui.open(window);
+				MuonLoaderGui.open(window);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			return result;
-		} catch (QuiltReportedError reported) {
+		} catch (MuonReportedError reported) {
 			try {
 				crashReportFile = reported.report.writeInDirectory(gameDir);
-			} catch (QuiltReport.CrashReportSaveFailed e) {
+			} catch (MuonReport.CrashReportSaveFailed e) {
 				fullCrashText = e.fullReportText;
 			}
 		}
@@ -678,27 +677,27 @@ public final class MuonLoaderImpl {
 		}
 
 		String msg = "crash.during_setup." + provider.getGameId();
-		QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
-		window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
-		window.mainText(QuiltLoaderText.translate(msg));
+		MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
+		window.title(MuonLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
+		window.mainText(MuonLoaderText.translate(msg));
 
-		QuiltGuiMessagesTab messagesTab = window.addMessagesTab(QuiltLoaderText.translate("tab.messages"));
+		MuonGuiMessagesTab messagesTab = window.addMessagesTab(MuonLoaderText.translate("tab.messages"));
 
 		if (fullCrashText != null) {
-			QuiltDisplayedError error = QuiltLoaderGui.createError(QuiltLoaderText.translate("error.failed_to_save_crash_report"));
+			MuonDisplayedError error = MuonLoaderGui.createError(MuonLoaderText.translate("error.failed_to_save_crash_report"));
 			error.setIcon(GuiManagerImpl.ICON_LEVEL_ERROR);
-			error.appendDescription(QuiltLoaderText.translate("error.failed_to_save_crash_report.desc"));
-			error.appendAdditionalInformation(QuiltLoaderText.translate("error.failed_to_save_crash_report.info"));
-			error.addCopyTextToClipboardButton(QuiltLoaderText.translate("button.copy_crash_report"), fullCrashText);
+			error.appendDescription(MuonLoaderText.translate("error.failed_to_save_crash_report.desc"));
+			error.appendAdditionalInformation(MuonLoaderText.translate("error.failed_to_save_crash_report.info"));
+			error.addCopyTextToClipboardButton(MuonLoaderText.translate("button.copy_crash_report"), fullCrashText);
 			messagesTab.addMessage(error);
 		}
 
 		int number = 1;
-		List<QuiltJsonGuiMessage> pluginErrors = plugins.getErrors();
-		for (QuiltJsonGuiMessage error : pluginErrors) {
+		List<MuonJsonGuiMessage> pluginErrors = plugins.getErrors();
+		for (MuonJsonGuiMessage error : pluginErrors) {
 			if (number > 200) {
-				error = new QuiltJsonGuiMessage(null, MOD_ID, QuiltLoaderText.translate("error.too_many_errors"));
-				error.appendDescription(QuiltLoaderText.translate("error.too_many_errors.desc", pluginErrors.size() - 200));
+				error = new MuonJsonGuiMessage(null, MOD_ID, MuonLoaderText.translate("error.too_many_errors"));
+				error.appendDescription(MuonLoaderText.translate("error.too_many_errors.desc", pluginErrors.size() - 200));
 				messagesTab.addMessage(error);
 				break;
 			}
@@ -706,19 +705,19 @@ public final class MuonLoaderImpl {
 			number++;
 		}
 
-		window.addTreeTab(QuiltLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
-		window.addTreeTab(QuiltLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
+		window.addTreeTab(MuonLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
+		window.addTreeTab(MuonLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
 
 		if (crashReportFile != null) {
-			window.addFileOpenButton(crashReportFile).text(QuiltLoaderText.translate("button.open_crash_report"));
-			window.addCopyFileToClipboardButton(QuiltLoaderText.translate("button.copy_crash_report"), crashReportFile);
+			window.addFileOpenButton(crashReportFile).text(MuonLoaderText.translate("button.open_crash_report"));
+			window.addCopyFileToClipboardButton(MuonLoaderText.translate("button.copy_crash_report"), crashReportFile);
 		}
 
-		window.addFolderViewButton(QuiltLoaderText.translate("button.open_mods_folder"), getModsDir());
-		window.addContinueButton().text(QuiltLoaderText.translate("button.exit")).icon(QuiltLoaderGui.iconLevelError());
+		window.addFolderViewButton(MuonLoaderText.translate("button.open_mods_folder"), getModsDir());
+		window.addContinueButton().text(MuonLoaderText.translate("button.exit")).icon(MuonLoaderGui.iconLevelError());
 
 		try {
-			QuiltLoaderGui.open(window);
+			MuonLoaderGui.open(window);
 			System.exit(1);
 			throw new Error("System.exit(1) Failed!");
 		} catch (Exception e) {
@@ -726,28 +725,28 @@ public final class MuonLoaderImpl {
 		}
 	}
 
-	private boolean handleUnknownFiles(QuiltPluginManagerImpl plugins, ModSolveResultImpl result) {
+	private boolean handleUnknownFiles(MuonPluginManagerImpl plugins, ModSolveResultImpl result) {
 		if (plugins.guiUnknownMods.isEmpty()) {
 			return false;
 		}
 
 		{
-			QuiltBasicWindow<Void> window = QuiltLoaderGui.createBasicWindow();
-			window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
-			window.addFolderViewButton(QuiltLoaderText.translate("button.open_mods_folder"), getModsDir());
+			MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
+			window.title(MuonLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
+			window.addFolderViewButton(MuonLoaderText.translate("button.open_mods_folder"), getModsDir());
 			window.addOpenQuiltSupportButton();
 			QuiltErrorButton continueButton = window.addContinueButton();
-			continueButton.text(QuiltLoaderText.translate("button.continue_to", getGameProvider().getGameName()));
-			continueButton.icon(QuiltLoaderGui.iconContinueIgnoring());
-			QuiltGuiMessagesTab unknownTab = window.addMessagesTab(QuiltLoaderText.translate("tab.unknown_mods"));
-			window.addTreeTab(QuiltLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
-			window.addTreeTab(QuiltLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
+			continueButton.text(MuonLoaderText.translate("button.continue_to", getGameProvider().getGameName()));
+			continueButton.icon(MuonLoaderGui.iconContinueIgnoring());
+			MuonGuiMessagesTab unknownTab = window.addMessagesTab(MuonLoaderText.translate("tab.unknown_mods"));
+			window.addTreeTab(MuonLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
+			window.addTreeTab(MuonLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
 
-			unknownTab.level(QuiltWarningLevel.WARN);
+			unknownTab.level(MuonWarningLevel.WARN);
 			plugins.guiUnknownMods.values().forEach(unknownTab::addMessage);
 
 			try {
-				QuiltLoaderGui.open(window);
+				MuonLoaderGui.open(window);
 			} catch (LoaderGuiException e) {
 				// Ignored
 			}
@@ -818,7 +817,7 @@ public final class MuonLoaderImpl {
 		// Only add subFiles column if we'll actually use it
 		AsciiTableGenerator.AsciiTableColumn subFile = mods.stream().anyMatch(i -> i.getSourcePaths().stream().anyMatch(paths -> paths.size() > 1)) ? table.addColumn("Sub-File", false) : null;
 
-		/** Map<String, ModContainerExt|ModLoadOption> */
+		/* Map<String, ModContainerExt|ModLoadOption> */
 		Map<String, Object> bestModSource = new HashMap<>();
 		for (ModContainerExt mod : mods) {
 			bestModSource.put(mod.metadata().id(), mod);
@@ -836,7 +835,7 @@ public final class MuonLoaderImpl {
 
 		if (!bestModSource.containsKey(MOD_ID)) {
 			AsciiTableGenerator.AsciiTableRow row = table.addRow();
-			row.put(name, "Quilt Loader");
+			row.put(name, MuonConstants.NAME);
 			row.put(id, MOD_ID);
 			row.put(version, VERSION);
 			row.put(type, "!missing!");
@@ -965,7 +964,7 @@ public final class MuonLoaderImpl {
 		for (Iterator<ModLoadOption> it = modList.iterator(); it.hasNext();) {
 			ModLoadOption mod = it.next();
 			boolean isFabric = mod instanceof FabricModOption;
-			if (QuiltMixinBootstrap.MixinConfigDecorator.getMixinCompat(isFabric, mod.metadata()) != FabricUtil.COMPATIBILITY_0_9_2) {
+			if (MuonMixinBootstrap.MixinConfigDecorator.getMixinCompat(isFabric, mod.metadata()) != FabricUtil.COMPATIBILITY_0_9_2) {
 				it.remove();
 				newMixinCompatMods.add(mod);
 			}
@@ -997,7 +996,7 @@ public final class MuonLoaderImpl {
 		}
 	}
 
-	protected void finishModLoading() {
+	private void finishModLoading() {
 		// add mods to classpath
 		// TODO: This can probably be made safer, but that's a long-term goal
 		for (ModContainerExt mod : mods) {
@@ -1008,9 +1007,9 @@ public final class MuonLoaderImpl {
 				File jarFile = copiedToJarMods.get(mod.metadata().id());
 				if (jarFile == null) {
 					URL origin = null;//mod.getSourcePaths();
-					QuiltLauncherBase.getLauncher().addToClassPath(mod.rootPath(), mod, origin);
+					MuonLauncherBase.getLauncher().addToClassPath(mod.rootPath(), mod, origin);
 				} else {
-					QuiltLauncherBase.getLauncher().addToClassPath(jarFile.toPath(), mod, null);
+					MuonLauncherBase.getLauncher().addToClassPath(jarFile.toPath(), mod, null);
 				}
 			}
 		}
@@ -1030,8 +1029,8 @@ public final class MuonLoaderImpl {
 					}
 					knownModPaths.add(paths.get(0).toAbsolutePath().normalize());
 				}
-				if (mod.rootPath() instanceof QuiltJoinedPath) {
-					QuiltJoinedPath joined = (QuiltJoinedPath) mod.rootPath();
+				if (mod.rootPath() instanceof MuonJoinedPath) {
+					MuonJoinedPath joined = (MuonJoinedPath) mod.rootPath();
 					for (int i = 0; i < joined.getFileSystem().getBackingPathCount(); i++) {
 						knownModPaths.add(joined.getFileSystem().getBackingPath(i, joined));
 					}
@@ -1053,7 +1052,7 @@ public final class MuonLoaderImpl {
 				Path path = Paths.get(pathName).toAbsolutePath().normalize();
 
 				if (FasterFiles.isDirectory(path) && knownModPaths.add(path)) {
-					QuiltLauncherBase.getLauncher().addToClassPath(path);
+					MuonLauncherBase.getLauncher().addToClassPath(path);
 				}
 			}
 		}
@@ -1078,9 +1077,9 @@ public final class MuonLoaderImpl {
 
 	public MappingResolver getMappingResolver() {
 		if (mappingResolver == null) {
-			mappingResolver = new QuiltMappingResolver(
-				QuiltLauncherBase.getLauncher().getMappingConfiguration()::getMappings,
-				QuiltLauncherBase.getLauncher().getTargetNamespace()
+			mappingResolver = new MuonMappingResolver(
+				MuonLauncherBase.getLauncher().getMappingConfiguration()::getMappings,
+				MuonLauncherBase.getLauncher().getTargetNamespace()
 			);
 		}
 
@@ -1120,7 +1119,7 @@ public final class MuonLoaderImpl {
 	}
 
 	public boolean isDevelopmentEnvironment() {
-		QuiltLauncher launcher = QuiltLauncherBase.getLauncher();
+		MuonLauncher launcher = MuonLauncherBase.getLauncher();
 		if (launcher == null) {
 			// Most likely a test
 			return true;
@@ -1128,7 +1127,7 @@ public final class MuonLoaderImpl {
 		return launcher.isDevelopment();
 	}
 
-	protected void addMod(ModContainerExt mod) throws ModResolutionException {
+	private void addMod(ModContainerExt mod) throws ModResolutionException {
 		ModMetadataExt meta = mod.metadata();
 
 		if (modMap.containsKey(meta.id())) {
@@ -1147,7 +1146,7 @@ public final class MuonLoaderImpl {
 		}
 	}
 
-	protected void postprocessModMetadata() {
+	private void postprocessModMetadata() {
 		// do nothing for now; most warnings have been moved to V1ModMetadataParser
 	}
 
@@ -1162,7 +1161,7 @@ public final class MuonLoaderImpl {
 				}
 
 				try {
-					ClassLoader classLoader = QuiltLauncherBase.getLauncher().getClassLoader(mod);
+					ClassLoader classLoader = MuonLauncherBase.getLauncher().getClassLoader(mod);
 					Class<?> adapterClass = Class.forName(laEntry.getValue(), true, classLoader);
 					adapterMap.put(laEntry.getKey(), (LanguageAdapter) adapterClass.getDeclaredConstructor().newInstance());
 				} catch (Exception e) {
@@ -1202,7 +1201,7 @@ public final class MuonLoaderImpl {
 		}
 
 		if (gameInstance != null) {
-			QuiltLauncherBase.getLauncher().validateGameClassLoader(gameInstance);
+			MuonLauncherBase.getLauncher().validateGameClassLoader(gameInstance);
 		}
 
 		this.gameInstance = gameInstance;
@@ -1236,7 +1235,7 @@ public final class MuonLoaderImpl {
 	 */
 	@Deprecated
 	public void setGameInstance(Object gameInstance) {
-		if (this.getEnvironmentType() != EnvType.SERVER) {
+		if (this.getEnvironmentType() != Environment.DEDICATED_SERVER) {
 			throw new UnsupportedOperationException("Cannot set game instance on a client!");
 		}
 

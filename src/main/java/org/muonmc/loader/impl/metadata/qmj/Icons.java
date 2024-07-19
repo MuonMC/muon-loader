@@ -20,13 +20,13 @@ import java.util.SortedMap;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.ModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /**
  * Implementation of an icon lookup.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface Icons {
 	/**
 	 * @see ModMetadata#icon(int)
@@ -37,7 +37,7 @@ public interface Icons {
 	/**
 	 * Implementation for a mod.
 	 */
-	@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public final class Single implements Icons {
 		@Nullable
 		private final String icon;
@@ -56,7 +56,7 @@ public interface Icons {
 	/**
 	 * Implementation for a mod which has multiple icons of different sizes.
 	 */
-	@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public final class Multiple implements Icons {
 		private final SortedMap<Integer, String> icons;
 

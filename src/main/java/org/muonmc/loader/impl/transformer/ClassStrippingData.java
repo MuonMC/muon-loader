@@ -27,8 +27,8 @@ import org.muonmc.loader.api.Requires;
 import org.muonmc.loader.api.minecraft.ClientOnly;
 import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /** Scans a class for Environment, EnvironmentInterface and Requires annotations to figure out what needs to be stripped. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ClassStrippingData extends AbstractStripData {
 
 	// Fabric annotations

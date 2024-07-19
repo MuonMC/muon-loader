@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class DeferredNioExecutionHandler {
 	// private static final ThreadLocal<Boolean> DEFERRED_REQUIRED = new ThreadLocal<>();
 	private static final boolean DEFER_REQUESTED = Boolean.getBoolean(SystemProperties.ALWAYS_DEFER_FILESYSTEM_OPERATIONS);

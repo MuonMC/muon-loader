@@ -25,12 +25,12 @@ import java.util.List;
 
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
-import org.muonmc.loader.api.plugin.QuiltPluginManager;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
+import org.muonmc.loader.api.plugin.MuonPluginManager;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class InternalModContainerBase implements ModContainerExt {
 
 	private final String pluginId;
@@ -38,7 +38,7 @@ public abstract class InternalModContainerBase implements ModContainerExt {
 	private final Path resourceRoot;
 	private final List<List<Path>> sourcePaths;
 
-	public InternalModContainerBase(QuiltPluginContext pluginContext, ModMetadataExt metadata, Path from, Path resourceRoot) {
+	public InternalModContainerBase(MuonPluginContext pluginContext, ModMetadataExt metadata, Path from, Path resourceRoot) {
 		this.pluginId = pluginContext.pluginId();
 		this.metadata = metadata;
 		this.resourceRoot = resourceRoot;
@@ -46,11 +46,11 @@ public abstract class InternalModContainerBase implements ModContainerExt {
 		sourcePaths = pluginContext.manager().convertToSourcePaths(from);
 	}
 
-	public static List<List<Path>> walkSourcePaths(QuiltPluginContext pluginContext, Path from) {
+	public static List<List<Path>> walkSourcePaths(MuonPluginContext pluginContext, Path from) {
 		return walkSourcePaths(pluginContext.manager(), from);
 	}
 
-	public static List<List<Path>> walkSourcePaths(QuiltPluginManager pluginManager, Path from) {
+	public static List<List<Path>> walkSourcePaths(MuonPluginManager pluginManager, Path from) {
 
 		if (from.getFileSystem() == FileSystems.getDefault()) {
 			return Collections.singletonList(Collections.singletonList(from));

@@ -24,15 +24,15 @@ import java.util.SortedMap;
 
 import org.objectweb.asm.ClassReader;
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class UnsupportedModChecker {
 
 	static UnsupportedModDetails checkFolder(Path folder) throws IOException {
@@ -109,15 +109,15 @@ public class UnsupportedModChecker {
 		return null;
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public enum UnsupportedType {
 		UNKNOWN("unknown"),
 		RISUGAMIS_MODLOADER("risugamis_modloader") {
 			@Override
-			QuiltDisplayedError createMessage(QuiltPluginManagerImpl manager, SortedMap<String, UnsupportedModDetails> files) {
-				QuiltDisplayedError message = super.createMessage(manager, files);
+			MuonDisplayedError createMessage(MuonPluginManagerImpl manager, SortedMap<String, UnsupportedModDetails> files) {
+				MuonDisplayedError message = super.createMessage(manager, files);
 				if (!manager.pluginsById.containsKey("rgml-quilt")) {
-					message.addOpenLinkButton(QuiltLoaderText.of("Check RGML Quilt"), "https://github.com/sschr15/rgml-quilt");
+					message.addOpenLinkButton(MuonLoaderText.of("Check RGML Quilt"), "https://github.com/sschr15/rgml-quilt");
 				}
 				return message;
 			}
@@ -131,20 +131,20 @@ public class UnsupportedModChecker {
 			this.type = type;
 		}
 
-		QuiltDisplayedError createMessage(QuiltPluginManagerImpl manager, SortedMap<String, UnsupportedModDetails> files) {
+		MuonDisplayedError createMessage(MuonPluginManagerImpl manager, SortedMap<String, UnsupportedModDetails> files) {
 			String key = "unsupported_mod." + type;
-			QuiltDisplayedError message = QuiltLoaderGui.createError();
-			message.title(QuiltLoaderText.translate(key + ".title", files.size()));
-			message.setIcon(QuiltLoaderGui.iconLevelWarn());
-			message.appendDescription(QuiltLoaderText.translate(key + ".desc"), QuiltLoaderText.of(" "));
+			MuonDisplayedError message = MuonLoaderGui.createError();
+			message.title(MuonLoaderText.translate(key + ".title", files.size()));
+			message.setIcon(MuonLoaderGui.iconLevelWarn());
+			message.appendDescription(MuonLoaderText.translate(key + ".desc"), MuonLoaderText.of(" "));
 			for (String file : files.keySet()) {
-				message.appendDescription(QuiltLoaderText.of(file));
+				message.appendDescription(MuonLoaderText.of(file));
 			}
 			return message;
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static abstract class UnsupportedModDetails {
 		// This is a class rather than just folded into the enum above
 		// to allow individual files to have more specific description.
@@ -154,27 +154,27 @@ public class UnsupportedModChecker {
 			this.type = type;
 		}
 
-		void addToFilesNode(QuiltTreeNode guiNode) {
+		void addToFilesNode(MuonTreeNode guiNode) {
 			String key = "unsupported_mod." + type.type + ".guiNode";
-			guiNode.addChild(QuiltLoaderText.translate(key)).level(QuiltWarningLevel.WARN);
+			guiNode.addChild(MuonLoaderText.translate(key)).level(MuonWarningLevel.WARN);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class UnknownMod extends UnsupportedModDetails {
 		UnknownMod() {
 			super(UnsupportedType.UNKNOWN);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class RisugamisModLoaderMod extends UnsupportedModDetails {
 		RisugamisModLoaderMod() {
 			super(UnsupportedType.RISUGAMIS_MODLOADER);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class UnsupportedForgeMod extends UnsupportedModDetails {
 		UnsupportedForgeMod(boolean neoforge) {
 			super(neoforge ? UnsupportedType.NEOFORGE : UnsupportedType.FORGE);

@@ -24,17 +24,17 @@ import java.nio.file.Path;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
-public final class QuiltMemoryFileSystemProvider extends QuiltMapFileSystemProvider<QuiltMemoryFileSystem, QuiltMemoryPath> {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public final class QuiltMemoryFileSystemProvider extends QuiltMapFileSystemProvider<MuonMemoryFileSystem, MuonMemoryPath> {
 	public QuiltMemoryFileSystemProvider() {}
 
 	public static final String SCHEME = "quilt.mfs";
 
 	static final String READ_ONLY_EXCEPTION = "This FileSystem is read-only";
-	static final QuiltFSP<QuiltMemoryFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
+	static final QuiltFSP<MuonMemoryFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
 
 	public static QuiltMemoryFileSystemProvider instance() {
 		for (FileSystemProvider provider : FileSystemProvider.installedProviders()) {
@@ -46,18 +46,18 @@ public final class QuiltMemoryFileSystemProvider extends QuiltMapFileSystemProvi
 	}
 
 	@Override
-	protected QuiltFSP<QuiltMemoryFileSystem> quiltFSP() {
+	protected QuiltFSP<MuonMemoryFileSystem> quiltFSP() {
 		return PROVIDER;
 	}
 
 	@Override
-	protected Class<QuiltMemoryFileSystem> fileSystemClass() {
-		return QuiltMemoryFileSystem.class;
+	protected Class<MuonMemoryFileSystem> fileSystemClass() {
+		return MuonMemoryFileSystem.class;
 	}
 
 	@Override
-	protected Class<QuiltMemoryPath> pathClass() {
-		return QuiltMemoryPath.class;
+	protected Class<MuonMemoryPath> pathClass() {
+		return MuonMemoryPath.class;
 	}
 
 	@Override
@@ -72,6 +72,6 @@ public final class QuiltMemoryFileSystemProvider extends QuiltMapFileSystemProvi
 
 	@Override
 	public FileStore getFileStore(Path path) throws IOException {
-		return ((QuiltMemoryPath) path).fs.getFileStores().iterator().next();
+		return ((MuonMemoryPath) path).fs.getFileStores().iterator().next();
 	}
 }

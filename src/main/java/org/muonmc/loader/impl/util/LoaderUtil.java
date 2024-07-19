@@ -22,7 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class LoaderUtil {
 	public static String getClassFileName(String className) {
 		return className.replace('.', '/').concat(".class");

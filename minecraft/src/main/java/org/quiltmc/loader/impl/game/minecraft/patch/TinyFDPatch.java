@@ -29,7 +29,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.entrypoint.GamePatch;
 import org.muonmc.loader.impl.entrypoint.GamePatchContext;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 
 import net.fabricmc.api.EnvType;
 
@@ -45,7 +45,7 @@ public final class TinyFDPatch extends GamePatch {
 	private static final String DIALOG_TITLE = "Select settings file (.json)";
 
 	@Override
-	public void process(QuiltLauncher launcher, String namespace, GamePatchContext context) {
+	public void process(MuonLauncher launcher, String namespace, GamePatchContext context) {
 		if (launcher.getEnvironmentType() != EnvType.CLIENT) {
 			// Fix should only be applied to clients.
 			return;

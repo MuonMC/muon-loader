@@ -19,12 +19,12 @@ package org.muonmc.loader.impl.entrypoint;
 
 import org.muonmc.loader.impl.util.ExceptionUtil;
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.util.SimpleClassPath;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.zip.ZipError;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 
 public class GameTransformer {
 	private final List<GamePatch> patches;
@@ -62,10 +62,10 @@ public class GameTransformer {
 		patchedClasses.put(key, writer.toByteArray());
 	}
 
-	public void locateEntrypoints(QuiltLauncher launcher, List<Path> gameJars) {
+	public void locateEntrypoints(MuonLauncher launcher, List<Path> gameJars) {
 		this.locateEntrypoints(launcher, null, gameJars);
 	}
-	public void locateEntrypoints(QuiltLauncher launcher, String namespace, List<Path> gameJars) {
+	public void locateEntrypoints(MuonLauncher launcher, String namespace, List<Path> gameJars) {
 		if (entrypointsLocated) {
 			return;
 		}

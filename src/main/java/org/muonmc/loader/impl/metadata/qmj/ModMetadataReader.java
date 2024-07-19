@@ -28,15 +28,15 @@ import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
 import org.quiltmc.json5.exception.ParseException;
 import org.muonmc.loader.api.LoaderValue;
-import org.muonmc.loader.api.plugin.QuiltPluginManager;
+import org.muonmc.loader.api.plugin.MuonPluginManager;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /**
  * The central class used to read a {@code muon.mod.json}.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ModMetadataReader {
 	/**
 	 * Name of the schema field used to detect what version of the {@code muon.mod.json} file we are parsing. This
@@ -49,7 +49,7 @@ public final class ModMetadataReader {
 		return read(json, null, null);
 	}
 
-	public static InternalModMetadata read(Path json, QuiltPluginManager manager, PluginGuiTreeNode warningNode) throws IOException, ParseException {
+	public static InternalModMetadata read(Path json, MuonPluginManager manager, PluginGuiTreeNode warningNode) throws IOException, ParseException {
 		return read(Files.newInputStream(json), json, manager, warningNode);
 	}
 
@@ -68,7 +68,7 @@ public final class ModMetadataReader {
 	 * @throws ParseException if the json file has errors in the muon.mod.json specification
 	 */
 	@SuppressWarnings("SwitchStatementWithTooFewBranches") // Switch statement intentionally used for future expandability
-	public static InternalModMetadata read(InputStream json, Path path, QuiltPluginManager manager, PluginGuiTreeNode warningNode) throws IOException, ParseException {
+	public static InternalModMetadata read(InputStream json, Path path, MuonPluginManager manager, PluginGuiTreeNode warningNode) throws IOException, ParseException {
 		JsonLoaderValue value;
 
 		try (JsonReader reader = JsonReader.json(new InputStreamReader(json, StandardCharsets.UTF_8))) {

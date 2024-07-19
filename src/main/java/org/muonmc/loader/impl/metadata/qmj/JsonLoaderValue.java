@@ -36,10 +36,10 @@ import org.quiltmc.json5.JsonWriter;
 import org.quiltmc.json5.exception.MalformedSyntaxException;
 import org.quiltmc.json5.exception.ParseException;
 import org.muonmc.loader.api.LoaderValue;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 interface JsonLoaderValue extends LoaderValue {
 	static JsonLoaderValue read(JsonReader reader) throws IOException, ParseException {
 		switch (reader.peek()) {

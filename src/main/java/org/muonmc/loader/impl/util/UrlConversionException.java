@@ -16,8 +16,7 @@
 
 package org.muonmc.loader.impl.util;
 
-@SuppressWarnings("serial")
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class UrlConversionException extends Exception {
 	public UrlConversionException() {
 		super();

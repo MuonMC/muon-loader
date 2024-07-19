@@ -17,11 +17,11 @@
 package org.muonmc.loader.api.plugin.solver;
 
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Indicates that this {@link LoadOption} should use {@link #getTarget()} for mod solving instead of this. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface AliasedLoadOption {
 
     /** @return The {@link LoadOption} to use instead of this, or null if this can be used (and so this is not actually

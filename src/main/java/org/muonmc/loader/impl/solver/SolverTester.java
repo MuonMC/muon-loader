@@ -30,13 +30,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.muonmc.loader.impl.discovery.ModSolvingError;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class SolverTester {
 
 	public static void main(String[] args) throws ModSolvingError, IOException {
@@ -229,7 +229,7 @@ public class SolverTester {
 		return options.toArray(new LoadOption[0]);
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class ReadOption extends LoadOption {
 
 		final String key;
@@ -246,8 +246,8 @@ public class SolverTester {
 		}
 
 		@Override
-		public QuiltLoaderText describe() {
-			return QuiltLoaderText.of(text);
+		public MuonLoaderText describe() {
+			return MuonLoaderText.of(text);
 		}
 	}
 }

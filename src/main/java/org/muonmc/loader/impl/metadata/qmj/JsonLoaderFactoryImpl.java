@@ -33,10 +33,10 @@ import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonWriter;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.plugin.LoaderValueFactory;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class JsonLoaderFactoryImpl implements LoaderValueFactory {
 
 	public static final JsonLoaderFactoryImpl INSTANCE = new JsonLoaderFactoryImpl();

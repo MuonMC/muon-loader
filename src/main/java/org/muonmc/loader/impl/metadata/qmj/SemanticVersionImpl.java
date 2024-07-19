@@ -24,12 +24,12 @@ import java.util.regex.Pattern;
 
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionFormatException;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.SemanticVersion;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class SemanticVersionImpl implements Version.Semantic {
 	private final String raw;
 	private final int[] components;

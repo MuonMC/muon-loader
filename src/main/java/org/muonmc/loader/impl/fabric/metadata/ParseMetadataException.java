@@ -19,14 +19,14 @@ package org.muonmc.loader.impl.fabric.metadata;
 
 
 import org.quiltmc.json5.JsonReader;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ParseMetadataException extends Exception {
 	private List<String> modPaths;
 

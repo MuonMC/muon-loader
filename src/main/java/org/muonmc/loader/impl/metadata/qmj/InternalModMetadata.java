@@ -20,11 +20,11 @@ import java.util.Collection;
 
 import org.muonmc.loader.api.ModMetadata;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Internal mod metadata interface which stores implementation detail. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface InternalModMetadata
 	extends ModMetadata, ModMetadataExt, ConvertibleModMetadata {
 

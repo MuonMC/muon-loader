@@ -40,12 +40,12 @@ import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.FileUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class FabricModMetadataReader {
 	public static final int LATEST_VERSION = 1;
 	/**

@@ -23,11 +23,11 @@ import java.nio.file.Path;
 import java.util.Collections;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Used for various method implementations of {@link ReflectionsClassPatcher} */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ReflectionsPatchUtils {
 
 	// TODO: Use these!

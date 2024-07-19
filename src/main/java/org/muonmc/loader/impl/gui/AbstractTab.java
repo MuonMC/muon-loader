@@ -23,12 +23,12 @@ import java.util.Map;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.LoaderValue.LType;
-import org.muonmc.loader.api.gui.QuiltGuiTab;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonGuiTab;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 
-abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
+abstract class AbstractTab extends QuiltGuiSyncBase implements MuonGuiTab {
 
 	interface TabChangeListener extends Listener {
 		default void onIconChanged() {}
@@ -39,12 +39,12 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 	}
 
 	PluginIconImpl icon;
-	private QuiltLoaderText apiText;
+	private MuonLoaderText apiText;
 
 	String text;
-	private QuiltWarningLevel level = QuiltWarningLevel.NONE;
+	private MuonWarningLevel level = MuonWarningLevel.NONE;
 
-	AbstractTab(BasicWindow<?> parent, QuiltLoaderText text) {
+	AbstractTab(BasicWindow<?> parent, MuonLoaderText text) {
 		super(parent);
 		icon(null);
 		text(text);
@@ -54,7 +54,7 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 		super(parent, obj);
 		icon = obj.containsKey("icon") ? readChild(HELPER.expectValue(obj, "icon"), PluginIconImpl.class) : null;
 		text = HELPER.expectString(obj, "text");
-		level = HELPER.expectEnum(QuiltWarningLevel.class, obj, "level");
+		level = HELPER.expectEnum(MuonWarningLevel.class, obj, "level");
 	}
 
 	@Override
@@ -85,7 +85,7 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 				break;
 			}
 			case "set_level": {
-				this.level = HELPER.expectEnum(QuiltWarningLevel.class, data, "level");
+				this.level = HELPER.expectEnum(MuonWarningLevel.class, data, "level");
 				invokeListeners(TabChangeListener.class, TabChangeListener::onLevelChanged);
 				break;
 			}
@@ -96,12 +96,12 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 	}
 
 	@Override
-	public QuiltLoaderIcon icon() {
+	public MuonLoaderIcon icon() {
 		return icon;
 	}
 
 	@Override
-	public QuiltGuiTab icon(QuiltLoaderIcon icon) {
+	public MuonGuiTab icon(MuonLoaderIcon icon) {
 		this.icon = PluginIconImpl.fromApi(icon);
 		invokeListeners(TabChangeListener.class, TabChangeListener::onIconChanged);
 		if (shouldSendUpdates()) {
@@ -113,12 +113,12 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 	}
 
 	@Override
-	public QuiltLoaderText text() {
+	public MuonLoaderText text() {
 		return apiText;
 	}
 
 	@Override
-	public QuiltGuiTab text(QuiltLoaderText text) {
+	public MuonGuiTab text(MuonLoaderText text) {
 		this.apiText = text;
 		this.text = text.toString();
 		invokeListeners(TabChangeListener.class, TabChangeListener::onTextChanged);
@@ -131,12 +131,12 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 	}
 
 	@Override
-	public QuiltWarningLevel level() {
+	public MuonWarningLevel level() {
 		return level;
 	}
 
 	@Override
-	public QuiltGuiTab level(QuiltWarningLevel level) {
+	public MuonGuiTab level(MuonWarningLevel level) {
 		this.level = level;
 		invokeListeners(TabChangeListener.class, TabChangeListener::onLevelChanged);
 		if (shouldSendUpdates()) {
@@ -147,5 +147,5 @@ abstract class AbstractTab extends QuiltGuiSyncBase implements QuiltGuiTab {
 		return this;
 	}
 
-	abstract QuiltWarningLevel getInheritedLevel();
+	abstract MuonWarningLevel getInheritedLevel();
 }

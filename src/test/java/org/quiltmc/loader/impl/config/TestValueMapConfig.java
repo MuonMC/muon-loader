@@ -16,10 +16,11 @@
 
 package org.quiltmc.loader.impl.config;
 
+import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.WrappedConfig;
 import org.quiltmc.config.api.values.ValueMap;
 
-public class TestValueMapConfig extends WrappedConfig {
+public class TestValueMapConfig extends ReflectiveConfig {
 	public final int version = 100;
 	public final String flavor = "lemon";
 	public final ValueMap<Integer> weights = ValueMap.builder(0).build();

@@ -33,13 +33,13 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.muonmc.loader.impl.filesystem.QuiltUnifiedEntry.QuiltUnifiedFile;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 
-	private QuiltMemoryFile(QuiltMapPath<?, ?> path) {
+	private QuiltMemoryFile(MuonMapPath<?, ?> path) {
 		super(path);
 	}
 
@@ -49,7 +49,7 @@ abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 		final boolean isCompressed;
 		final int uncompressedSize;
 
-		ReadOnly(QuiltMapPath<?, ?> path, boolean compressed, int uncompressedSize, byte[] bytes) {
+		ReadOnly(MuonMapPath<?, ?> path, boolean compressed, int uncompressedSize, byte[] bytes) {
 			super(path);
 			this.isCompressed = compressed;
 			this.uncompressedSize = uncompressedSize;
@@ -68,7 +68,7 @@ abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 			return bytes.length;
 		}
 
-		static QuiltMemoryFile.ReadOnly create(QuiltMapPath<?, ?> path, byte[] bytes, boolean compress) {
+		static QuiltMemoryFile.ReadOnly create(MuonMapPath<?, ?> path, byte[] bytes, boolean compress) {
 			int size = bytes.length;
 
 			if (size < 24 || !compress) {
@@ -94,7 +94,7 @@ abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
 			return new ReadOnly(newPath, isCompressed, uncompressedSize, bytes);
 		}
 
@@ -280,11 +280,11 @@ abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 		private byte[] bytes = null;
 		private int length = 0;
 
-		ReadWrite(QuiltMapPath<?, ?> path) {
+		ReadWrite(MuonMapPath<?, ?> path) {
 			super(path);
 		}
 
-		private ReadWrite(QuiltMapPath<?, ?> path, ReadWrite from, boolean copy) {
+		private ReadWrite(MuonMapPath<?, ?> path, ReadWrite from, boolean copy) {
 			super(path);
 			this.bytes = copy ? Arrays.copyOf(from.bytes, from.bytes.length) : from.bytes;
 			this.length = from.length;
@@ -339,12 +339,12 @@ abstract class QuiltMemoryFile extends QuiltUnifiedFile {
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
 			return new ReadWrite(newPath, this, true);
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createMovedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createMovedTo(MuonMapPath<?, ?> newPath) {
 			return new ReadWrite(newPath, this, false);
 		}
 

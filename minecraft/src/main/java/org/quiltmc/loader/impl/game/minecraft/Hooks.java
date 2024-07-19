@@ -21,29 +21,29 @@ import net.fabricmc.api.ModInitializer;
 
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.entrypoint.EntrypointUtils;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
 import java.io.File;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_NO_WARN)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class Hooks {
 	public static final String INTERNAL_NAME = Hooks.class.getName().replace('.', '/');
 
 	public static String appletMainClass;
 
-	public static final String QUILT = "quilt";
+	public static final String MUON = "muon";
 	public static final String VANILLA = "vanilla";
 
 	public static String insertBranding(final String brand) {
 		if (brand == null || brand.isEmpty()) {
 			Log.warn(LogCategory.GAME_PROVIDER, "Null or empty branding found!", new IllegalStateException());
-			return QUILT;
+			return MUON;
 		}
 
-		return VANILLA.equals(brand) ? QUILT : brand + ',' + QUILT;
+		return VANILLA.equals(brand) ? MUON : brand + ',' + MUON;
 	}
 
 	public static void startClient(File runDir, Object gameInstance) {

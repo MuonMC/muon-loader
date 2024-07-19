@@ -19,14 +19,14 @@ package org.muonmc.loader.impl.metadata.qmj;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /**
  * @deprecated Since we should probably use a different mechanism?
  */
 @Deprecated
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface ConvertibleModMetadata {
 
 	/** Please use {@link #asFabricModMetadata(ModContainerExt)} instead. */

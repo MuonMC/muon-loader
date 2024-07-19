@@ -16,10 +16,10 @@
 
 package org.muonmc.loader.impl.plugin;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class HaltLoadingError extends Error {
 	static final HaltLoadingError INSTANCE = new HaltLoadingError();
 

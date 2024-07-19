@@ -19,26 +19,27 @@ package org.muonmc.loader.impl.plugin.fabric;
 import java.nio.file.Path;
 
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
 import org.muonmc.loader.api.plugin.ModContainerExt;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
 import org.muonmc.loader.impl.plugin.base.InternalModOptionBase;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class FabricModOption extends InternalModOptionBase {
 
-	public FabricModOption(QuiltPluginContext pluginContext, FabricLoaderModMetadata meta, Path from,
-		QuiltLoaderIcon fileIcon, Path resourceRoot, boolean mandatory, boolean requiresRemap) {
+	public FabricModOption(
+			MuonPluginContext pluginContext, FabricLoaderModMetadata meta, Path from,
+		MuonLoaderIcon fileIcon, Path resourceRoot, boolean mandatory, boolean requiresRemap) {
 
 		super(pluginContext, meta.asQuiltModMetadata(), from, fileIcon, resourceRoot, mandatory, requiresRemap);
 	}
 
 	@Override
-	public QuiltLoaderIcon modTypeIcon() {
-		return QuiltLoaderGui.iconFabric();
+	public MuonLoaderIcon modTypeIcon() {
+		return MuonLoaderGui.iconFabric();
 	}
 
 	@Override

@@ -15,6 +15,8 @@ package org.quiltmc.loader.impl.game.minecraft.patch;
  * limitations under the License.
  */
 
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -22,15 +24,19 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.muonmc.loader.impl.entrypoint.GamePatch;
 import org.muonmc.loader.impl.entrypoint.GamePatchContext;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
 import java.util.ListIterator;
 
+/**
+ * Changes the vanilla server/client brand which acts similarly to a user agent.
+ */
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class BrandingPatch extends GamePatch {
 	@Override
-	public void process(QuiltLauncher launcher, String namespace, GamePatchContext context) {
+	public void process(MuonLauncher launcher, String namespace, GamePatchContext context) {
 		for (String brandClassName : new String[] {
 				"net.minecraft.client.ClientBrandRetriever",
 				"net.minecraft.server.MinecraftServer"
@@ -57,7 +63,7 @@ public final class BrandingPatch extends GamePatch {
 				while (it.hasNext()) {
 					if (it.next().getOpcode() == Opcodes.ARETURN) {
 						it.previous();
-						it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "org/quiltmc/loader/impl/game/minecraft/Hooks", "insertBranding", "(Ljava/lang/String;)Ljava/lang/String;", false));
+						it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "org/muonmc/loader/impl/game/minecraft/Hooks", "insertBranding", "(Ljava/lang/String;)Ljava/lang/String;", false));
 						it.next();
 					}
 				}

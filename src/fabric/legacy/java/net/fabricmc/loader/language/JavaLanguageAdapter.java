@@ -22,7 +22,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import org.objectweb.asm.ClassReader;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class JavaLanguageAdapter implements LanguageAdapter {
 				}
 		}
 
-		InputStream stream = QuiltLauncherBase.getLauncher().getResourceAsStream(LoaderUtil.getClassFileName(itfString));
+		InputStream stream = MuonLauncherBase.getLauncher().getResourceAsStream(LoaderUtil.getClassFileName(itfString));
 		if (stream == null) return false;
 
 		ClassReader reader = new ClassReader(stream);
@@ -64,7 +64,7 @@ public class JavaLanguageAdapter implements LanguageAdapter {
 	}
 
 	public static Class<?> getClass(String className, Options options) throws ClassNotFoundException, IOException {
-		InputStream stream = QuiltLauncherBase.getLauncher().getResourceAsStream(LoaderUtil.getClassFileName(className));
+		InputStream stream = MuonLauncherBase.getLauncher().getResourceAsStream(LoaderUtil.getClassFileName(className));
 		if (stream == null) throw new ClassNotFoundException("Could not find or load class " + className);
 
 		ClassReader reader = new ClassReader(stream);
@@ -84,7 +84,7 @@ public class JavaLanguageAdapter implements LanguageAdapter {
 		}
 
 		stream.close();
-		return QuiltLauncherBase.getClass(className);
+		return MuonLauncherBase.getClass(className);
 	}
 
 	@Override

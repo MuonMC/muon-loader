@@ -79,15 +79,15 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.StringUtil;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 import org.muonmc.loader.impl.gui.PluginIconImpl.BlankIcon;
 import org.muonmc.loader.impl.gui.PluginIconImpl.IconType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class BasicWindowUI {
 	static BufferedImage missingImage = null;
 	static Icon missingIcon = null;
@@ -157,7 +157,7 @@ class BasicWindowUI {
 
 			for (AbstractTab tab : quiltWindow.tabs) {
 				PluginIconImpl icon = tab.icon;
-				QuiltWarningLevel level = tab.level();
+				MuonWarningLevel level = tab.level();
 				if (level.icon() != null) {
 					if (icon == null) {
 						icon = PluginIconImpl.fromApi(level.icon());
@@ -194,8 +194,8 @@ class BasicWindowUI {
 			public void onAddTab(AbstractTab tab) {
 				if (tabs != null) {
 					PluginIconImpl icon = tab.icon;
-					QuiltWarningLevel level = tab.level();
-					if (QuiltWarningLevel.NONE.compareTo(level) <= 0) {
+					MuonWarningLevel level = tab.level();
+					if (MuonWarningLevel.NONE.compareTo(level) <= 0) {
 						if (icon == null) {
 							icon = PluginIconImpl.fromApi(level.icon());
 						} else {
@@ -490,11 +490,11 @@ class BasicWindowUI {
 			JPanel panel = null;
 
 			@Override
-			public void onMessageAdded(QuiltJsonGuiMessage message) {
+			public void onMessageAdded(MuonJsonGuiMessage message) {
 				SwingUtilities.invokeLater(() -> addPanelForMessage(message));
 			}
 
-			void addPanelForMessage(QuiltJsonGuiMessage message) {
+			void addPanelForMessage(MuonJsonGuiMessage message) {
 				if (panel == null) {
 					panel = outerPanel;
 				} else {
@@ -510,7 +510,7 @@ class BasicWindowUI {
 
 		TabManager manager = new TabManager();
 		tab.listeners.add(manager);
-		for (QuiltJsonGuiMessage message : tab.messages) {
+		for (MuonJsonGuiMessage message : tab.messages) {
 			manager.addPanelForMessage(message);
 		}
 
@@ -518,7 +518,7 @@ class BasicWindowUI {
 		return pane;
 	}
 
-	private JPanel createMessagePanel(IconSet icons, QuiltJsonGuiMessage message) {
+	private JPanel createMessagePanel(IconSet icons, MuonJsonGuiMessage message) {
 		JPanel container = new JPanel();
 		container.setLayout(new BorderLayout());
 		container.setAlignmentY(0);
@@ -567,7 +567,7 @@ class BasicWindowUI {
 
 		AtomicReference<JPanel> currentOuterPanel = new AtomicReference<>();
 
-		class MessageListener implements QuiltJsonGuiMessage.QuiltMessageListener {
+		class MessageListener implements MuonJsonGuiMessage.QuiltMessageListener {
 
 			static final int FLAG_UPDATE_TITLE = 1 << 0;
 			static final int FLAG_UPDATE_ICON = 1 << 1;
@@ -579,7 +579,7 @@ class BasicWindowUI {
 			PluginIconImpl msgIcon = message.icon;
 			String[] description = message.description.toArray(new String[0]);
 			String[] additionalInfo = message.additionalInfo.toArray(new String[0]);
-			QuiltStatusNode tree = message.treeNode;
+			MuonStatusNode tree = message.treeNode;
 
 			JComponent currentTreePanel = null;
 
@@ -669,7 +669,7 @@ class BasicWindowUI {
 				}
 
 				if (tree != null) {
-					currentTreePanel = createTreePanel(tree, QuiltWarningLevel.NONE, icons);
+					currentTreePanel = createTreePanel(tree, MuonWarningLevel.NONE, icons);
 					messagesPanel.add(currentTreePanel, BorderLayout.SOUTH);
 				}
 			}
@@ -707,7 +707,8 @@ class BasicWindowUI {
 		return outer;
 	}
 
-	private static JPanel createTreePanel(QuiltStatusNode rootNode, QuiltWarningLevel minimumWarningLevel,
+	private static JPanel createTreePanel(
+			MuonStatusNode rootNode, MuonWarningLevel minimumWarningLevel,
 		IconSet iconSet) {
 
 		JPanel panel = new JPanel();
@@ -1045,15 +1046,15 @@ class BasicWindowUI {
 
 	static class CustomTreeNode implements TreeNode {
 		public final TreeNode parent;
-		public final QuiltStatusNode node;
+		public final MuonStatusNode node;
 		public final List<CustomTreeNode> displayedChildren = new ArrayList<>();
 		private PluginIconImpl iconInfo;
 
-		CustomTreeNode(TreeNode parent, QuiltStatusNode node, QuiltWarningLevel minimumWarningLevel) {
+		CustomTreeNode(TreeNode parent, MuonStatusNode node, MuonWarningLevel minimumWarningLevel) {
 			this.parent = parent;
 			this.node = node;
 
-			for (QuiltStatusNode c : node.childIterable()) {
+			for (MuonStatusNode c : node.childIterable()) {
 				if (minimumWarningLevel.compareTo(c.maximumLevel()) < 0) {
 					continue;
 				}
@@ -1066,7 +1067,7 @@ class BasicWindowUI {
 			if (iconInfo == null) {
 				if (node.icon == null) {
 					if (node.level().icon() == null) {
-						iconInfo = PluginIconImpl.fromApi(QuiltLoaderGui.iconTreeDot());
+						iconInfo = PluginIconImpl.fromApi(MuonLoaderGui.iconTreeDot());
 					} else {
 						iconInfo = PluginIconImpl.fromApi(node.maximumLevel().icon());
 					}

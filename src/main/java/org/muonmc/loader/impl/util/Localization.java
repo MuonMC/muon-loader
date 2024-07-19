@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class Localization {
 	public static final ResourceBundle BUNDLE = createBundle("net.fabricmc.loader.Messages");
 

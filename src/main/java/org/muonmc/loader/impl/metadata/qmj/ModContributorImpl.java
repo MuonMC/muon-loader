@@ -20,10 +20,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.muonmc.loader.api.ModContributor;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ModContributorImpl implements ModContributor {
 	private final String name;
 	private final Collection<String> roles;

@@ -21,8 +21,8 @@ import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.util.ExceptionUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
@@ -30,7 +30,7 @@ import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class EntrypointUtils {
 	public static <T> void invoke(String name, Class<T> type, Consumer<? super T> invoker) {
 		invokeContainer(name, type, container -> invoker.accept(container.getEntrypoint()));

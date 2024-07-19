@@ -18,16 +18,16 @@ package org.muonmc.loader.impl.plugin;
 
 import java.nio.file.Path;
 
-import org.muonmc.loader.api.plugin.QuiltLoaderPlugin;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.api.plugin.MuonLoaderPlugin;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class BuiltinPluginContext extends BasePluginContext {
 
-	final QuiltLoaderPlugin plugin;
+	final MuonLoaderPlugin plugin;
 
-	public BuiltinPluginContext(QuiltPluginManagerImpl manager, String pluginId, QuiltLoaderPlugin plugin) {
+	public BuiltinPluginContext(MuonPluginManagerImpl manager, String pluginId, MuonLoaderPlugin plugin) {
 		super(manager, pluginId);
 		this.plugin = plugin;
 	}
@@ -38,7 +38,7 @@ class BuiltinPluginContext extends BasePluginContext {
 	}
 
 	@Override
-	public QuiltLoaderPlugin plugin() {
+	public MuonLoaderPlugin plugin() {
 		return plugin;
 	}
 }

@@ -21,10 +21,10 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface ModSolveResult {
 
 	/** @return Every mod, not including mods provided by other mods. */

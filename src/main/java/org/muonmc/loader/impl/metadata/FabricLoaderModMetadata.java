@@ -17,13 +17,13 @@
 
 package org.muonmc.loader.impl.metadata;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
 import org.jetbrains.annotations.Nullable;
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.qmj.ConvertibleModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,7 +35,7 @@ import net.fabricmc.loader.api.metadata.ModDependency;
 /**
  * Internal variant of the ModMetadata interface.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface FabricLoaderModMetadata extends ModMetadata, ConvertibleModMetadata, net.fabricmc.loader.metadata.LoaderModMetadata {
 	int getSchemaVersion();
 
@@ -45,11 +45,11 @@ public interface FabricLoaderModMetadata extends ModMetadata, ConvertibleModMeta
 
 	Map<String, String> getLanguageAdapterDefinitions();
 	Collection<NestedJarEntry> getJars();
-	Collection<String> getMixinConfigs(EnvType type);
+	Collection<String> getMixinConfigs(Environment environment);
 	@Nullable
 	String getAccessWidener();
 	@Override
-	boolean loadsInEnvironment(EnvType type);
+	boolean loadsInEnvironment(Environment environment);
 
 	Collection<String> getOldInitializers();
 	@Override

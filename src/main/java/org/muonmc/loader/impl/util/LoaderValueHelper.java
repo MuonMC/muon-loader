@@ -25,7 +25,7 @@ import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.LoaderValue.LType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class LoaderValueHelper<T extends Throwable> {
 
 	public static final LoaderValueHelper<IOException> IO_EXCEPTION;

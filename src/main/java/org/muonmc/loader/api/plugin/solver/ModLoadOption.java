@@ -22,26 +22,26 @@ import java.nio.file.Path;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
-import org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltJoinedPath;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.filesystem.MuonJoinedFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonJoinedPath;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.Version;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModLoadType;
-import org.muonmc.loader.api.plugin.QuiltLoaderPlugin;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.plugin.MuonLoaderPlugin;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
 
 /** A special type of {@link LoadOption} that represents a mod. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public abstract class ModLoadOption extends LoadOption {
 
 	/** The sub-type of this mod. Used in
-	 * {@link QuiltLoaderPlugin#isHigherPriorityThan(Path, java.util.List, String, java.util.List)} to differentiate
+	 * {@link MuonLoaderPlugin#isHigherPriorityThan(Path, java.util.List, String, java.util.List)} to differentiate
 	 * types loaded by the same plugin.
 	 * <p>
 	 * Mods loaded by quilt loader itself use the empty string, as you can use the plugin ID to differentiate between
@@ -59,14 +59,14 @@ public abstract class ModLoadOption extends LoadOption {
 	}
 
 	/** @return The plugin context for the plugin that loaded this mod. */
-	public abstract QuiltPluginContext loader();
+	public abstract MuonPluginContext loader();
 
 	/** @return The metadata that this mod either (a) is, or (b) points to, if this is an {@link AliasedLoadOption}. */
 	public abstract ModMetadataExt metadata();
 
 	/** @return The {@link Path} where this is loaded from. This should be either the Path that was passed to
-	 *         {@link QuiltLoaderPlugin#scanZip(Path, boolean, PluginGuiTreeNode)} or the Path that was passed to
-	 *         {@link QuiltLoaderPlugin#scanUnknownFile(Path, boolean, PluginGuiTreeNode)}. */
+	 *         {@link MuonLoaderPlugin#scanZip(Path, boolean, PluginGuiTreeNode)} or the Path that was passed to
+	 *         {@link MuonLoaderPlugin#scanUnknownFile(Path, boolean, PluginGuiTreeNode)}. */
 	public abstract Path from();
 
 	/** @return The {@link Path} where this mod's classes and resources can be loaded from. */
@@ -120,11 +120,11 @@ public abstract class ModLoadOption extends LoadOption {
 		return metadata().version();
 	}
 
-	public abstract QuiltLoaderIcon modFileIcon();
+	public abstract MuonLoaderIcon modFileIcon();
 
-	public abstract QuiltLoaderIcon modTypeIcon();
+	public abstract MuonLoaderIcon modTypeIcon();
 
-	public QuiltLoaderIcon modCompleteIcon() {
+	public MuonLoaderIcon modCompleteIcon() {
 		return modFileIcon().withDecoration(modTypeIcon());
 	}
 
@@ -132,7 +132,7 @@ public abstract class ModLoadOption extends LoadOption {
 	 * been set to the {@link #version()} before this method is called. */
 	public void populateModsTabInfo(PluginGuiTreeNode guiNode) {
 		guiNode.mainIcon(modTypeIcon());
-		guiNode.addChild(QuiltLoaderText.of(loader().manager().describePath(from())))//
+		guiNode.addChild(MuonLoaderText.of(loader().manager().describePath(from())))//
 			.mainIcon(guiNode.manager().iconFolder());
 	}
 
@@ -167,9 +167,9 @@ public abstract class ModLoadOption extends LoadOption {
 		Path from = from();
 		if (from.getFileSystem() == FileSystems.getDefault() && FasterFiles.isDirectory(from)) {
 			return true;
-		} else if (from instanceof QuiltJoinedPath) {
-			QuiltJoinedPath path = (QuiltJoinedPath) from;
-			QuiltJoinedFileSystem fs = path.getFileSystem();
+		} else if (from instanceof MuonJoinedPath) {
+			MuonJoinedPath path = (MuonJoinedPath) from;
+			MuonJoinedFileSystem fs = path.getFileSystem();
 			for (int i = 0; i < fs.getBackingPathCount(); i++) {
 				Path backingPath = fs.getBackingPath(i, path);
 				if (backingPath.getFileSystem() == FileSystems.getDefault() && FasterFiles.isDirectory(backingPath)) {

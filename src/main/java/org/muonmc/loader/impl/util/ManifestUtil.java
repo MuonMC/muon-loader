@@ -35,7 +35,7 @@ import java.util.jar.Manifest;
 
 import org.muonmc.loader.api.FasterFiles;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ManifestUtil {
 	public static Manifest readManifest(Class<?> cls) throws IOException, URISyntaxException {
 		CodeSource cs = cls.getProtectionDomain().getCodeSource();

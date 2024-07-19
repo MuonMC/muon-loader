@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class AsciiTableGenerator {
 	private final List<AsciiTableColumn> columns = new ArrayList<>();
 	private final List<AsciiTableRow> rows = new ArrayList<>();

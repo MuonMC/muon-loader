@@ -23,8 +23,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import java.util.NavigableMap;
 import java.util.Optional;
@@ -40,7 +40,7 @@ import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fabricmc.loader.api.metadata.Person;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class BuiltinModMetadata extends AbstractModMetadata {
 	private final String id;
 	private final Version version;

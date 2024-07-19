@@ -16,11 +16,10 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import net.fabricmc.api.EnvType;
-
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.muonmc.loader.impl.launch.common.QuiltMixinBootstrap;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonMixinBootstrap;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.ModContainer.BasicSourceType;
 import org.muonmc.loader.impl.FormattedException;
@@ -28,8 +27,8 @@ import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.config.MuonConfigImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.FileUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.UrlUtil;
 import org.muonmc.loader.impl.util.log.Log;
@@ -57,22 +56,22 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
-public final class Knot extends QuiltLauncherBase {
-	protected Map<String, Object> properties = new HashMap<>();
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public final class Knot extends MuonLauncherBase {
+	private final Map<String, Object> properties = new HashMap<>();
 
 	private KnotClassLoaderInterface classLoader;
 	private boolean isDevelopment;
-	private EnvType envType;
+	private Environment environment;
 	private final List<Path> classPath = new ArrayList<>();
 	private GameProvider provider;
 	private boolean unlocked;
 
-	public static void launch(String[] args, EnvType type) {
+	public static void launch(String[] args, Environment environment) {
 		setupUncaughtExceptionHandler();
 
 		try {
-			Knot knot = new Knot(type);
+			Knot knot = new Knot(environment);
 			ClassLoader cl = knot.init(args);
 
 			if (knot.provider == null) {
@@ -85,24 +84,24 @@ public final class Knot extends QuiltLauncherBase {
 		}
 	}
 
-	public Knot(EnvType type) {
-		this.envType = type;
+	public Knot(Environment environment) {
+		this.environment = environment;
 	}
 
 	public ClassLoader init(String[] args) {
 		setProperties(properties);
 
 		// configure fabric vars
-		if (envType == null) {
+		if (environment == null) {
 			String side = System.getProperty(SystemProperties.SIDE);
 			if (side == null) throw new RuntimeException("Please specify side or use a dedicated Knot!");
 
 			switch (side.toLowerCase(Locale.ROOT)) {
 			case "client":
-				envType = EnvType.CLIENT;
+				environment = Environment.CLIENT;
 				break;
-			case "server":
-				envType = EnvType.SERVER;
+			case "dedicated_server":
+				environment = Environment.DEDICATED_SERVER;
 				break;
 			default:
 				throw new RuntimeException("Invalid side provided: must be \"client\" or \"server\"!");
@@ -135,7 +134,8 @@ public final class Knot extends QuiltLauncherBase {
 		// Setup classloader
 		// TODO: Provide KnotCompatibilityClassLoader in non-exclusive-Fabric pre-1.13 environments?
 		boolean useCompatibility = provider.requiresUrlClassLoader() || Boolean.parseBoolean(System.getProperty("fabric.loader.useCompatibilityClassLoader", "false"));
-		classLoader = useCompatibility ? new KnotCompatibilityClassLoader(isDevelopment(), envType, provider) : new KnotClassLoader(isDevelopment(), envType, provider);
+		classLoader = useCompatibility ? new KnotCompatibilityClassLoader(isDevelopment(), environment, provider) : new KnotClassLoader(isDevelopment(),
+				environment, provider);
 		ClassLoader cl = (ClassLoader) classLoader;
 
 		provider.initialize(this);
@@ -148,8 +148,8 @@ public final class Knot extends QuiltLauncherBase {
 		loader.freeze();
 
 		MixinBootstrap.init();
-		QuiltMixinBootstrap.init(getEnvironmentType(), loader);
-		QuiltLauncherBase.finishMixinBootstrapping();
+		MuonMixinBootstrap.init(getEnvironmentType(), loader);
+		MuonLauncherBase.finishMixinBootstrapping();
 
 		classLoader.getDelegate().initializeTransformers();
 
@@ -338,7 +338,7 @@ public final class Knot extends QuiltLauncherBase {
 	@Override
 	public void validateGameClassLoader(Object gameInstance) {
 		ClassLoader gameClassLoader = gameInstance.getClass().getClassLoader();
-		ClassLoader targetClassLoader = QuiltLauncherBase.getLauncher().getTargetClassLoader();
+		ClassLoader targetClassLoader = MuonLauncherBase.getLauncher().getTargetClassLoader();
 		boolean matchesKnot = isMatchingClassLoader(targetClassLoader, gameClassLoader);
 		boolean containsKnot = false;
 
@@ -365,7 +365,7 @@ public final class Knot extends QuiltLauncherBase {
 						+ " - Expected game class loader: %s\n"
 						+ " - Actual game class loader: %s\n"
 						+ "Could not find the expected class loader in game class loader parents!\n",
-						QuiltLauncherBase.getLauncher().getTargetClassLoader(), gameClassLoader);
+						MuonLauncherBase.getLauncher().getTargetClassLoader(), gameClassLoader);
 			}
 		}
 	}
@@ -378,8 +378,8 @@ public final class Knot extends QuiltLauncherBase {
 	}
 
 	@Override
-	public EnvType getEnvironmentType() {
-		return envType;
+	public Environment getEnvironmentType() {
+		return environment;
 	}
 
 	@Override

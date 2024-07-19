@@ -32,17 +32,19 @@ import net.fabricmc.loader.api.metadata.ModDependency;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.muonmc.loader.impl.metadata.qmj.FabricModMetadataWrapper;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoaderModMetadata {
 	private static final Mixins EMPTY_MIXINS = new Mixins(Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 	// Required
@@ -140,8 +142,8 @@ final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 	}
 
 	@Override
-	public boolean loadsInEnvironment(EnvType type) {
-		return this.environment.matches(type);
+	public boolean loadsInEnvironment(Environment environment) {
+		return this.environment.matches(EnvTypeUtil.toEnvType(environment));
 	}
 
 	@Override
@@ -257,14 +259,14 @@ final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 	}
 
 	@Override
-	public Collection<String> getMixinConfigs(EnvType type) {
+	public Collection<String> getMixinConfigs(Environment environment) {
 		List<String> mixinConfigs = new ArrayList<>(this.mixins.common);
 
-		switch (type) {
+		switch (environment) {
 		case CLIENT:
 			mixinConfigs.addAll(this.mixins.client);
 			break;
-		case SERVER:
+		case DEDICATED_SERVER:
 			mixinConfigs.addAll(this.mixins.server);
 			break;
 		}

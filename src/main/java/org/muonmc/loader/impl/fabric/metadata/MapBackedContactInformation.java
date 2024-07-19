@@ -21,12 +21,12 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ContactInformation;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class MapBackedContactInformation implements ContactInformation {
 	private final Map<String, String> map;
 

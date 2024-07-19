@@ -46,16 +46,16 @@ import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionFormatException;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModEntrypoint;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModLoadType;
-import org.muonmc.loader.api.plugin.QuiltPluginManager;
+import org.muonmc.loader.api.plugin.MuonPluginManager;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode.WarningLevel;
 import org.muonmc.loader.impl.metadata.qmj.JsonLoaderValue.ObjectImpl;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 
@@ -64,13 +64,13 @@ import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
 // TODO: Figure out a way to not need to always specify JsonLoaderValue everywhere so we can let other users and plugins have location data.
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class V1ModMetadataReader {
 	public static V1ModMetadataImpl read(JsonLoaderValue.ObjectImpl root) {
 		return read(root, null, null, null);
 	}
 
-	public static V1ModMetadataImpl read(JsonLoaderValue.ObjectImpl root, Path path, QuiltPluginManager manager, PluginGuiTreeNode parentNode) {
+	public static V1ModMetadataImpl read(JsonLoaderValue.ObjectImpl root, Path path, MuonPluginManager manager, PluginGuiTreeNode parentNode) {
 		// Read loader category
 		@Nullable JsonLoaderValue quiltLoader = root.get("quilt_loader");
 
@@ -109,13 +109,13 @@ public final class V1ModMetadataReader {
 	}
 
 	final Path from;
-	final QuiltPluginManager manager;
+	final MuonPluginManager manager;
 	final PluginGuiTreeNode warningNode;
 	PluginGuiTreeNode modJsonNode = null;
 	boolean loggedAnyWarnings = false;
 	boolean loggedDeprecatedArrayDepends = false;
 
-	private V1ModMetadataReader(Path from, QuiltPluginManager manager, PluginGuiTreeNode warningNode) {
+	private V1ModMetadataReader(Path from, MuonPluginManager manager, PluginGuiTreeNode warningNode) {
 		this.from = from;
 		this.manager = manager;
 		this.warningNode = warningNode;
@@ -755,9 +755,9 @@ public final class V1ModMetadataReader {
 					}
 					if (warningNode != null) {
 						createModJsonNode()
-							.addChild(QuiltLoaderText.of("Uses deprecated array format for declaring dependencies."))
+							.addChild(MuonLoaderText.of("Uses deprecated array format for declaring dependencies."))
 							.setDirectLevel(WarningLevel.CONCERN)
-							.addChild(QuiltLoaderText.of("See " + RFC_56_LINK + " for more information on how to fix this"));
+							.addChild(MuonLoaderText.of("See " + RFC_56_LINK + " for more information on how to fix this"));
 					}
 				}
 
@@ -815,9 +815,9 @@ public final class V1ModMetadataReader {
 					}
 					if (warningNode != null) {
 						createModJsonNode()
-							.addChild(QuiltLoaderText.of(msg))
+							.addChild(MuonLoaderText.of(msg))
 							.setDirectLevel(WarningLevel.CONCERN)
-							.addChild(QuiltLoaderText.of("See " + RFC_56_LINK + " for more information on how to fix this"));
+							.addChild(MuonLoaderText.of("See " + RFC_56_LINK + " for more information on how to fix this"));
 					}
 				}
 			}
@@ -838,8 +838,8 @@ public final class V1ModMetadataReader {
 			throw new IllegalStateException("Check 'warningNode' first!");
 		}
 		if (modJsonNode == null) {
-			modJsonNode = warningNode.addChild(QuiltLoaderText.of("muon.mod.json"));
-			modJsonNode.mainIcon(QuiltLoaderGui.iconJsonFile()).subIcon(QuiltLoaderGui.iconQuilt());
+			modJsonNode = warningNode.addChild(MuonLoaderText.of("muon.mod.json"));
+			modJsonNode.mainIcon(MuonLoaderGui.iconJsonFile()).subIcon(MuonLoaderGui.iconQuilt());
 		}
 		return modJsonNode;
 	}

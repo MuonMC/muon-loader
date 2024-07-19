@@ -39,10 +39,10 @@ import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.MuonLoaderImpl;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 import org.quiltmc.parsers.json.JsonReader;
@@ -51,7 +51,7 @@ import org.quiltmc.parsers.json.ParseException;
 /**
  * A representation of the transform cache to be used by transformers when generating the cache for the first time.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class TransformCache {
 	private final Path root;
 	private final Map<ModLoadOption, Path> modRoots = new HashMap<>();
@@ -79,7 +79,7 @@ class TransformCache {
 //					copyFile(modSrc.resolve("META-INF/MANIFEST.MF"), modSrc, modDst);
 
 					// Copy mixin + AWs over
-					for (String mixin : mod.metadata().mixins(QuiltLauncherBase.getLauncher().getEnvironmentType())) {
+					for (String mixin : mod.metadata().mixins(MuonLauncherBase.getLauncher().getEnvironmentType())) {
 						copyFile(modSrc.resolve(mixin), modSrc, modDst);
 						// find the refmap and copy it too
 						String refmap = extractRefmap(modSrc.resolve(mixin));

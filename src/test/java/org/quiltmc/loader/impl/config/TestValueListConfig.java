@@ -16,10 +16,11 @@
 
 package org.quiltmc.loader.impl.config;
 
+import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.WrappedConfig;
 import org.quiltmc.config.api.values.ValueList;
 
-public class TestValueListConfig extends WrappedConfig {
+public class TestValueListConfig extends ReflectiveConfig {
 	public final String test = "watermark";
 	public final int thingy = 1009;
 	public final ValueList<String> strings = ValueList.create("");

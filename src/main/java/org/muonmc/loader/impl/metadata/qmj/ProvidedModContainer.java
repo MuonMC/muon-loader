@@ -21,10 +21,10 @@ import java.util.List;
 
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ProvidedModContainer implements ModContainerExt {
 
 	final ProvidedModMetadata metadata;

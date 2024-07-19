@@ -26,16 +26,16 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErrorButton {
 
 	interface QuiltButtonListener extends Listener {
@@ -45,23 +45,23 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 	}
 
 	public enum QuiltBasicButtonAction {
-		CLOSE(QuiltLoaderGui.iconLevelError()),
-		CONTINUE(QuiltLoaderGui.iconContinue()),
-		VIEW_FILE(QuiltLoaderGui.iconUnknownFile(), "file"),
-		EDIT_FILE(QuiltLoaderGui.iconUnknownFile(), "file"),
-		VIEW_FOLDER(QuiltLoaderGui.iconFolder(), "folder"),
-		OPEN_FILE(QuiltLoaderGui.iconUnknownFile(), "file"),
+		CLOSE(MuonLoaderGui.iconLevelError()),
+		CONTINUE(MuonLoaderGui.iconContinue()),
+		VIEW_FILE(MuonLoaderGui.iconUnknownFile(), "file"),
+		EDIT_FILE(MuonLoaderGui.iconUnknownFile(), "file"),
+		VIEW_FOLDER(MuonLoaderGui.iconFolder(), "folder"),
+		OPEN_FILE(MuonLoaderGui.iconUnknownFile(), "file"),
 
 		/** Copies the given 'text' into the clipboard */
-		PASTE_CLIPBOARD_TEXT(QuiltLoaderGui.iconClipboard(), "text"),
+		PASTE_CLIPBOARD_TEXT(MuonLoaderGui.iconClipboard(), "text"),
 
 		/** Copies the contents of a {@link File} (given in 'file') into the clipboard. */
-		PASTE_CLIPBOARD_FILE(QuiltLoaderGui.iconClipboard(), "file"),
+		PASTE_CLIPBOARD_FILE(MuonLoaderGui.iconClipboard(), "file"),
 
 		/** Copies a sub-sequence of characters from a {@link File} (given in 'file'), starting with the byte indexed by
 		 * 'from' and stopping one byte before 'to' */
-		PASTE_CLIPBOARD_FILE_SECTION(QuiltLoaderGui.iconClipboard(), "file", "from", "to"),
-		OPEN_WEB_URL(QuiltLoaderGui.iconWeb(), "url"),
+		PASTE_CLIPBOARD_FILE_SECTION(MuonLoaderGui.iconClipboard(), "file", "from", "to"),
+		OPEN_WEB_URL(MuonLoaderGui.iconWeb(), "url"),
 
 		/** Runs a {@link Runnable} in the original application, but only the first time the button is pressed. */
 		RETURN_SIGNAL_ONCE(null),
@@ -69,10 +69,10 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 		/** Runs a {@link Runnable} in the original application, every time the button is pressed. */
 		RETURN_SIGNAL_MANY(null);
 
-		public final QuiltLoaderIcon defaultIcon;
+		public final MuonLoaderIcon defaultIcon;
 		private final Set<String> requiredArgs;
 
-		private QuiltBasicButtonAction(QuiltLoaderIcon defaultIcon, String... args) {
+		private QuiltBasicButtonAction(MuonLoaderIcon defaultIcon, String... args) {
 			this.defaultIcon = defaultIcon;
 			requiredArgs = new HashSet<>();
 			Collections.addAll(requiredArgs, args);
@@ -124,7 +124,7 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 	}
 
 	public static QuiltJsonButton createUserSupportButton(QuiltGuiSyncBase parent) {
-		QuiltLoaderText text = QuiltLoaderText.translate("button.quilt_forum.user_support");
+		MuonLoaderText text = MuonLoaderText.translate("button.quilt_forum.user_support");
 		QuiltJsonButton button = new QuiltJsonButton(parent, text.toString(), null, QuiltJsonButton.QuiltBasicButtonAction.OPEN_WEB_URL);
 		button.arg("url", "https://forum.quiltmc.org/c/support/9");
 		return button;
@@ -165,7 +165,7 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 	}
 
 	@Override
-	public QuiltErrorButton text(QuiltLoaderText newText) {
+	public QuiltErrorButton text(MuonLoaderText newText) {
 		if (newText == null) {
 			throw new NullPointerException("text");
 		}
@@ -179,12 +179,12 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 	}
 
 	@Override
-	public QuiltLoaderIcon icon() {
+	public MuonLoaderIcon icon() {
 		return icon;
 	}
 
 	@Override
-	public QuiltErrorButton icon(QuiltLoaderIcon newIcon) {
+	public QuiltErrorButton icon(MuonLoaderIcon newIcon) {
 		if (newIcon == null) {
 			if (action.defaultIcon == null) {
 				this.icon = null;
@@ -203,7 +203,7 @@ public final class QuiltJsonButton extends QuiltGuiSyncBase implements QuiltErro
 	}
 
 	@Override
-	public void setEnabled(boolean enabled, QuiltLoaderText disabledMessage) {
+	public void setEnabled(boolean enabled, MuonLoaderText disabledMessage) {
 		this.enabled = enabled;
 		if (!enabled) {
 			if (disabledMessage == null) {

@@ -18,13 +18,13 @@
 package org.muonmc.loader.impl.fabric.util.version;
 
 import org.muonmc.loader.api.Version;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.SemanticVersionImpl;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class Quilt2FabricVersion implements net.fabricmc.loader.api.Version {
 
 	final Version quilt;

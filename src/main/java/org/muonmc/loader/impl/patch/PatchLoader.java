@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 
 import org.muonmc.loader.impl.patch.reflections.ReflectionsClassPatcher;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class PatchLoader {
 	private static final Map<String, byte[]> patchedClasses = new HashMap<>();
 

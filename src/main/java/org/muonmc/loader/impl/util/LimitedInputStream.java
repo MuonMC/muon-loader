@@ -19,7 +19,7 @@ package org.muonmc.loader.impl.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class LimitedInputStream extends InputStream {
 	private final InputStream from;
 	private final int limit;

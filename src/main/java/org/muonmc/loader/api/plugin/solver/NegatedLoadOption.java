@@ -16,16 +16,16 @@
 
 package org.muonmc.loader.api.plugin.solver;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 
 /** Used for the "inverse load" condition - if this is required by a {@link Rule} then it means the {@link LoadOption}
  * must not be loaded.
  * <p>
  * Plugins can negate {@link LoadOption}s with {@link LoadOption#negate()}, and test for negation with either
  * "instanceof NegatedLoadOption" or LoadOption.isNegated */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public final class NegatedLoadOption extends LoadOption {
 	public final LoadOption not;
 
@@ -43,7 +43,7 @@ public final class NegatedLoadOption extends LoadOption {
 	}
 
 	@Override
-	public QuiltLoaderText describe() {
-		return QuiltLoaderText.translate("solver.option.negated", not.describe());
+	public MuonLoaderText describe() {
+		return MuonLoaderText.translate("solver.option.negated", not.describe());
 	}
 }

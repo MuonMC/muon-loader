@@ -34,10 +34,10 @@ import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionConstraint;
 import org.muonmc.loader.api.VersionInterval;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class VersionRangeImpl extends AbstractSet<VersionInterval> implements VersionRange {
 	public static final VersionRangeImpl ANY = new VersionRangeImpl(Collections.singleton(VersionIntervalImpl.ALL));
 	public static final VersionRangeImpl NONE = new VersionRangeImpl(Collections.emptyList());

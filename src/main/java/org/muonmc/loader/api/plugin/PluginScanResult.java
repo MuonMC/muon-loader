@@ -17,12 +17,12 @@
 package org.muonmc.loader.api.plugin;
 
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** Used as a result from {@link QuiltLoaderPlugin#scanZip(java.nio.file.Path, boolean, PluginGuiTreeNode)} and
- * {@link QuiltLoaderPlugin#scanUnknownFile(java.nio.file.Path, boolean, PluginGuiTreeNode)}. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+/** Used as a result from {@link MuonLoaderPlugin#scanZip(java.nio.file.Path, boolean, PluginGuiTreeNode)} and
+ * {@link MuonLoaderPlugin#scanUnknownFile(java.nio.file.Path, boolean, PluginGuiTreeNode)}. */
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public enum PluginScanResult {
 	/** Indicates that the plugin didn't find anything useful. */
 	IGNORED,

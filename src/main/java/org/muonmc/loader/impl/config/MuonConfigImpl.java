@@ -19,18 +19,18 @@ package org.muonmc.loader.impl.config;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.quiltmc.config.api.ConfigEnvironment;
+import org.quiltmc.config.implementor_api.ConfigEnvironment;
 import org.quiltmc.config.api.Serializer;
 import org.quiltmc.config.api.serializers.Json5Serializer;
 import org.quiltmc.config.api.serializers.TomlSerializer;
 import org.muonmc.loader.impl.MuonLoaderImpl;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class MuonConfigImpl {
 	private static ConfigEnvironment ENV;
 

@@ -16,7 +16,7 @@
 
 package org.muonmc.loader.impl.util;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class StringUtil {
 	public static String capitalize(String s) {
 		if (s.isEmpty()) return s;

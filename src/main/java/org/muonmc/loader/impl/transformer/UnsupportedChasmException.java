@@ -16,12 +16,12 @@
 
 package org.muonmc.loader.impl.transformer;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Indicates that the installed chasm version doesn't match what loader expects. Temporary exception since chasm will
  * eventually be built into loader. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class UnsupportedChasmException extends RuntimeException {
 
 	public UnsupportedChasmException(String message, Throwable cause) {

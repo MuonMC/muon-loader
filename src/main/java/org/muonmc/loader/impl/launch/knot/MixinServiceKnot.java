@@ -17,12 +17,12 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 import org.objectweb.asm.ClassReader;
@@ -53,7 +53,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBytecodeProvider, ITransformerProvider, IClassTracker {
 	static IMixinTransformer transformer;
 
@@ -64,11 +64,11 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 	}
 
 	public byte[] getClassBytes(String name, String transformedName) throws IOException {
-		return QuiltLauncherBase.getLauncher().getClassByteArray(name, true);
+		return MuonLauncherBase.getLauncher().getClassByteArray(name, true);
 	}
 
 	public byte[] getClassBytes(String name, boolean runTransformers) throws ClassNotFoundException, IOException {
-		byte[] classBytes = QuiltLauncherBase.getLauncher().getClassByteArray(name, runTransformers);
+		byte[] classBytes = MuonLauncherBase.getLauncher().getClassByteArray(name, runTransformers);
 
 		if (classBytes != null) {
 			return classBytes;
@@ -99,12 +99,12 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public Class<?> findClass(String name) throws ClassNotFoundException {
-		return QuiltLauncherBase.getLauncher().getTargetClassLoader().loadClass(name);
+		return MuonLauncherBase.getLauncher().getTargetClassLoader().loadClass(name);
 	}
 
 	@Override
 	public Class<?> findClass(String name, boolean initialize) throws ClassNotFoundException {
-		return Class.forName(name, initialize, QuiltLauncherBase.getLauncher().getTargetClassLoader());
+		return Class.forName(name, initialize, MuonLauncherBase.getLauncher().getTargetClassLoader());
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public String getName() {
-		return QuiltLauncherBase.getLauncher() instanceof Knot ? "Knot/Quilt" : "Launchwrapper/Quilt";
+		return MuonLauncherBase.getLauncher() instanceof Knot ? "Knot/Quilt" : "Launchwrapper/Quilt";
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 					Path modResource = modContainer.get().rootPath().resolve(resource);
 					try {
 						if (!FasterFiles.exists(modResource)) {
-							URL url = QuiltLauncherBase.getLauncher().getResourceURL(resource);
+							URL url = MuonLauncherBase.getLauncher().getResourceURL(resource);
 							if (url != null) {
 								Log.warn(LogCategory.GENERAL, "Failed to find the resource '" + resource + "' in mod '" + mod + "', but did find it in a different place: " + url);
 								return url.openStream();
@@ -223,7 +223,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 				}
 			}
 		}
-		return QuiltLauncherBase.getLauncher().getResourceAsStream(name);
+		return MuonLauncherBase.getLauncher().getResourceAsStream(name);
 	}
 
 	@Override
@@ -231,7 +231,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public boolean isClassLoaded(String className) {
-		return QuiltLauncherBase.getLauncher().isClassLoaded(className);
+		return MuonLauncherBase.getLauncher().isClassLoaded(className);
 	}
 
 	@Override
@@ -254,7 +254,7 @@ public class MixinServiceKnot implements IMixinService, IClassProvider, IClassBy
 
 	@Override
 	public String getSideName() {
-		return QuiltLauncherBase.getLauncher().getEnvironmentType().name();
+		return MuonLauncherBase.getLauncher().getEnvironmentType().name();
 	}
 
 	@Override

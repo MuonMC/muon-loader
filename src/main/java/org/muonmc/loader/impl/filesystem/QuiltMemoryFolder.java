@@ -24,14 +24,14 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 @Deprecated
 abstract class QuiltMemoryFolder extends QuiltMemoryEntry {
 
-	private QuiltMemoryFolder(QuiltMemoryPath path) {
+	private QuiltMemoryFolder(MuonMemoryPath path) {
 		super(path);
 	}
 
@@ -44,9 +44,9 @@ abstract class QuiltMemoryFolder extends QuiltMemoryEntry {
 
 	@Deprecated
 	public static final class ReadOnly extends QuiltMemoryFolder {
-		final QuiltMemoryPath[] children;
+		final MuonMemoryPath[] children;
 
-		public ReadOnly(QuiltMemoryPath path, QuiltMemoryPath[] children) {
+		public ReadOnly(MuonMemoryPath path, MuonMemoryPath[] children) {
 			super(path);
 			this.children = children;
 		}
@@ -59,9 +59,9 @@ abstract class QuiltMemoryFolder extends QuiltMemoryEntry {
 
 	@Deprecated
 	public static final class ReadWrite extends QuiltMemoryFolder {
-		final Set<QuiltMemoryPath> children = Collections.newSetFromMap(new ConcurrentHashMap<>());
+		final Set<MuonMemoryPath> children = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
-		public ReadWrite(QuiltMemoryPath path) {
+		public ReadWrite(MuonMemoryPath path) {
 			super(path);
 		}
 

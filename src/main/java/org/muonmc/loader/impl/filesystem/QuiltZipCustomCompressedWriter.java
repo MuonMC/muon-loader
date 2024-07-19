@@ -47,7 +47,7 @@ import java.util.zip.GZIPOutputStream;
 import org.muonmc.loader.impl.util.ExposedByteArrayOutputStream;
 
 /** Writer class that implements
- * {@link QuiltZipFileSystem#writeQuiltCompressedFileSystem(java.nio.file.Path, java.nio.file.Path)}. */
+ * {@link MuonZipFileSystem#writeQuiltCompressedFileSystem(java.nio.file.Path, java.nio.file.Path)}. */
 final class QuiltZipCustomCompressedWriter {
 
 	static final Charset UTF8 = StandardCharsets.UTF_8;
@@ -71,7 +71,7 @@ final class QuiltZipCustomCompressedWriter {
 		this.dst = dst;
 	}
 
-	/** @see QuiltZipFileSystem#writeQuiltCompressedFileSystem(Path, Path) */
+	/** @see MuonZipFileSystem#writeQuiltCompressedFileSystem(Path, Path) */
 	void write() throws IOException {
 		try (FileChannel channel = FileChannel.open(dst, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)) {
 			write0(channel);

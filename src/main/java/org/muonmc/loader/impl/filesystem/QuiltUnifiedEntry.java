@@ -33,16 +33,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFolder, QuiltUnifiedFile */ {
 
 	// We don't actually need generics at this point
-	final QuiltMapPath<?, ?> path;
+	final MuonMapPath<?, ?> path;
 
-	private QuiltUnifiedEntry(QuiltMapPath<?, ?> path) {
+	private QuiltUnifiedEntry(MuonMapPath<?, ?> path) {
 		this.path = path.toAbsolutePath().normalize();
 	}
 
@@ -58,17 +58,17 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 	}
 
 	/** @return A new entry which has been copied to the new path. Might not be on the same filesystem. */
-	protected abstract QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath);
+	protected abstract QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath);
 
-	/** Like {@link #createCopiedTo(QuiltMapPath)}, but used when the original file will be deleted - which allows some entries to
+	/** Like {@link #createCopiedTo(MuonMapPath)}, but used when the original file will be deleted - which allows some entries to
 	 * be shallow copied. */
-	protected QuiltUnifiedEntry createMovedTo(QuiltMapPath<?, ?> newPath) {
+	protected QuiltUnifiedEntry createMovedTo(MuonMapPath<?, ?> newPath) {
 		return createCopiedTo(newPath);
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static abstract class QuiltUnifiedFolder extends QuiltUnifiedEntry {
-		private QuiltUnifiedFolder(QuiltMapPath<?, ?> path) {
+		private QuiltUnifiedFolder(MuonMapPath<?, ?> path) {
 			super(path);
 		}
 
@@ -80,11 +80,11 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 		protected abstract Collection<? extends Path> getChildren();
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class QuiltUnifiedFolderReadOnly extends QuiltUnifiedFolder {
-		public final QuiltMapPath<?, ?>[] children;
+		public final MuonMapPath<?, ?>[] children;
 
-		public QuiltUnifiedFolderReadOnly(QuiltMapPath<?, ?> path, QuiltMapPath<?, ?>[] children) {
+		public QuiltUnifiedFolderReadOnly(MuonMapPath<?, ?> path, MuonMapPath<?, ?>[] children) {
 			super(path);
 			this.children = children;
 		}
@@ -95,16 +95,16 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
-			return new QuiltUnifiedFolderReadOnly(newPath, new QuiltMapPath[0]);
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
+			return new QuiltUnifiedFolderReadOnly(newPath, new MuonMapPath[0]);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class QuiltUnifiedFolderWriteable extends QuiltUnifiedFolder {
-		public final Set<QuiltMapPath<?, ?>> children = Collections.newSetFromMap(new ConcurrentHashMap<>());
+		public final Set<MuonMapPath<?, ?>> children = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
-		public QuiltUnifiedFolderWriteable(QuiltMapPath<?, ?> path) {
+		public QuiltUnifiedFolderWriteable(MuonMapPath<?, ?> path) {
 			super(path);
 		}
 
@@ -115,18 +115,18 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 
 		@Override
 		protected QuiltUnifiedEntry switchToReadOnly() {
-			return new QuiltUnifiedFolderReadOnly(path, children.toArray(new QuiltMapPath[0]));
+			return new QuiltUnifiedFolderReadOnly(path, children.toArray(new MuonMapPath[0]));
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
 			return new QuiltUnifiedFolderWriteable(newPath);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static abstract class QuiltUnifiedFile extends QuiltUnifiedEntry {
-		public QuiltUnifiedFile(QuiltMapPath<?, ?> path) {
+		public QuiltUnifiedFile(MuonMapPath<?, ?> path) {
 			super(path);
 		}
 
@@ -137,13 +137,13 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 		abstract SeekableByteChannel createByteChannel(Set<? extends OpenOption> options) throws IOException;
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static class QuiltUnifiedMountedFile extends QuiltUnifiedFile {
 
 		public final Path to;
 		public final boolean readOnly;
 
-		public QuiltUnifiedMountedFile(QuiltMapPath<?, ?> path, Path to, boolean readOnly) {
+		public QuiltUnifiedMountedFile(MuonMapPath<?, ?> path, Path to, boolean readOnly) {
 			super(path);
 			this.to = to;
 			this.readOnly = readOnly;
@@ -197,14 +197,14 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
 			return new QuiltUnifiedMountedFile(newPath, to, readOnly);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static class QuiltUnifiedCopyOnWriteFile extends QuiltUnifiedMountedFile {
-		public QuiltUnifiedCopyOnWriteFile(QuiltMapPath<?, ?> path, Path to) {
+		public QuiltUnifiedCopyOnWriteFile(MuonMapPath<?, ?> path, Path to) {
 			super(path, to, false);
 //			System.out.println("NEW copy-on-write " + path + "   ->   " + to);
 		}
@@ -216,7 +216,7 @@ public abstract /* sealed */ class QuiltUnifiedEntry /* permits QuiltUnifiedFold
 		}
 
 		@Override
-		protected QuiltUnifiedEntry createCopiedTo(QuiltMapPath<?, ?> newPath) {
+		protected QuiltUnifiedEntry createCopiedTo(MuonMapPath<?, ?> newPath) {
 			return new QuiltUnifiedCopyOnWriteFile(newPath, to);
 		}
 

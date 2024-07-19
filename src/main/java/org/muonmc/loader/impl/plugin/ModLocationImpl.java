@@ -17,10 +17,10 @@
 package org.muonmc.loader.impl.plugin;
 
 import org.muonmc.loader.api.plugin.ModLocation;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ModLocationImpl implements ModLocation {
 
 	private final boolean classpath, direct;

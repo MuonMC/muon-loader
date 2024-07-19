@@ -25,10 +25,10 @@ import java.util.TreeMap;
 
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class PotentialModSet {
 
 	static final Comparator<Version> VERSION_COMPARATOR = (a, b) -> {

@@ -49,8 +49,8 @@ import org.muonmc.loader.impl.game.LibClassifier;
 import org.quiltmc.loader.impl.game.minecraft.patch.BrandingPatch;
 import org.quiltmc.loader.impl.game.minecraft.patch.EntrypointPatch;
 import org.quiltmc.loader.impl.game.minecraft.patch.TinyFDPatch;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.metadata.qmj.V1ModMetadataBuilder;
 import org.muonmc.loader.impl.util.Arguments;
 import org.muonmc.loader.impl.util.ExceptionUtil;
@@ -192,7 +192,7 @@ public class MinecraftGameProvider implements GameProvider {
 
 	@Override
 	public String getNamespace() {
-		return QuiltLauncherBase.getLauncher().isDevelopment() ? "named" : "intermediary";
+		return MuonLauncherBase.getLauncher().isDevelopment() ? "named" : "intermediary";
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class MinecraftGameProvider implements GameProvider {
 
 
 	@Override
-	public boolean locateGame(QuiltLauncher launcher, String[] args) {
+	public boolean locateGame(MuonLauncher launcher, String[] args) {
 		this.envType = launcher.getEnvironmentType();
 		this.arguments = new Arguments();
 		arguments.parse(args);
@@ -361,7 +361,7 @@ public class MinecraftGameProvider implements GameProvider {
 	}
 
 	@Override
-	public void initialize(QuiltLauncher launcher) {
+	public void initialize(MuonLauncher launcher) {
 		if (isObfuscated()) {
 			Map<String, Path> obfJars = new HashMap<>(3);
 			String[] names = new String[gameJars.size()];
@@ -440,7 +440,7 @@ public class MinecraftGameProvider implements GameProvider {
 		transformer.locateEntrypoints(launcher, getNamespace(), gameJars);
 	}
 
-	private void setupLogHandler(QuiltLauncher launcher, boolean useTargetCl) {
+	private void setupLogHandler(MuonLauncher launcher, boolean useTargetCl) {
 		System.setProperty("log4j2.formatMsgNoLookups", "true"); // lookups are not used by mc and cause issues with older log4j2 versions
 
 		try {
@@ -524,7 +524,7 @@ public class MinecraftGameProvider implements GameProvider {
 	}
 
 	@Override
-	public void unlockClassPath(QuiltLauncher launcher) {
+	public void unlockClassPath(MuonLauncher launcher) {
 		for (Path gameJar : gameJars) {
 			if (logJars.contains(gameJar)) {
 				launcher.setAllowedPrefixes(gameJar);

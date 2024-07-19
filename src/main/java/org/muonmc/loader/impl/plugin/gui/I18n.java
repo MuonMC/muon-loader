@@ -25,16 +25,16 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /**
  * Handles the translation of the plugin's status tree nodes.
  */
 // TODO: support plugins having their own language files for their own translation keys
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class I18n {
-	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("lang/quilt_loader", Locale.getDefault(), new LocaleFactory());
+	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("lang/muon_loader", Locale.getDefault(), new LocaleFactory());
 
 	public static String translate(String key) {
 		if (BUNDLE.containsKey(key)) {

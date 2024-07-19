@@ -17,13 +17,13 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.spongepowered.asm.service.IGlobalPropertyService;
 import org.spongepowered.asm.service.IPropertyKey;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltGlobalPropertyService implements IGlobalPropertyService {
 	@Override
 	public IPropertyKey resolveKey(String name) {
@@ -37,23 +37,23 @@ public class QuiltGlobalPropertyService implements IGlobalPropertyService {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getProperty(IPropertyKey key) {
-		return (T) QuiltLauncherBase.getProperties().get(keyString(key));
+		return (T) MuonLauncherBase.getProperties().get(keyString(key));
 	}
 
 	@Override
 	public void setProperty(IPropertyKey key, Object value) {
-		QuiltLauncherBase.getProperties().put(keyString(key), value);
+		MuonLauncherBase.getProperties().put(keyString(key), value);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getProperty(IPropertyKey key, T defaultValue) {
-		return (T) QuiltLauncherBase.getProperties().getOrDefault(keyString(key), defaultValue);
+		return (T) MuonLauncherBase.getProperties().getOrDefault(keyString(key), defaultValue);
 	}
 
 	@Override
 	public String getPropertyString(IPropertyKey key, String defaultValue) {
-		Object o = QuiltLauncherBase.getProperties().get(keyString(key));
+		Object o = MuonLauncherBase.getProperties().get(keyString(key));
 		return o != null ? o.toString() : defaultValue;
 	}
 }

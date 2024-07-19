@@ -18,10 +18,10 @@
 package org.muonmc.loader.impl.entrypoint;
 
 import org.muonmc.loader.api.entrypoint.EntrypointException;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltEntrypointException extends EntrypointException {
 
 	private final String key;

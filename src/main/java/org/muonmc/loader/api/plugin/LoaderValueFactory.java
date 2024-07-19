@@ -23,14 +23,14 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.muonmc.loader.impl.metadata.qmj.JsonLoaderFactoryImpl;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.LoaderValue;
 
 /** Location-less factories */
 // Unlike the rest of the plugin API this should probably be moved to the main API
 // since it could be useful?
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface LoaderValueFactory {
 
 	public static LoaderValueFactory getFactory() {

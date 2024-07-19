@@ -28,11 +28,11 @@ import java.util.function.Consumer;
 import org.muonmc.loader.api.plugin.solver.AliasedLoadOption;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** A set of {@link RuleDefinition} and {@link LoadOption}s that can be solved. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class RuleSet {
 
 	// Non-solvable parts
@@ -114,7 +114,7 @@ public abstract class RuleSet {
 
 	public abstract void forEachRule(Consumer<RuleDefinition> consumer);
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class InputRuleSet extends RuleSet {
 
 		public final Map<Rule, List<RuleDefinition>> ruleToDefinitions;
@@ -140,7 +140,7 @@ public abstract class RuleSet {
 
 	/** A {@link RuleSet} where the input {@link RuleDefinition}s cannot be easily mapped back to the original
 	 * {@link Rule}s. */
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static final class ProcessedRuleSet extends RuleSet {
 
 		/** Every active {@link RuleDefinition} that influences the load options chosen. */

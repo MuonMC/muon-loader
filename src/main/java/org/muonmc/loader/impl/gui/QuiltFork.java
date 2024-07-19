@@ -30,8 +30,8 @@ import javax.imageio.ImageIO;
 
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.LoaderValueHelper;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
@@ -40,17 +40,17 @@ import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.LoaderValue.LType;
 import org.muonmc.loader.api.gui.LoaderGuiClosed;
 import org.muonmc.loader.api.gui.LoaderGuiException;
-import org.muonmc.loader.api.gui.QuiltBasicWindow;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
-import org.muonmc.loader.api.gui.QuiltGuiMessagesTab;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltLoaderWindow;
+import org.muonmc.loader.api.gui.MuonBasicWindow;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonGuiMessagesTab;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderWindow;
 import org.muonmc.loader.api.plugin.LoaderValueFactory;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltFork {
 
 	private static final QuiltForkComms COMMS;
@@ -88,40 +88,40 @@ public class QuiltFork {
 		return LoaderValueFactory.getFactory();
 	}
 
-	public static void openErrorGui(List<QuiltDisplayedError> errors) throws LoaderGuiException, LoaderGuiClosed {
-		QuiltBasicWindow<Boolean> window = QuiltLoaderGui.createBasicWindow(false);
-		window.title(QuiltLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
+	public static void openErrorGui(List<MuonDisplayedError> errors) throws LoaderGuiException, LoaderGuiClosed {
+		MuonBasicWindow<Boolean> window = MuonLoaderGui.createBasicWindow(false);
+		window.title(MuonLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
 		window.addOpenQuiltSupportButton();
 		QuiltErrorButton continueButton = window.addContinueButton();
-		continueButton.text(QuiltLoaderText.translate("button.ignore"));
-		continueButton.icon(QuiltLoaderGui.iconContinueIgnoring());
-		QuiltGuiMessagesTab messages = window.addMessagesTab(QuiltLoaderText.EMPTY);
+		continueButton.text(MuonLoaderText.translate("button.ignore"));
+		continueButton.icon(MuonLoaderGui.iconContinueIgnoring());
+		MuonGuiMessagesTab messages = window.addMessagesTab(MuonLoaderText.EMPTY);
 		window.restrictToSingleTab();
-		for (QuiltDisplayedError error : errors) {
+		for (MuonDisplayedError error : errors) {
 			error.addOnFixedListener(() -> {
-				for (QuiltDisplayedError e : errors) {
+				for (MuonDisplayedError e : errors) {
 					if (!e.isFixed()) {
 						return;
 					}
 				}
-				continueButton.text(QuiltLoaderText.of("button.continue"));
-				continueButton.icon(QuiltLoaderGui.iconContinue());
+				continueButton.text(MuonLoaderText.of("button.continue"));
+				continueButton.icon(MuonLoaderGui.iconContinue());
 				window.returnValue(true);
 			});
 			messages.addMessage(error);
 		}
 
-		if (!QuiltLoaderGui.open(window)) {
+		if (!MuonLoaderGui.open(window)) {
 			throw LoaderGuiClosed.INSTANCE;
 		}
 	}
 
-	public static <R> R open(QuiltLoaderWindow<R> window) throws LoaderGuiException {
+	public static <R> R open(MuonLoaderWindow<R> window) throws LoaderGuiException {
 		open(window, true);
 		return window.returnValue();
 	}
 
-	public static void open(QuiltLoaderWindow<?> window, boolean shouldWait) throws LoaderGuiException {
+	public static void open(MuonLoaderWindow<?> window, boolean shouldWait) throws LoaderGuiException {
 		if (COMMS == null) {
 			if (FORK_EXCEPTION != null) {
 				// Gui NOT disabled, but it failed to open

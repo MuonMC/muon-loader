@@ -22,11 +22,11 @@ import java.util.Objects;
 import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionConstraint;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 @Deprecated
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class VersionConstraintImpl implements VersionConstraint {
 	public static final VersionConstraintImpl ANY = new VersionConstraintImpl();
 	private final String versionString;

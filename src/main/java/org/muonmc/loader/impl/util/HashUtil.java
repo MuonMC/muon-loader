@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.muonmc.loader.api.FasterFiles;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class HashUtil {
 
 	public static final int SHA1_HASH_LENGTH = 20;

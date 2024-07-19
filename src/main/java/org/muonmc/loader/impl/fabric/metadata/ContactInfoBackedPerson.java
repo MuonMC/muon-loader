@@ -17,12 +17,12 @@
 
 package org.muonmc.loader.impl.fabric.metadata;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ContactInformation;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class ContactInfoBackedPerson extends SimplePerson {
 	private final ContactInformation contact;
 

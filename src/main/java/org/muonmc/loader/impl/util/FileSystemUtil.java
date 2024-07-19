@@ -29,10 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipError;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class FileSystemUtil {
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public static class FileSystemDelegate implements AutoCloseable {
 		private final FileSystem fileSystem;
 		private final boolean owner;

@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.muonmc.loader.impl.MuonConstants;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -36,15 +37,28 @@ import org.objectweb.asm.Type;
 import org.muonmc.loader.api.ModInternal;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.MuonLoaderImpl;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+/**
+ * Transforms classes that access Muon internals.
+ *
+ * <p>
+ * Transformations can have a few outcomes:
+ * <ul>
+ *     <li>The offender throws an error upon access.</li>
+ *     <li>The offender prints a warning upon access.</li>
+ *     <li>Nothing.</li>
+ * </ul>
+ * These are all determined by the {@link MuonLoaderInternal} value on the offended class.
+ *
+ * @see MuonLoaderInternal
+ */
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class InternalsHiderTransform {
-
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	public enum Target {
 		PLUGIN,
 		MOD;
@@ -52,7 +66,7 @@ public class InternalsHiderTransform {
 
 	private static final String MOD_INTERNAL_DESCRIPTOR = Type.getDescriptor(ModInternal.class);
 
-	private static final String METHOD_OWNER = Type.getInternalName(QuiltInternalExceptionUtil.class);
+	private static final String METHOD_OWNER = Type.getInternalName(MuonInternalExceptionUtil.class);
 
 	final Target target;
 	final Map<String, InternalValue> internalPackages = new HashMap<>();
@@ -164,7 +178,7 @@ public class InternalsHiderTransform {
 				}
 
 				// SO
-				// This is a two step process
+				// This is a two-step process
 				// we need to visit every method call, field read/write
 				// and check that against the definitions, to see if the package/class/method/field is marked as
 				// "@ModInternal"
@@ -286,31 +300,31 @@ public class InternalsHiderTransform {
 			return value;
 		}
 
-		if (owner.startsWith("org/quiltmc/loader/")) {
+		if (owner.startsWith("org/muonmc/loader/")) {
 			try {
 				String name = owner.replace('/', '.');
 				Class<?> loaderClass = Class.forName(name);
-				QuiltLoaderInternal internal = loaderClass.getAnnotation(QuiltLoaderInternal.class);
-				QuiltLoaderInternalType type;
+				MuonLoaderInternal internal = loaderClass.getAnnotation(MuonLoaderInternal.class);
+				MuonLoaderInternalType type;
 				Class<?>[] replacements = {};
 				if (internal != null) {
 					type = internal.value();
 					replacements = internal.replacements();
-				} else if (name.startsWith("org.quiltmc.loader.impl")) {
-					type = QuiltLoaderInternalType.LEGACY_EXPOSED;
-					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @QuiltLoaderInternal!");
-				} else if (name.startsWith("org.quiltmc.loader.api.plugin")) {
-					type = QuiltLoaderInternalType.PLUGIN_API;
-					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @QuiltLoaderInternal!");
+				} else if (name.startsWith("org.muonmc.loader.impl")) {
+					type = MuonLoaderInternalType.getLegacyExposed();
+					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @MuonLoaderInternal!");
+				} else if (name.startsWith("org.muonmc.loader.api.plugin")) {
+					type = MuonLoaderInternalType.PLUGIN_API;
+					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @MuonLoaderInternal!");
 				} else {
-					type = QuiltLoaderInternalType.LEGACY_NO_WARN;
+					type = MuonLoaderInternalType.getLegacyNoWarn();
 				}
 
 				if (target == Target.MOD) {
-					if (type == QuiltLoaderInternalType.LEGACY_NO_WARN) {
+					if (type == MuonLoaderInternalType.getLegacyNoWarn()) {
 						value = PermittedLoaderInternalValue.INSTANCE;
 					} else {
-						if (type == QuiltLoaderInternalType.LEGACY_EXPOSED) {
+						if (type == MuonLoaderInternalType.getLegacyExposed()) {
 							value = new WarnLoaderInternalValue();
 						} else {
 							value = new LoaderInternalValue();
@@ -320,7 +334,7 @@ public class InternalsHiderTransform {
 						}
 					}
 				} else if (target == Target.PLUGIN) {
-					if (name.startsWith("org.quiltmc.loader.api.")) {
+					if (name.startsWith("org.muonmc.loader.api.")) {
 						value = PermittedLoaderInternalValue.INSTANCE;
 					} else {
 						value = new LoaderInternalValue();
@@ -443,7 +457,7 @@ public class InternalsHiderTransform {
 				sb.append(modFrom());
 				sb.append(" to declare a new public API that can have guaranteed backwards compatibility!");
 			} else if (replacements.size() == 1) {
-				sb.append("Please don't use this, instead try using the public api ");
+				sb.append("Please don't use this, instead try using the public API ");
 				sb.append(replacements.get(0));
 				sb.append(" - that way you can have guaranteed backwards compatibility!");
 			} else {
@@ -466,7 +480,7 @@ public class InternalsHiderTransform {
 
 		@Override
 		String modFrom() {
-			return "Quilt Loader";
+			return MuonConstants.NAME;
 		}
 	}
 
@@ -504,7 +518,7 @@ public class InternalsHiderTransform {
 
 		@Override
 		String modFrom() {
-			return inMod == null ? "Unkown Mod" : inMod.metadata().name();
+			return inMod == null ? "Unknown Mod" : inMod.metadata().name();
 		}
 	}
 

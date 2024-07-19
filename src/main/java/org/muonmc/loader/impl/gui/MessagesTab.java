@@ -24,28 +24,28 @@ import java.util.Map;
 
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltGuiMessagesTab;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonGuiMessagesTab;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 
-class MessagesTab extends AbstractTab implements QuiltGuiMessagesTab {
+class MessagesTab extends AbstractTab implements MuonGuiMessagesTab {
 
 	interface MessageTabListener extends TabChangeListener {
-		default void onMessageAdded(QuiltJsonGuiMessage message) {}
-		default void onMessageRemoved(int index, QuiltJsonGuiMessage message) {}
+		default void onMessageAdded(MuonJsonGuiMessage message) {}
+		default void onMessageRemoved(int index, MuonJsonGuiMessage message) {}
 	}
 
-	final List<QuiltJsonGuiMessage> messages = new ArrayList<>();
+	final List<MuonJsonGuiMessage> messages = new ArrayList<>();
 
-	public MessagesTab(BasicWindow<?> parent, QuiltLoaderText text) {
+	public MessagesTab(BasicWindow<?> parent, MuonLoaderText text) {
 		super(parent, text);
 	}
 
 	public MessagesTab(QuiltGuiSyncBase parent, LObject obj) throws IOException {
 		super(parent, obj);
 		for (LoaderValue value : HELPER.expectArray(obj, "messages")) {
-			messages.add(readChild(value, QuiltJsonGuiMessage.class));
+			messages.add(readChild(value, MuonJsonGuiMessage.class));
 		}
 	}
 
@@ -59,14 +59,14 @@ class MessagesTab extends AbstractTab implements QuiltGuiMessagesTab {
 	void handleUpdate(String name, LObject data) throws IOException {
 		switch (name) {
 			case "add_message": {
-				QuiltJsonGuiMessage message = readChild(HELPER.expectValue(data, "message"), QuiltJsonGuiMessage.class);
+				MuonJsonGuiMessage message = readChild(HELPER.expectValue(data, "message"), MuonJsonGuiMessage.class);
 				messages.add(message);
 				invokeListeners(MessageTabListener.class, l -> l.onMessageAdded(message));
 				break;
 			}
 			case "remove_message": {
 				int index = HELPER.expectNumber(data, "index").intValue();
-				QuiltJsonGuiMessage removed = messages.remove(index);
+				MuonJsonGuiMessage removed = messages.remove(index);
 				if (removed != null) {
 					invokeListeners(MessageTabListener.class, l -> l.onMessageRemoved(index, removed));
 				}
@@ -84,8 +84,8 @@ class MessagesTab extends AbstractTab implements QuiltGuiMessagesTab {
 	}
 
 	@Override
-	public void addMessage(QuiltDisplayedError message) {
-		QuiltJsonGuiMessage impl = (QuiltJsonGuiMessage) message;
+	public void addMessage(MuonDisplayedError message) {
+		MuonJsonGuiMessage impl = (MuonJsonGuiMessage) message;
 		messages.add(impl);
 		if (shouldSendUpdates()) {
 			Map<String, LoaderValue> map = new HashMap<>();
@@ -95,7 +95,7 @@ class MessagesTab extends AbstractTab implements QuiltGuiMessagesTab {
 	}
 
 	@Override
-	public void removeMessage(QuiltDisplayedError message) {
+	public void removeMessage(MuonDisplayedError message) {
 		int index = messages.indexOf(message);
 		if (index >= 0) {
 			Map<String, LoaderValue> map = new HashMap<>();
@@ -105,10 +105,10 @@ class MessagesTab extends AbstractTab implements QuiltGuiMessagesTab {
 	}
 
 	@Override
-	QuiltWarningLevel getInheritedLevel() {
-		for (QuiltJsonGuiMessage msg : messages) {
+	MuonWarningLevel getInheritedLevel() {
+		for (MuonJsonGuiMessage msg : messages) {
 			// TODO: Add levels to messages!
 		}
-		return QuiltWarningLevel.NONE;
+		return MuonWarningLevel.NONE;
 	}
 }

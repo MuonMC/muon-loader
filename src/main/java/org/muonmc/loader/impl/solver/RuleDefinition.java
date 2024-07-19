@@ -30,8 +30,8 @@ import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.api.plugin.solver.RuleDefiner;
 import org.muonmc.loader.impl.solver.Sat4jWrapper.Sat4jSolver;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.quiltmc.loader.util.sat4j.pb.IPBSolver;
 import org.quiltmc.loader.util.sat4j.specs.ContradictionException;
 import org.quiltmc.loader.util.sat4j.specs.IConstr;
@@ -39,7 +39,7 @@ import org.quiltmc.loader.util.sat4j.specs.IVecInt;
 
 /** Base rules that may be set by any of the rule defining methods in {@link RuleDefiner}. These are used to ensure we
  * don't have to double-call rules to make them define themselves in both of the sat4j passes. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class RuleDefinition {
 
 	final Rule rule;

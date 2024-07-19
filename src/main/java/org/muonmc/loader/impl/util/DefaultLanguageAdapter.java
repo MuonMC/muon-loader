@@ -17,7 +17,7 @@
 
 package org.muonmc.loader.impl.util;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.api.LanguageAdapter;
 import org.muonmc.loader.api.LanguageAdapterException;
 import org.muonmc.loader.api.ModContainer;
@@ -29,7 +29,7 @@ import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class DefaultLanguageAdapter implements LanguageAdapter {
 	public static final DefaultLanguageAdapter INSTANCE = new DefaultLanguageAdapter();
 
@@ -47,7 +47,7 @@ public final class DefaultLanguageAdapter implements LanguageAdapter {
 		Class<?> c;
 
 		try {
-			c = Class.forName(methodSplit[0], true, QuiltLauncherBase.getLauncher().getTargetClassLoader());
+			c = Class.forName(methodSplit[0], true, MuonLauncherBase.getLauncher().getTargetClassLoader());
 		} catch (ClassNotFoundException e) {
 			throw new LanguageAdapterException(e);
 		}

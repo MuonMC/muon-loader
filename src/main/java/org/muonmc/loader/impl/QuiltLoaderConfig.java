@@ -24,13 +24,13 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 import org.jetbrains.annotations.VisibleForTesting;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
 /** User-configurable options. Normally loaded from "CURRENT_DIR/config/quilt-loader.txt". */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class QuiltLoaderConfig {
 
 	// #######

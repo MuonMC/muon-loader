@@ -20,11 +20,11 @@ package org.muonmc.loader.impl.launch.knot;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.spongepowered.asm.launch.platform.container.IContainerHandle;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class MixinContainerHandleMod implements IContainerHandle {
 	@Override
 	public String getAttribute(String name) {

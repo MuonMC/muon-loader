@@ -32,12 +32,12 @@ import org.muonmc.loader.api.ModMetadata.ProvidedMod;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModEntrypoint;
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModLoadType;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class V1ModMetadataBuilder {
 	/* Required fields */
 	public JsonLoaderValue.ObjectImpl root = new JsonLoaderValue.ObjectImpl("root", new HashMap<>());

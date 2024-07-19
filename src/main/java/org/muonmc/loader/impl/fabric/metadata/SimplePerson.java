@@ -17,8 +17,8 @@
 
 package org.muonmc.loader.impl.fabric.metadata;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ContactInformation;
 import net.fabricmc.loader.api.metadata.Person;
@@ -26,7 +26,7 @@ import net.fabricmc.loader.api.metadata.Person;
 /**
  * Represents a simple implementation of person which is only identified by name.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class SimplePerson implements Person {
 	private final String name;
 

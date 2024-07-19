@@ -18,17 +18,17 @@ package org.muonmc.loader.impl.plugin;
 
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
 import org.muonmc.loader.api.plugin.solver.TentativeLoadOption;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Indicates the current state in the current cycle. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 enum PerCycleStep {
 
 	/** Indicates that the cycle has only just started. */
 	START,
 
-	/** Indicates that we've called {@link BuiltinQuiltPlugin#beforeSolve()}, and now we're solving. */
+	/** Indicates that we've called {@link BuiltinMuonPlugin#beforeSolve()}, and now we're solving. */
 	SOLVE,
 
 	/** Indicates that solving has finished, and now we're resolving {@link TentativeLoadOption}s. */

@@ -23,10 +23,10 @@ import java.util.Map;
 
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ModSolveResultImpl implements ModSolveResult {
 
 	public final Map<String, ModLoadOption> directModMap;

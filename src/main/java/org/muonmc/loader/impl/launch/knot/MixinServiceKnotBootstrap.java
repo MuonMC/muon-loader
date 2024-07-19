@@ -17,11 +17,11 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.spongepowered.asm.service.IMixinServiceBootstrap;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class MixinServiceKnotBootstrap implements IMixinServiceBootstrap {
 	@Override
 	public String getName() {

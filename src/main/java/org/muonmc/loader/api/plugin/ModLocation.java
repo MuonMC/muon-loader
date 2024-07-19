@@ -18,12 +18,12 @@ package org.muonmc.loader.api.plugin;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** Information about where a mod came from. Passed into the various {@link QuiltLoaderPlugin} scan methods. */
+/** Information about where a mod came from. Passed into the various {@link MuonLoaderPlugin} scan methods. */
 @ApiStatus.NonExtendable
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface ModLocation {
 
 	/** @return True if the mod is directly on the classpath, otherwise false. */

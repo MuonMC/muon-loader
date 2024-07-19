@@ -17,12 +17,12 @@
 
 package org.muonmc.loader.impl.discovery;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Thrown when something goes wrong internally during solving, rather than being the fault of mod files. In other words
  * it's caused by a bug in quilt loader, or one of it's plugins. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ModSolvingError extends ModResolutionException {
 	public ModSolvingError() {
 		super();

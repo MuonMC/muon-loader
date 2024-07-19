@@ -23,13 +23,13 @@ import java.util.Set;
 
 import org.objectweb.asm.ClassVisitor;
 import org.muonmc.loader.api.Requires;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.api.EnvType;
 
 /** Contains string processing for both {@link PackageStrippingData} and {@link ClassStrippingData} */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class AbstractStripData extends ClassVisitor {
 
 	protected final EnvType envType;

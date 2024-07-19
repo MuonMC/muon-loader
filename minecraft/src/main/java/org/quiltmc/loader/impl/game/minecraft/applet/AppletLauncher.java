@@ -1,7 +1,7 @@
 package org.quiltmc.loader.impl.game.minecraft.applet;
 
 import org.quiltmc.loader.impl.game.minecraft.Hooks;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.awt.BorderLayout;
@@ -21,7 +21,6 @@ import java.util.Map;
  *
  * <p>It has been adapted here for the purposes of the Fabric loader.
  */
-@SuppressWarnings("serial")
 public class AppletLauncher extends Applet implements AppletStub {
 	public static File gameDir;
 
@@ -46,7 +45,7 @@ public class AppletLauncher extends Applet implements AppletStub {
 		params.put("demo", Boolean.toString(demo));
 
 		try {
-			mcApplet = (Applet) QuiltLauncherBase
+			mcApplet = (Applet) MuonLauncherBase
 					.getClass(Hooks.appletMainClass)
 					.getDeclaredConstructor()
 					.newInstance();

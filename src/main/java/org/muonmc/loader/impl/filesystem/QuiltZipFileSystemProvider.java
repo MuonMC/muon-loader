@@ -24,15 +24,15 @@ import java.nio.file.Path;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-public class QuiltZipFileSystemProvider extends QuiltMapFileSystemProvider<QuiltZipFileSystem, QuiltZipPath> {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public class QuiltZipFileSystemProvider extends QuiltMapFileSystemProvider<MuonZipFileSystem, MuonZipPath> {
 
 	public static final String SCHEME = "quilt.zfs";
 	static final String READ_ONLY_EXCEPTION = "This FileSystem is read-only";
-	static final QuiltFSP<QuiltZipFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
+	static final QuiltFSP<MuonZipFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
 
 	public static QuiltZipFileSystemProvider instance() {
 		for (FileSystemProvider provider : FileSystemProvider.installedProviders()) {
@@ -44,18 +44,18 @@ public class QuiltZipFileSystemProvider extends QuiltMapFileSystemProvider<Quilt
 	}
 
 	@Override
-	protected QuiltFSP<QuiltZipFileSystem> quiltFSP() {
+	protected QuiltFSP<MuonZipFileSystem> quiltFSP() {
 		return PROVIDER;
 	}
 
 	@Override
-	protected Class<QuiltZipFileSystem> fileSystemClass() {
-		return QuiltZipFileSystem.class;
+	protected Class<MuonZipFileSystem> fileSystemClass() {
+		return MuonZipFileSystem.class;
 	}
 
 	@Override
-	protected Class<QuiltZipPath> pathClass() {
-		return QuiltZipPath.class;
+	protected Class<MuonZipPath> pathClass() {
+		return MuonZipPath.class;
 	}
 
 	@Override
@@ -68,10 +68,10 @@ public class QuiltZipFileSystemProvider extends QuiltMapFileSystemProvider<Quilt
 		throw new IOException("Only direct creation is supported");
 	}
 
-	private static QuiltZipPath toAbsQuiltPath(Path path) {
+	private static MuonZipPath toAbsQuiltPath(Path path) {
 		Path p = path.toAbsolutePath().normalize();
-		if (p instanceof QuiltZipPath) {
-			return (QuiltZipPath) p;
+		if (p instanceof MuonZipPath) {
+			return (MuonZipPath) p;
 		} else {
 			throw new IllegalArgumentException("Only 'QuiltZipPath' is supported!");
 		}
@@ -79,6 +79,6 @@ public class QuiltZipFileSystemProvider extends QuiltMapFileSystemProvider<Quilt
 
 	@Override
 	public FileStore getFileStore(Path path) throws IOException {
-		return ((QuiltZipPath) path).fs.getFileStores().iterator().next();
+		return ((MuonZipPath) path).fs.getFileStores().iterator().next();
 	}
 }

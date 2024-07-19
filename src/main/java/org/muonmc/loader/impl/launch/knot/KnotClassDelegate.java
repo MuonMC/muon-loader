@@ -16,10 +16,9 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import net.fabricmc.api.EnvType;
-
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.launch.common.QuiltCodeSource;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.MuonLoader;
@@ -28,8 +27,8 @@ import org.muonmc.loader.impl.patch.PatchLoader;
 import org.muonmc.loader.impl.util.FileSystemUtil;
 import org.muonmc.loader.impl.util.FileUtil;
 import org.muonmc.loader.impl.util.ManifestUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.UrlConversionException;
 import org.muonmc.loader.impl.util.UrlUtil;
@@ -57,7 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class KnotClassDelegate {
 	static class Metadata {
 		static final Metadata EMPTY = new Metadata(null, null);
@@ -116,7 +115,7 @@ class KnotClassDelegate {
 	private final KnotClassLoaderInterface itf;
 	private final GameProvider provider;
 	private final boolean isDevelopment;
-	private final EnvType envType;
+	private final Environment environment;
 	private IMixinTransformer mixinTransformer;
 	private boolean transformInitialized = false;
 	private boolean transformFinishedLoading = false;
@@ -134,9 +133,9 @@ class KnotClassDelegate {
 
 	private Map<String, ClassLoader> pluginPackages = Collections.emptyMap();
 
-	KnotClassDelegate(boolean isDevelopment, EnvType envType, KnotClassLoaderInterface itf, GameProvider provider) {
+	KnotClassDelegate(boolean isDevelopment, Environment environment, KnotClassLoaderInterface itf, GameProvider provider) {
 		this.isDevelopment = isDevelopment;
-		this.envType = envType;
+		this.environment = environment;
 		this.itf = itf;
 		this.provider = provider;
 	}
@@ -184,11 +183,11 @@ class KnotClassDelegate {
 
 		try {
 			c = tryLoadClass(name, false);
-		} catch (IllegalQuiltInternalAccessError e) {
+		} catch (IllegalMuonInternalAccessError e) {
 			// This happens when loading a class that needs a quilt-loader class to load:
 			// for example if it extends or implements one,
 			// or if the verifier needs to load one to check up-casts.
-			IllegalQuiltInternalAccessError e2 = new IllegalQuiltInternalAccessError("Failed to load the class " + name + "!");
+			IllegalMuonInternalAccessError e2 = new IllegalMuonInternalAccessError("Failed to load the class " + name + "!");
 			e2.initCause(e);
 			throw e2;
 		}
@@ -420,7 +419,7 @@ class KnotClassDelegate {
 			try {
 				manifest = ManifestUtil.readManifest(loadFrom);
 			} catch (IOException io) {
-				if (QuiltLauncherBase.getLauncher().isDevelopment()) {
+				if (MuonLauncherBase.getLauncher().isDevelopment()) {
 					Log.warn(LogCategory.KNOT, "Failed to load manifest", io);
 				}
 			}
@@ -463,7 +462,7 @@ class KnotClassDelegate {
 					} */
 				}
 			} catch (IOException | FileSystemNotFoundException e) {
-				if (QuiltLauncherBase.getLauncher().isDevelopment()) {
+				if (MuonLauncherBase.getLauncher().isDevelopment()) {
 					Log.warn(LogCategory.KNOT, "Failed to load manifest", e);
 				}
 			}

@@ -34,17 +34,19 @@ import net.fabricmc.loader.api.metadata.ModDependency;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.muonmc.loader.impl.metadata.qmj.FabricModMetadataWrapper;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class V1ModMetadataFabric extends AbstractModMetadata implements FabricLoaderModMetadata {
 	static final IconEntry NO_ICON = size -> Optional.empty();
 
@@ -177,8 +179,8 @@ final class V1ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 	}
 
 	@Override
-	public boolean loadsInEnvironment(EnvType type) {
-		return this.environment.matches(type);
+	public boolean loadsInEnvironment(Environment environment) {
+		return this.environment.matches(EnvTypeUtil.toEnvType(environment));
 	}
 
 	@Override
@@ -250,12 +252,12 @@ final class V1ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 	}
 
 	@Override
-	public Collection<String> getMixinConfigs(EnvType type) {
+	public Collection<String> getMixinConfigs(Environment environment) {
 		final List<String> mixinConfigs = new ArrayList<>();
 
 		// This is only ever called once, so no need to store the result of this.
 		for (MixinEntry mixin : this.mixins) {
-			if (mixin.environment.matches(type)) {
+			if (mixin.environment.matches(EnvTypeUtil.toEnvType(environment))) {
 				mixinConfigs.add(mixin.config);
 			}
 		}
@@ -264,7 +266,7 @@ final class V1ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 	}
 
 	@Override
-	public String getAccessWidener() {
+	public @Nullable String getAccessWidener() {
 		return this.accessWidener;
 	}
 

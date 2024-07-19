@@ -35,11 +35,11 @@ import java.util.stream.Collectors;
 
 import org.objectweb.asm.commons.Remapper;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.ManifestUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.mappings.TinyRemapperMappingsHelper;
 
@@ -51,7 +51,7 @@ import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 import net.fabricmc.tinyremapper.extension.mixin.MixinExtension;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class RuntimeModRemapper {
 	private static final String REMAP_TYPE_MANIFEST_KEY = "Fabric-Loom-Mixin-Remap-Type";
 	private static final String REMAP_TYPE_STATIC = "static";
@@ -68,7 +68,7 @@ final class RuntimeModRemapper {
 			return;
 		}
 
-		QuiltLauncher launcher = QuiltLauncherBase.getLauncher();
+		MuonLauncher launcher = MuonLauncherBase.getLauncher();
 
 		TinyRemapper remapper = TinyRemapper.newRemapper()
 				.withMappings(TinyRemapperMappingsHelper.create(launcher.getMappingConfiguration().getMappings(), "intermediary", launcher.getTargetNamespace()))
@@ -143,7 +143,7 @@ final class RuntimeModRemapper {
 
 	private static byte[] remapAccessWidener(byte[] input, Remapper remapper) {
 		AccessWidenerWriter writer = new AccessWidenerWriter();
-		AccessWidenerRemapper remappingDecorator = new AccessWidenerRemapper(writer, remapper, "intermediary", QuiltLauncherBase.getLauncher().getTargetNamespace());
+		AccessWidenerRemapper remappingDecorator = new AccessWidenerRemapper(writer, remapper, "intermediary", MuonLauncherBase.getLauncher().getTargetNamespace());
 		AccessWidenerReader accessWidenerReader = new AccessWidenerReader(remappingDecorator);
 		accessWidenerReader.read(input, "intermediary");
 		return writer.write();

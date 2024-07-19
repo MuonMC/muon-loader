@@ -32,7 +32,7 @@ import java.util.function.Function;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.plugin.solver.QuiltFileHasher;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class FileHasherImpl implements QuiltFileHasher {
 
 	public static final int HASH_LENGTH = HashUtil.SHA1_HASH_LENGTH;

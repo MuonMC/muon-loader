@@ -17,13 +17,13 @@
 
 package org.muonmc.loader.impl.discovery;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Thrown when an exception occurs while solving the set of mods, which is caused by those mods - in other words the
  * user is expected to be able to fix this error by adding or removing mods, or by asking a mod author to fix their
  * muon.mod.json file. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ModSolvingException extends ModResolutionException {
 
 	public ModSolvingException(String s) {

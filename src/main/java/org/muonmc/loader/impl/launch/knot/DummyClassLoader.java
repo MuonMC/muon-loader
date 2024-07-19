@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class DummyClassLoader extends ClassLoader {
 	private static final Enumeration<URL> NULL_ENUMERATION = new Enumeration<URL>() {
 		@Override

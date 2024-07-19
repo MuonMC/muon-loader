@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.Objects;
 
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
 import org.muonmc.loader.impl.util.Arguments;
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface GameProvider {
 	String getGameId();
 	String getGameName();
@@ -47,10 +47,10 @@ public interface GameProvider {
 	boolean requiresUrlClassLoader();
 
 	boolean isEnabled();
-	boolean locateGame(QuiltLauncher launcher, String[] args);
-	void initialize(QuiltLauncher launcher);
+	boolean locateGame(MuonLauncher launcher, String[] args);
+	void initialize(MuonLauncher launcher);
 	GameTransformer getEntrypointTransformer();
-	void unlockClassPath(QuiltLauncher launcher);
+	void unlockClassPath(MuonLauncher launcher);
 	void launch(ClassLoader loader);
 	default boolean isGameClass(String name) {
 		return true;

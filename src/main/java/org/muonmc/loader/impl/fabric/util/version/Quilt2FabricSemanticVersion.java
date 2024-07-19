@@ -20,14 +20,14 @@ package org.muonmc.loader.impl.fabric.util.version;
 import java.util.Optional;
 
 import org.muonmc.loader.api.Version;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.util.version.SemanticVersionImpl;
 
 @Deprecated
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class Quilt2FabricSemanticVersion extends Quilt2FabricVersion implements SemanticVersion {
 
 	final Version.Semantic quilt;

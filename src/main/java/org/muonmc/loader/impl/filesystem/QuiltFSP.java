@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 
-class QuiltFSP<FS extends QuiltBaseFileSystem<FS, ?>> {
+class QuiltFSP<FS extends MuonBaseFileSystem<FS, ?>> {
 
 	private final String scheme;
 	private final Map<String, WeakReference<FS>> activeFilesystems = new HashMap<>();

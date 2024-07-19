@@ -31,8 +31,8 @@ import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.quiltmc.json5.JsonReader;
 import org.quiltmc.json5.JsonToken;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -42,7 +42,7 @@ import net.fabricmc.loader.api.metadata.ModDependency;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class V1ModMetadataParser {
 	/**
 	 * Reads a {@code fabric.mod.json} file of schema version {@code 1}.

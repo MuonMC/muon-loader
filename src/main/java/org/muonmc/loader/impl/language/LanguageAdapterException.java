@@ -17,12 +17,11 @@
 
 package org.muonmc.loader.impl.language;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@SuppressWarnings("serial")
 @Deprecated
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class LanguageAdapterException extends Exception {
 	public LanguageAdapterException(String s) {
 		super(s);

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -31,22 +31,22 @@ import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.Remapper;
 import org.objectweb.asm.commons.SimpleRemapper;
 import org.muonmc.loader.api.FasterFileSystem;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ReflectionsClassPatcher {
 
 	private static final String REF_PATCH_UTIL = Type.getInternalName(ReflectionsPatchUtils.class);
 
 	private static final String INPUT_CLASS = "/org/muonmc/loader/impl/patch/reflections/";
 
-	/** Quilt loader impl package to place the newly generated class in. This uses the dot separator '.' */
+	/** Muon loader impl package to place the newly generated class in. This uses the dot separator '.' */
 	private final String patchPackage;
 
-	/** Quilt loader impl package to place the newly generated class in. This uses the slash separator '/' */
+	/** Muon loader impl package to place the newly generated class in. This uses the slash separator '/' */
 	private final String patchInternalPackage;
 
 	/** Target package to call into. This uses the package separator '/', and starts with text and ends with a slash,
@@ -72,7 +72,7 @@ public class ReflectionsClassPatcher {
 	/** @param patchPackage Sub-package to place this into. This will be prefixed with
 	 *            "org.quiltmc.loader.impl.patch.PATCHED.reflections." since it must go in there. */
 	private ReflectionsClassPatcher(String patchPackage, String targetPackage) {
-		this.patchPackage = "org.quiltmc.loader.impl.patch.PATCHED.reflections." + patchPackage;
+		this.patchPackage = "org.muonmc.loader.impl.patch.PATCHED.reflections." + patchPackage;
 		this.patchInternalPackage = this.patchPackage.replace('.', '/');
 		this.targetPackage = targetPackage;
 
@@ -95,7 +95,7 @@ public class ReflectionsClassPatcher {
 
 	private void patch(Map<String, byte[]> patchedClasses) {
 
-		if (QuiltLauncherBase.getLauncher().getResourceURL("/" + targetPackage + "vfs/Vfs.class") == null) {
+		if (MuonLauncherBase.getLauncher().getResourceURL("/" + targetPackage + "vfs/Vfs.class") == null) {
 			return;
 		}
 
@@ -110,7 +110,7 @@ public class ReflectionsClassPatcher {
 		genFile(file, patchedClasses);
 
 		try {
-			ClassLoader targetClassLoader = QuiltLauncherBase.getLauncher().getTargetClassLoader();
+			ClassLoader targetClassLoader = MuonLauncherBase.getLauncher().getTargetClassLoader();
 			Class<?> urlTypeCls = Class.forName(urlType, true, targetClassLoader);
 			Class.forName(dir, true, targetClassLoader);
 			Class.forName(file, true, targetClassLoader);

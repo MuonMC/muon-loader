@@ -17,12 +17,12 @@
 
 package org.muonmc.loader.impl.discovery;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Thrown to indicate something went wrong while loading mods, in a way that can be displayed to the user. */
 @SuppressWarnings("serial")
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ModResolutionException extends Exception {
 	public ModResolutionException() {
 		super();

@@ -17,13 +17,13 @@
 
 package org.muonmc.loader.impl.util.log;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ConsoleLogHandler implements LogHandler {
 	private static final LogLevel MIN_STDERR_LEVEL = LogLevel.ERROR;
 	private static final LogLevel MIN_STDOUT_LEVEL = LogLevel.getDefault();

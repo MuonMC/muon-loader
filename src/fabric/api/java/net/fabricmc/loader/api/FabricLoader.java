@@ -31,7 +31,7 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.api.minecraft.MinecraftQuiltLoader;
+import org.muonmc.loader.api.minecraft.MinecraftMuonLoader;
 
 /**
  * The public-facing FabricLoader instance.
@@ -39,7 +39,7 @@ import org.muonmc.loader.api.minecraft.MinecraftQuiltLoader;
  * <p>To obtain a working instance, call {@link #getInstance()}.</p>
  *
  * @since 0.4.0
- * @deprecated Please migrate to using {@link MuonLoader} directly instead - except for {@link #getEnvironmentType()}, which is now located in {@link MinecraftQuiltLoader}.
+ * @deprecated Please migrate to using {@link MuonLoader} directly instead - except for {@link #getEnvironmentType()}, which is now located in {@link MinecraftMuonLoader}.
  */
 @Deprecated
 public interface FabricLoader {

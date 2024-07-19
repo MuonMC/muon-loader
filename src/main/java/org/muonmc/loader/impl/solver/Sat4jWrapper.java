@@ -35,8 +35,8 @@ import org.muonmc.loader.api.plugin.solver.NegatedLoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.api.plugin.solver.RuleContext;
 import org.muonmc.loader.api.plugin.solver.RuleDefiner;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
@@ -65,7 +65,7 @@ import org.quiltmc.loader.util.sat4j.specs.TimeoutException;
  * <li>Perform optimisation of the rules.</li>
  * </ol>
  * This is (mostly) separated from any more specific rules */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class Sat4jWrapper implements RuleContext {
 
 	static final boolean LOG = Boolean.getBoolean(SystemProperties.DEBUG_MOD_SOLVING);

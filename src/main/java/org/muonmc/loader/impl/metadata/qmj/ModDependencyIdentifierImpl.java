@@ -19,10 +19,10 @@ package org.muonmc.loader.impl.metadata.qmj;
 import java.util.Objects;
 
 import org.muonmc.loader.api.ModDependencyIdentifier;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ModDependencyIdentifierImpl implements ModDependencyIdentifier {
 	private final String mavenGroup;
 	private final String id;

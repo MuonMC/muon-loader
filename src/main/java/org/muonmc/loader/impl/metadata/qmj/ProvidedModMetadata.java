@@ -27,14 +27,14 @@ import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModLicense;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 
 import net.fabricmc.api.EnvType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ProvidedModMetadata implements ModMetadataExt {
 
 	final ProvidedMod override;

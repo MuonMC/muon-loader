@@ -22,24 +22,24 @@ import java.util.Map;
 
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
-import org.muonmc.loader.api.gui.QuiltGuiTab;
-import org.muonmc.loader.api.gui.QuiltGuiTreeTab;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonGuiTab;
+import org.muonmc.loader.api.gui.MuonGuiTreeTab;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 
-class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
+class TreeTab extends AbstractTab implements MuonGuiTreeTab {
 
-	final QuiltStatusNode rootNode;
+	final MuonStatusNode rootNode;
 	boolean inheritLevel = true;
-	QuiltWarningLevel visibilityLevel = QuiltWarningLevel.NONE;
+	MuonWarningLevel visibilityLevel = MuonWarningLevel.NONE;
 
-	TreeTab(BasicWindow<?> parent, QuiltLoaderText text) {
+	TreeTab(BasicWindow<?> parent, MuonLoaderText text) {
 		super(parent, text);
-		rootNode = new QuiltStatusNode(this);
+		rootNode = new MuonStatusNode(this);
 	}
 
-	TreeTab(BasicWindow<?> parent, QuiltLoaderText text, QuiltStatusNode rootNode) {
+	TreeTab(BasicWindow<?> parent, MuonLoaderText text, MuonStatusNode rootNode) {
 		super(parent, text);
 		if (rootNode.parent != null) {
 			throw new IllegalArgumentException("Cannot use a different root node if the other root node already has a parent!");
@@ -49,9 +49,9 @@ class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
 
 	TreeTab(QuiltGuiSyncBase parent, LObject obj) throws IOException {
 		super(parent, obj);
-		rootNode = readChild(HELPER.expectValue(obj, "root_node"), QuiltStatusNode.class);
+		rootNode = readChild(HELPER.expectValue(obj, "root_node"), MuonStatusNode.class);
 		inheritLevel = HELPER.expectBoolean(obj, "inherit_level");
-		visibilityLevel = HELPER.expectEnum(QuiltWarningLevel.class, obj, "visibilityLevel");
+		visibilityLevel = HELPER.expectEnum(MuonWarningLevel.class, obj, "visibilityLevel");
 	}
 
 	@Override
@@ -77,7 +77,7 @@ class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
 	}
 
 	@Override
-	QuiltWarningLevel getInheritedLevel() {
+	MuonWarningLevel getInheritedLevel() {
 		return rootNode.maximumLevel();
 	}
 
@@ -87,12 +87,12 @@ class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
 	}
 
 	@Override
-	public QuiltTreeNode rootNode() {
+	public MuonTreeNode rootNode() {
 		return rootNode;
 	}
 
 	@Override
-	public QuiltWarningLevel level() {
+	public MuonWarningLevel level() {
 		if (inheritLevel) {
 			return rootNode.maximumLevel();
 		} else {
@@ -101,13 +101,13 @@ class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
 	}
 
 	@Override
-	public QuiltGuiTab level(QuiltWarningLevel level) {
+	public MuonGuiTab level(MuonWarningLevel level) {
 		inheritLevel(false);
 		return super.level(level);
 	}
 
 	@Override
-	public QuiltGuiTreeTab inheritLevel(boolean should) {
+	public MuonGuiTreeTab inheritLevel(boolean should) {
 		this.inheritLevel = should;
 		if (shouldSendUpdates()) {
 			Map<String, LoaderValue> map = new HashMap<>();
@@ -119,7 +119,7 @@ class TreeTab extends AbstractTab implements QuiltGuiTreeTab {
 
 
 	@Override
-	public QuiltGuiTreeTab visibilityLevel(QuiltWarningLevel level) {
+	public MuonGuiTreeTab visibilityLevel(MuonWarningLevel level) {
 		visibilityLevel = level;
 		return this;
 	}

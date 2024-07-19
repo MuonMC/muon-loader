@@ -22,10 +22,10 @@ import java.net.URL;
 import java.nio.file.Path;
 
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 interface KnotClassLoaderInterface extends KnotBaseClassLoader {
 	KnotClassDelegate getDelegate();
 	ClassLoader getOriginalLoader();

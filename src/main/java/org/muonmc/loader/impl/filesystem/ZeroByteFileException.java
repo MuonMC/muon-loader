@@ -18,11 +18,11 @@ package org.muonmc.loader.impl.filesystem;
 
 import java.io.IOException;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** Thrown by {@link QuiltZipFileSystem} if the input file is zero bytes long. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+/** Thrown by {@link MuonZipFileSystem} if the input file is zero bytes long. */
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ZeroByteFileException extends IOException {
 
 	public ZeroByteFileException() {

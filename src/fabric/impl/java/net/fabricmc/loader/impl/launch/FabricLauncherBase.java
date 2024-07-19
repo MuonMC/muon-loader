@@ -21,8 +21,8 @@ import net.fabricmc.loader.impl.launch.knot.Knot;
 
 import net.fabricmc.api.EnvType;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +33,7 @@ import java.util.jar.Manifest;
 
 @Deprecated
 public class FabricLauncherBase implements FabricLauncher {
-	private final QuiltLauncher delegate = QuiltLauncherBase.getLauncher();
+	private final MuonLauncher delegate = MuonLauncherBase.getLauncher();
 
 	private final MappingConfiguration mappingConfiguration = new MappingConfiguration(delegate.getMappingConfiguration());
 
@@ -121,10 +121,10 @@ public class FabricLauncherBase implements FabricLauncher {
 	}
 
 	public static Map<String, Object> getProperties() {
-		return QuiltLauncherBase.getProperties();
+		return MuonLauncherBase.getProperties();
 	}
 
 	public static boolean isMixinReady() {
-		return QuiltLauncherBase.isMixinReady();
+		return MuonLauncherBase.isMixinReady();
 	}
 }

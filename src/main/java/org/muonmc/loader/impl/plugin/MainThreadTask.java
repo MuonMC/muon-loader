@@ -18,15 +18,15 @@ package org.muonmc.loader.impl.plugin;
 
 import java.nio.file.Path;
 
-import org.muonmc.loader.impl.gui.QuiltStatusNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.gui.MuonStatusNode;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** A task that must be completed by the main quilt thread. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class MainThreadTask {
 
-	abstract void execute(QuiltPluginManagerImpl manager);
+	abstract void execute(MuonPluginManagerImpl manager);
 
 	static final class ScanModFolderTask extends MainThreadTask {
 		final Path folder;
@@ -38,7 +38,7 @@ abstract class MainThreadTask {
 		}
 
 		@Override
-		void execute(QuiltPluginManagerImpl manager) {
+		void execute(MuonPluginManagerImpl manager) {
 			manager.scanModFolder(folder, pluginSrc);
 		}
 	}
@@ -46,16 +46,16 @@ abstract class MainThreadTask {
 	static final class ScanFolderAsModTask extends MainThreadTask {
 		final Path folder;
 		final ModLocationImpl location;
-		final QuiltStatusNode guiNode;
+		final MuonStatusNode guiNode;
 
-		public ScanFolderAsModTask(Path folder, ModLocationImpl location, QuiltStatusNode guiNode) {
+		public ScanFolderAsModTask(Path folder, ModLocationImpl location, MuonStatusNode guiNode) {
 			this.folder = folder;
 			this.location = location;
 			this.guiNode = guiNode;
 		}
 
 		@Override
-		void execute(QuiltPluginManagerImpl manager) {
+		void execute(MuonPluginManagerImpl manager) {
 			manager.scanFolderAsMod(folder, location, guiNode);
 		}
 	}
@@ -64,9 +64,9 @@ abstract class MainThreadTask {
 		final Path zipFile;
 		final Path zipRoot;
 		final ModLocationImpl location;
-		final QuiltStatusNode guiNode;
+		final MuonStatusNode guiNode;
 
-		public ScanZipTask(Path zipFile, Path zipRoot, ModLocationImpl location, QuiltStatusNode guiNode) {
+		public ScanZipTask(Path zipFile, Path zipRoot, ModLocationImpl location, MuonStatusNode guiNode) {
 			this.zipFile = zipFile;
 			this.zipRoot = zipRoot;
 			this.location = location;
@@ -74,7 +74,7 @@ abstract class MainThreadTask {
 		}
 
 		@Override
-		void execute(QuiltPluginManagerImpl manager) {
+		void execute(MuonPluginManagerImpl manager) {
 			manager.scanZip(zipFile, zipRoot, location, guiNode);
 		}
 	}
@@ -82,16 +82,16 @@ abstract class MainThreadTask {
 	static final class ScanUnknownFileTask extends MainThreadTask {
 		final Path file;
 		final ModLocationImpl location;
-		final QuiltStatusNode guiNode;
+		final MuonStatusNode guiNode;
 
-		public ScanUnknownFileTask(Path file, ModLocationImpl location, QuiltStatusNode guiNode) {
+		public ScanUnknownFileTask(Path file, ModLocationImpl location, MuonStatusNode guiNode) {
 			this.file = file;
 			this.location = location;
 			this.guiNode = guiNode;
 		}
 
 		@Override
-		void execute(QuiltPluginManagerImpl manager) {
+		void execute(MuonPluginManagerImpl manager) {
 			manager.scanUnknownFile(file, location, guiNode);
 		}
 	}

@@ -24,14 +24,14 @@ import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.impl.metadata.qmj.AdapterLoadableClassEntry;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.ModMetadata;
 import org.muonmc.loader.api.ModMetadataToBeMovedToPlugins;
 
 /** Additional metadata that should be implemented by plugin-provided mods that wish to rely on quilt's solver to
  * implement provides or dependency handling. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface ModMetadataExt extends ModMetadata, ModMetadataToBeMovedToPlugins {
 
 	// Dependency handling

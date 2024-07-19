@@ -40,14 +40,14 @@ import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.impl.filesystem.PartiallyWrittenIOException;
-import org.muonmc.loader.impl.filesystem.QuiltMapFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltUnifiedFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltZipFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltZipPath;
+import org.muonmc.loader.impl.filesystem.MuonMapFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonUnifiedFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonZipFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonZipPath;
 import org.muonmc.loader.impl.util.FilePreloadHelper;
 import org.muonmc.loader.impl.util.FileSystemUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
@@ -55,7 +55,7 @@ import org.quiltmc.parsers.json.JsonReader;
 import org.quiltmc.parsers.json.JsonToken;
 import org.quiltmc.parsers.json.JsonWriter;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class TransformCacheManager {
 
 	static final boolean SHOW_KEY_DIFFERENCE = Boolean.getBoolean(SystemProperties.LOG_CACHE_KEY_CHANGES);
@@ -96,7 +96,7 @@ public class TransformCacheManager {
 			throw new ModResolutionException("Failed to create parent directories of the transform cache file!", e);
 		}
 
-		QuiltZipPath existing = checkTransformCache(transformCacheFolder, map);
+		MuonZipPath existing = checkTransformCache(transformCacheFolder, map);
 		boolean isNewlyGenerated = false;
 		if (existing == null) {
 			existing = createTransformCache(transformCacheFolder.resolve(CACHE_FILE), toString(map), modList);
@@ -134,7 +134,7 @@ public class TransformCacheManager {
 		return options;
 	}
 
-	private static QuiltZipPath checkTransformCache(Path transformCacheFolder, Map<String, String> options)
+	private static MuonZipPath checkTransformCache(Path transformCacheFolder, Map<String, String> options)
 		throws ModResolutionException {
 
 		Path cacheFile = transformCacheFolder.resolve(CACHE_FILE);
@@ -151,8 +151,8 @@ public class TransformCacheManager {
 			return null;
 		}
 
-		try (QuiltZipFileSystem fs = new QuiltZipFileSystem("transform-cache", cacheFile, "")) {
-			QuiltZipPath inner = fs.getRoot();
+		try (MuonZipFileSystem fs = new MuonZipFileSystem("transform-cache", cacheFile, "")) {
+			MuonZipPath inner = fs.getRoot();
 			if (!FasterFiles.isRegularFile(inner.resolve(FILE_TRANSFORM_COMPLETE))) {
 				Log.info(LogCategory.CACHE, "Not reusing previous transform cache since it's incomplete!");
 				erasePreviousTransformCache(transformCacheFolder, cacheFile, null);
@@ -257,7 +257,7 @@ public class TransformCacheManager {
 
 	static final boolean WRITE_CUSTOM = true;
 
-	private static QuiltZipPath createTransformCache(Path transformCacheFile, String options, List<
+	private static MuonZipPath createTransformCache(Path transformCacheFile, String options, List<
 		ModLoadOption> modList) throws ModResolutionException {
 
 		try {
@@ -267,10 +267,10 @@ public class TransformCacheManager {
 		}
 
 		if (!Boolean.getBoolean(SystemProperties.DISABLE_OPTIMIZED_COMPRESSED_TRANSFORM_CACHE)) {
-			try (QuiltUnifiedFileSystem fs = new QuiltUnifiedFileSystem("transform-cache", true)) {
+			try (MuonUnifiedFileSystem fs = new MuonUnifiedFileSystem("transform-cache", true)) {
 				Path root = fs.getRoot();
 				writeTransformCache(options, modList, root);
-				QuiltZipFileSystem.writeQuiltCompressedFileSystem(root, transformCacheFile);
+				MuonZipFileSystem.writeQuiltCompressedFileSystem(root, transformCacheFile);
 
 				return openCache(transformCacheFile);
 			} catch (IOException e) {
@@ -297,7 +297,7 @@ public class TransformCacheManager {
 
 	private static void writeTransformCache(String options, List<ModLoadOption> modList, Path root) throws ModResolutionException, IOException {
 		TransformCache cache = TransformCacheGenerator.generate(root, modList);
-		QuiltMapFileSystem.dumpEntries(root.getFileSystem(), "after-populate");
+		MuonMapFileSystem.dumpEntries(root.getFileSystem(), "after-populate");
 		Files.write(root.resolve("options.txt"), options.getBytes(StandardCharsets.UTF_8));
 		try (JsonWriter json = JsonWriter.json(Files.newBufferedWriter(root.resolve(DENY_LOAD_REASONS_PATH)))) {
 			if (true) {
@@ -313,9 +313,9 @@ public class TransformCacheManager {
 		Files.createFile(root.resolve(FILE_TRANSFORM_COMPLETE));
 	}
 
-	private static QuiltZipPath openCache(Path transformCacheFile) throws ModResolutionException {
+	private static MuonZipPath openCache(Path transformCacheFile) throws ModResolutionException {
 		try {
-			QuiltZipPath path = new QuiltZipFileSystem("transform-cache", transformCacheFile, "").getRoot();
+			MuonZipPath path = new MuonZipFileSystem("transform-cache", transformCacheFile, "").getRoot();
 			return path;
 		} catch (IOException e) {
 			// TODO: Better error message for the gui!

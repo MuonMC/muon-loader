@@ -21,16 +21,17 @@ import java.awt.HeadlessException;
 
 import javax.swing.UIManager;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.MuonConstants;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class QuiltUI {
 
 	static {
-		// Set MacOS specific system props
+		// Set macOS specific system props
 		System.setProperty("apple.awt.application.appearance", "system");
-		System.setProperty("apple.awt.application.name", "Quilt Loader");
+		System.setProperty("apple.awt.application.name", MuonConstants.NAME);
 	}
 
 	static void init() throws Exception {

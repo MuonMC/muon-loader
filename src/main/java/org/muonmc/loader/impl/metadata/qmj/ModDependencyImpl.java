@@ -29,10 +29,10 @@ import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModDependencyIdentifier;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class ModDependencyImpl {
 	ModDependencyImpl() {
 	}

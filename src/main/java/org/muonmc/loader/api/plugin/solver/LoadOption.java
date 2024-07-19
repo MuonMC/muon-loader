@@ -19,17 +19,17 @@ package org.muonmc.loader.api.plugin.solver;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 
 /** Base definition of something that can either be completely loaded or not loaded. (Usually this is just a mod jar
  * file, but in the future this might refer to something else that loader has control over). */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public abstract class LoadOption {
 
 	/** @return A description of this load option, to be shown in the error gui when this load option is involved in a solver error. */
-	public abstract QuiltLoaderText describe();
+	public abstract MuonLoaderText describe();
 
 	public final LoadOption negate() {
 		if (this instanceof NegatedLoadOption) {

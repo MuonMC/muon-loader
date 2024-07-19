@@ -18,6 +18,10 @@ package net.fabricmc.loader.api.metadata;
 
 import net.fabricmc.api.EnvType;
 
+/**
+ * @deprecated use {@link org.muonmc.loader.api.minecraft.ModEnvironment}
+ */
+@Deprecated
 public enum ModEnvironment {
 	CLIENT,
 	SERVER,

@@ -18,11 +18,11 @@ package org.muonmc.loader.impl.plugin;
 
 import java.nio.file.Path;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** We don't have a lot of events so instead of using a proper event system we just keep track of them internally. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class PluginEvent {
 
 	static final class AddFolderEvent extends PluginEvent {

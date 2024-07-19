@@ -25,7 +25,7 @@ import java.util.concurrent.Callable;
  * InputStream deferring to a separate I/O thread to work around
  * Thread.interrupt()-related issues in NIO.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class DeferredInputStream extends InputStream {
 	private final InputStream stream;
 

@@ -17,11 +17,11 @@
 package org.muonmc.loader.impl.transformer;
 
 import org.muonmc.loader.impl.discovery.ModResolutionException;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Thrown when something goes wrong with chasm. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ChasmTransformException extends ModResolutionException {
 
 	public ChasmTransformException(String format, Object... args) {

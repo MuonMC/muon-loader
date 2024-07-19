@@ -22,27 +22,28 @@ import java.util.Objects;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.QuiltFileHasher;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class InternalModOptionBase extends ModLoadOption {
 
-	protected final QuiltPluginContext pluginContext;
+	protected final MuonPluginContext pluginContext;
 	protected final ModMetadataExt metadata;
 	protected final Path from, resourceRoot;
 	protected final boolean mandatory;
 	protected final boolean requiresRemap;
-	protected final QuiltLoaderIcon fileIcon;
+	protected final MuonLoaderIcon fileIcon;
 
-	public InternalModOptionBase(QuiltPluginContext pluginContext, ModMetadataExt meta, Path from,
-		QuiltLoaderIcon fileIcon, Path resourceRoot, boolean mandatory, boolean requiresRemap) {
+	public InternalModOptionBase(
+			MuonPluginContext pluginContext, ModMetadataExt meta, Path from,
+		MuonLoaderIcon fileIcon, Path resourceRoot, boolean mandatory, boolean requiresRemap) {
 
 		this.pluginContext = pluginContext;
 		this.metadata = Objects.requireNonNull(meta, "meta");
@@ -64,7 +65,7 @@ public abstract class InternalModOptionBase extends ModLoadOption {
 	}
 
 	@Override
-	public QuiltLoaderIcon modFileIcon() {
+	public MuonLoaderIcon modFileIcon() {
 		return fileIcon;
 	}
 
@@ -85,7 +86,7 @@ public abstract class InternalModOptionBase extends ModLoadOption {
 	}
 
 	@Override
-	public QuiltPluginContext loader() {
+	public MuonPluginContext loader() {
 		return pluginContext;
 	}
 
@@ -102,8 +103,8 @@ public abstract class InternalModOptionBase extends ModLoadOption {
 	protected abstract String nameOfType();
 
 	@Override
-	public QuiltLoaderText describe() {
-		return QuiltLoaderText.translate("solver.option.mod.quilt_impl", nameOfType(), metadata.id(), pluginContext.manager().describePath(from));
+	public MuonLoaderText describe() {
+		return MuonLoaderText.translate("solver.option.mod.quilt_impl", nameOfType(), metadata.id(), pluginContext.manager().describePath(from));
 	}
 
 	@Override

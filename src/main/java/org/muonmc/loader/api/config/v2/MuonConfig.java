@@ -25,6 +25,9 @@ import org.quiltmc.config.implementor_api.ConfigFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Class containing helper methods that mods should use to create config files as part of Quilt's config system.
+ */
 public final class MuonConfig {
 	/**
 	 * Creates and registers a config file

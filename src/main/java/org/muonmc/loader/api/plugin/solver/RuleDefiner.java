@@ -16,12 +16,12 @@
 
 package org.muonmc.loader.api.plugin.solver;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Plugin interface to allow {@link Rule}s to define themselves. If multiple definition methods are called then all of
  * those definitions must be matched. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface RuleDefiner {
 
 	/** @return A {@link LoadOption} which is negated - that is instead of being equal to TRUE, it will be equal to

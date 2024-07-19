@@ -18,7 +18,7 @@ package org.muonmc.loader.impl.filesystem;
 
 import java.io.IOException;
 
-/** Thrown by {@link QuiltZipFileSystem#QuiltZipFileSystem(String, java.nio.file.Path, String)} if the input zip file
+/** Thrown by {@link MuonZipFileSystem#MuonZipFileSystem(String, java.nio.file.Path, String)} if the input zip file
  * was only partially written, and so can be considered invalid. */
 public class PartiallyWrittenIOException extends IOException {
 

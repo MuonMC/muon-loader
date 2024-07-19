@@ -34,17 +34,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.muonmc.loader.impl.MuonLoaderImpl;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.UrlConversionException;
 import org.muonmc.loader.impl.util.UrlUtil;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ClasspathModCandidateFinder {
 
 	@FunctionalInterface
@@ -53,7 +53,7 @@ public class ClasspathModCandidateFinder {
 	}
 
 	public static void findCandidatesStatic(ModAdder out) {
-		if (QuiltLauncherBase.getLauncher().isDevelopment()) {
+		if (MuonLauncherBase.getLauncher().isDevelopment()) {
 			Map<Path, List<Path>> pathGroups = getPathGroups();
 			try {
 				findCandidates("muon.mod.json", pathGroups, out);
@@ -76,7 +76,7 @@ public class ClasspathModCandidateFinder {
 	}
 
 	private static void findCandidates(String metadataName, Map<Path, List<Path>> pathGroups, ModAdder out) throws IOException {
-		Enumeration<URL> quiltMods = QuiltLauncherBase.getLauncher().getTargetClassLoader().getResources(metadataName);
+		Enumeration<URL> quiltMods = MuonLauncherBase.getLauncher().getTargetClassLoader().getResources(metadataName);
 		while (quiltMods.hasMoreElements()) {
 			URL url = quiltMods.nextElement();
 
@@ -115,7 +115,7 @@ public class ClasspathModCandidateFinder {
 		String prop = System.getProperty(SystemProperties.PATH_GROUPS);
 		if (prop == null) return Collections.emptyMap();
 
-		Set<Path> cp = new HashSet<>(QuiltLauncherBase.getLauncher().getClassPath());
+		Set<Path> cp = new HashSet<>(MuonLauncherBase.getLauncher().getClassPath());
 		Map<Path, List<Path>> ret = new HashMap<>();
 
 		for (String group : prop.split(File.pathSeparator+File.pathSeparator)) {
@@ -157,7 +157,7 @@ public class ClasspathModCandidateFinder {
 
 	public static Path getLoaderPath() {
 		try {
-			return UrlUtil.asPath(QuiltLauncherBase.getLauncher().getClass().getProtectionDomain().getCodeSource().getLocation());
+			return UrlUtil.asPath(MuonLauncherBase.getLauncher().getClass().getProtectionDomain().getCodeSource().getLocation());
 		} catch (Throwable t) {
 			Log.debug(LogCategory.DISCOVERY, "Could not retrieve launcher code source!", t);
 			return null;

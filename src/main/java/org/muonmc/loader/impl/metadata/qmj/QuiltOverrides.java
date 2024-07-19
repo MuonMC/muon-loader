@@ -32,11 +32,11 @@ import org.muonmc.loader.api.LoaderValue.LArray;
 import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.LoaderValue.LType;
 import org.muonmc.loader.api.ModDependency;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Parses various overrides. Currently only version and depends/breaks overrides are supported. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltOverrides {
 
 	public final Map<String, ModOverrides> pathOverrides = new HashMap<>();

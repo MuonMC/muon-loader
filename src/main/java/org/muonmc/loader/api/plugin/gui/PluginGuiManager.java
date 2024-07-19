@@ -20,63 +20,63 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
 
 /**
- * @deprecated Replaced with {@link QuiltLoaderGui}, kept only until we clear out all uses of this from quilt's codebase.
+ * @deprecated Replaced with {@link MuonLoaderGui}, kept only until we clear out all uses of this from quilt's codebase.
  */
-@QuiltLoaderInternal(value = QuiltLoaderInternalType.PLUGIN_API, replacements = QuiltLoaderGui.class)
+@MuonLoaderInternal(value = MuonLoaderInternalType.PLUGIN_API, replacements = MuonLoaderGui.class)
 @Deprecated
 public interface PluginGuiManager {
 
 	// Icons
 
-	default QuiltLoaderIcon allocateIcon(BufferedImage image) {
+	default MuonLoaderIcon allocateIcon(BufferedImage image) {
 		return allocateIcon(Collections.singletonMap(image.getWidth(), image));
 	}
 
-	QuiltLoaderIcon allocateIcon(Map<Integer, BufferedImage> image);
+	MuonLoaderIcon allocateIcon(Map<Integer, BufferedImage> image);
 
 	// Builtin icons
 
-	QuiltLoaderIcon iconFolder();
+	MuonLoaderIcon iconFolder();
 
-	QuiltLoaderIcon iconUnknownFile();
+	MuonLoaderIcon iconUnknownFile();
 
-	QuiltLoaderIcon iconTextFile();
+	MuonLoaderIcon iconTextFile();
 
-	QuiltLoaderIcon iconZipFile();
+	MuonLoaderIcon iconZipFile();
 
-	QuiltLoaderIcon iconJarFile();
+	MuonLoaderIcon iconJarFile();
 
-	QuiltLoaderIcon iconJsonFile();
+	MuonLoaderIcon iconJsonFile();
 
-	QuiltLoaderIcon iconJavaClassFile();
+	MuonLoaderIcon iconJavaClassFile();
 
-	QuiltLoaderIcon iconPackage();
+	MuonLoaderIcon iconPackage();
 
-	QuiltLoaderIcon iconJavaPackage();
+	MuonLoaderIcon iconJavaPackage();
 
-	QuiltLoaderIcon iconDisabled();
+	MuonLoaderIcon iconDisabled();
 
-	QuiltLoaderIcon iconQuilt();
+	MuonLoaderIcon iconQuilt();
 
-	QuiltLoaderIcon iconFabric();
+	MuonLoaderIcon iconFabric();
 
-	QuiltLoaderIcon iconTick();
+	MuonLoaderIcon iconTick();
 
-	QuiltLoaderIcon iconCross();
+	MuonLoaderIcon iconCross();
 
-	QuiltLoaderIcon iconLevelFatal();
+	MuonLoaderIcon iconLevelFatal();
 
-	QuiltLoaderIcon iconLevelError();
+	MuonLoaderIcon iconLevelError();
 
-	QuiltLoaderIcon iconLevelWarn();
+	MuonLoaderIcon iconLevelWarn();
 
-	QuiltLoaderIcon iconLevelConcern();
+	MuonLoaderIcon iconLevelConcern();
 
-	QuiltLoaderIcon iconLevelInfo();
+	MuonLoaderIcon iconLevelInfo();
 }

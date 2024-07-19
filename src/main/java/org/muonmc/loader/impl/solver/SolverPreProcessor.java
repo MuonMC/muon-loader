@@ -37,14 +37,14 @@ import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.NegatedLoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.impl.solver.RuleComputeResult.DeclaredConstants;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 import org.quiltmc.loader.util.sat4j.specs.ContradictionException;
 
 /** Pre-processes a {@link RuleSet} to reduce the problem that we pass to sat4j. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class SolverPreProcessor {
 
 	// API

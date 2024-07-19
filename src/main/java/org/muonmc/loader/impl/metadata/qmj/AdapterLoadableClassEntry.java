@@ -17,13 +17,13 @@
 package org.muonmc.loader.impl.metadata.qmj;
 
 import org.muonmc.loader.api.plugin.ModMetadataExt.ModEntrypoint;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /**
  * Represents a class entry inside of that specifies a language adapter to use to load the class.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class AdapterLoadableClassEntry implements ModEntrypoint {
 	private final String adapter;
 	private final String value;

@@ -35,28 +35,28 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonMemoryFileSystem;
 
 public class QuiltFileSystemTester {
 
 	@ParameterizedTest
 	@ValueSource(strings = { "buildcraft-9.0.0.jar", "extrasounds-2.3.11.19.2-1.19.1~akemi-git-c96fd99.jar" })
 	public void testFilesystemNames(String name) {
-		try (QuiltMemoryFileSystem mfs = new QuiltMemoryFileSystem.ReadWrite(name, true)) {
+		try (MuonMemoryFileSystem mfs = new MuonMemoryFileSystem.ReadWrite(name, true)) {
 			mfs.getRoot();
 		}
 	}
 
 	@Test
 	public void testPathTraversal() {
-		try (QuiltMemoryFileSystem fs = new QuiltMemoryFileSystem.ReadWrite("test_basics", true)) {
+		try (MuonMemoryFileSystem fs = new MuonMemoryFileSystem.ReadWrite("test_basics", true)) {
 			testUnixLikeFileSystem(fs);
 		}
 	}
 
 	@Test
 	public void testGlob() throws IOException {
-		try (QuiltMemoryFileSystem fs = new QuiltMemoryFileSystem.ReadWrite("test_basics", true)) {
+		try (MuonMemoryFileSystem fs = new MuonMemoryFileSystem.ReadWrite("test_basics", true)) {
 			Path root = fs.root;
 
 			Files.createFile(root.resolve("hello"));

@@ -20,11 +20,11 @@ package org.muonmc.loader.impl.util;
 import java.net.URL;
 import java.net.URLStreamHandlerFactory;
 
-import org.muonmc.loader.impl.filesystem.QuiltBasePath;
-import org.muonmc.loader.impl.filesystem.QuiltClassPath;
-import org.muonmc.loader.impl.filesystem.QuiltMapFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonBasePath;
+import org.muonmc.loader.impl.filesystem.MuonClassPath;
+import org.muonmc.loader.impl.filesystem.MuonMapFileSystem;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class SystemProperties {
 	private SystemProperties() {}
 
@@ -96,7 +96,7 @@ public final class SystemProperties {
 	public static final String DISABLE_BEACON = "loader.disable_beacon";
 	public static final String DEBUG_DUMP_FILESYSTEM_CONTENTS = "loader.debug.filesystem.dump_contents";
 	public static final String ALWAYS_DEFER_FILESYSTEM_OPERATIONS = "loader.workaround.defer_all_filesystem_operations";
-	public static final String DISABLE_QUILT_CLASS_PATH_CUSTOM_TABLE = "loader.quilt_class_path.disable_custom_table";
+	public static final String DISABLE_MUON_CLASS_PATH_CUSTOM_TABLE = "loader.muon_class_path.disable_custom_table";
 	public static final String DISABLE_BUILTIN_MIXIN_EXTRAS = "loader.disable_builtin_mixin_extras";
 	/** whether the loader should display unsupported mods with the GUI or ignore and continue starting up the game. */
 	public static final String IGNORE_UNSUPPORTED_MODS = "loader.ignore_unsupported_mods";
@@ -131,13 +131,13 @@ public final class SystemProperties {
 	 */
 	public static final int VALIDATION_LEVEL = Integer.getInteger("loader.validation.level", 0);
 
-	/** Controls validation for {@link QuiltClassPath}. Also enabled by {@link #VALIDATION_LEVEL} > 0. */
-	public static final String VALIDATE_QUILT_CLASS_PATH = "loader.validation.quilt_class_path";
+	/** Controls validation for {@link MuonClassPath}. Also enabled by {@link #VALIDATION_LEVEL} > 0. */
+	public static final String VALIDATE_MUON_CLASS_PATH = "loader.validation.muon_class_path";
 
-	/** Controls validation for {@link QuiltBasePath}. Also enabled by {@link #VALIDATION_LEVEL} > 0. */
-	public static final String VALIDATE_QUILT_BASE_PATH = "loader.validation.quilt_base_path";
+	/** Controls validation for {@link MuonBasePath}. Also enabled by {@link #VALIDATION_LEVEL} > 0. */
+	public static final String VALIDATE_MUON_BASE_PATH = "loader.validation.muon_base_path";
 
-	/** Controls if {@link QuiltMapFileSystem} should validate its internal map on every filesystem operation. Also
+	/** Controls if {@link MuonMapFileSystem} should validate its internal map on every filesystem operation. Also
 	 * enabled by {@link #VALIDATION_LEVEL} > 3 */
 	public static final String DEBUG_VALIDATE_FILESYSTEM_CONTENTS = "loader.debug.filesystem.validate_constantly";
 

@@ -26,7 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class UrlUtil {
 	public static final Path LOADER_CODE_SOURCE = getCodeSource(UrlUtil.class);
 	private UrlUtil() { }

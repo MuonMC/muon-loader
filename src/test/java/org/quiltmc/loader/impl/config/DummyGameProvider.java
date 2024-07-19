@@ -18,7 +18,7 @@ package org.quiltmc.loader.impl.config;
 
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
 import org.muonmc.loader.impl.game.GameProvider;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.util.Arguments;
 
 import java.nio.file.Path;
@@ -82,12 +82,12 @@ public class DummyGameProvider implements GameProvider {
 	}
 
 	@Override
-	public boolean locateGame(QuiltLauncher launcher, String[] args) {
+	public boolean locateGame(MuonLauncher launcher, String[] args) {
 		return false;
 	}
 
 	@Override
-	public void initialize(QuiltLauncher launcher) {
+	public void initialize(MuonLauncher launcher) {
 
 	}
 
@@ -97,7 +97,7 @@ public class DummyGameProvider implements GameProvider {
 	}
 
 	@Override
-	public void unlockClassPath(QuiltLauncher launcher) {
+	public void unlockClassPath(MuonLauncher launcher) {
 
 	}
 

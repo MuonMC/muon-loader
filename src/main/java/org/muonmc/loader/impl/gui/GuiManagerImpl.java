@@ -27,13 +27,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.muonmc.loader.impl.util.FileUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
 import org.muonmc.loader.api.plugin.gui.PluginGuiManager;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class GuiManagerImpl implements PluginGuiManager {
 	private GuiManagerImpl(boolean unused) {}
 
@@ -57,7 +57,7 @@ public class GuiManagerImpl implements PluginGuiManager {
 	public static final PluginIconImpl ICON_PACKAGE = new PluginIconImpl("package");
 	public static final PluginIconImpl ICON_JAVA_PACKAGE = new PluginIconImpl("java_package");
 	public static final PluginIconImpl ICON_DISABLED = new PluginIconImpl("disabled");
-	public static final PluginIconImpl ICON_QUILT = new PluginIconImpl("quilt");
+	public static final PluginIconImpl ICON_MUON = new PluginIconImpl("quilt");
 	public static final PluginIconImpl ICON_FABRIC = new PluginIconImpl("fabric");
 	public static final PluginIconImpl ICON_WEB_LINK = new PluginIconImpl("web_link");
 	public static final PluginIconImpl ICON_CLIPBOARD = new PluginIconImpl("clipboard");
@@ -72,28 +72,28 @@ public class GuiManagerImpl implements PluginGuiManager {
 
 	private static final AtomicInteger NEXT_ICON_KEY = new AtomicInteger();
 	private static final Map<Integer, Map<Integer, BufferedImage>> ICON_MAP = new ConcurrentHashMap<>();
-	private static final Map<String, QuiltLoaderIcon> MOD_ICON_CACHE = new ConcurrentHashMap<>();
+	private static final Map<String, MuonLoaderIcon> MOD_ICON_CACHE = new ConcurrentHashMap<>();
 
 	// Icons
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon allocateIcon(Map<Integer, BufferedImage> image) {
+	public MuonLoaderIcon allocateIcon(Map<Integer, BufferedImage> image) {
 		return allocateIcons(image);
 	}
 
-	public static QuiltLoaderIcon allocateIcons(Map<Integer, BufferedImage> imageSizeMap) {
+	public static MuonLoaderIcon allocateIcons(Map<Integer, BufferedImage> imageSizeMap) {
 		int index = NEXT_ICON_KEY.incrementAndGet();
 		ICON_MAP.put(index, imageSizeMap);
 		QuiltFork.uploadIcon(index, imageSizeMap);
 		return new PluginIconImpl(index);
 	}
 
-	public static QuiltLoaderIcon allocateIcons(byte[][] imageBytes) {
+	public static MuonLoaderIcon allocateIcons(byte[][] imageBytes) {
 		return new PluginIconImpl(imageBytes);
 	}
 
-	public static QuiltLoaderIcon getModIcon(ModContainer mod) {
+	public static MuonLoaderIcon getModIcon(ModContainer mod) {
 		if (mod == null) {
 			return ICON_GENERIC_FILE;
 		}
@@ -103,7 +103,7 @@ public class GuiManagerImpl implements PluginGuiManager {
 		});
 	}
 
-	private static QuiltLoaderIcon computeModIcon(ModContainer mod) {
+	private static MuonLoaderIcon computeModIcon(ModContainer mod) {
 		Map<String, byte[]> images = new HashMap<>();
 		for (int size : new int[] { 16, 32 }) {
 			String iconPath = mod.metadata().icon(size);
@@ -127,115 +127,115 @@ public class GuiManagerImpl implements PluginGuiManager {
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconFolder() {
+	public MuonLoaderIcon iconFolder() {
 		return ICON_FOLDER;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconUnknownFile() {
+	public MuonLoaderIcon iconUnknownFile() {
 		return ICON_GENERIC_FILE;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconTextFile() {
+	public MuonLoaderIcon iconTextFile() {
 		return ICON_TEXT_FILE;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconZipFile() {
+	public MuonLoaderIcon iconZipFile() {
 		return ICON_ZIP;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconJarFile() {
+	public MuonLoaderIcon iconJarFile() {
 		return ICON_JAR;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconJsonFile() {
+	public MuonLoaderIcon iconJsonFile() {
 		return ICON_JSON;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconJavaClassFile() {
+	public MuonLoaderIcon iconJavaClassFile() {
 		return ICON_JAVA_CLASS;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconPackage() {
+	public MuonLoaderIcon iconPackage() {
 		return ICON_PACKAGE;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconJavaPackage() {
+	public MuonLoaderIcon iconJavaPackage() {
 		return ICON_JAVA_PACKAGE;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconDisabled() {
+	public MuonLoaderIcon iconDisabled() {
 		return ICON_DISABLED;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconQuilt() {
-		return ICON_QUILT;
+	public MuonLoaderIcon iconQuilt() {
+		return ICON_MUON;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconFabric() {
+	public MuonLoaderIcon iconFabric() {
 		return ICON_FABRIC;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconTick() {
+	public MuonLoaderIcon iconTick() {
 		return ICON_TICK;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconCross() {
+	public MuonLoaderIcon iconCross() {
 		return ICON_CROSS;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconLevelFatal() {
+	public MuonLoaderIcon iconLevelFatal() {
 		return ICON_LEVEL_FATAL;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconLevelError() {
+	public MuonLoaderIcon iconLevelError() {
 		return ICON_LEVEL_ERROR;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconLevelWarn() {
+	public MuonLoaderIcon iconLevelWarn() {
 		return ICON_LEVEL_WARN;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconLevelConcern() {
+	public MuonLoaderIcon iconLevelConcern() {
 		return ICON_LEVEL_CONCERN;
 	}
 
 	@Override
 	@Deprecated
-	public QuiltLoaderIcon iconLevelInfo() {
+	public MuonLoaderIcon iconLevelInfo() {
 		return ICON_LEVEL_INFO;
 	}
 }

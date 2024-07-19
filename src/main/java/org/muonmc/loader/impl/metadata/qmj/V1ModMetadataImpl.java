@@ -31,8 +31,8 @@ import org.muonmc.loader.api.ModLicense;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 
@@ -42,7 +42,7 @@ import org.muonmc.loader.impl.util.SystemProperties;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class V1ModMetadataImpl implements InternalModMetadata {
 	private final JsonLoaderValue.ObjectImpl root;
 	/* Required fields */

@@ -18,41 +18,41 @@ package org.muonmc.loader.impl.plugin;
 
 import org.muonmc.loader.api.VersionInterval;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import java.util.stream.Collectors;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class VersionRangeDescriber {
-	public static QuiltLoaderText describe(String modName, VersionRange range, String depName, boolean transitive) {
-		return describe(QuiltLoaderText.of(modName), range, depName, transitive);
+	public static MuonLoaderText describe(String modName, VersionRange range, String depName, boolean transitive) {
+		return describe(MuonLoaderText.of(modName), range, depName, transitive);
 	}
 
-	public static QuiltLoaderText describe(QuiltLoaderText modFrom, VersionRange range, String depName, boolean transitive) {
+	public static MuonLoaderText describe(MuonLoaderText modFrom, VersionRange range, String depName, boolean transitive) {
 		return describe(modFrom, range, depName, true, transitive);
 	}
 
-	public static QuiltLoaderText describe(String modFrom, VersionRange range, String depName, boolean isDep, boolean transitive) {
-		return describe(QuiltLoaderText.of(modFrom), range, depName, isDep, transitive);
+	public static MuonLoaderText describe(String modFrom, VersionRange range, String depName, boolean isDep, boolean transitive) {
+		return describe(MuonLoaderText.of(modFrom), range, depName, isDep, transitive);
 	}
 
-	public static QuiltLoaderText describe(QuiltLoaderText modFrom, VersionRange range, String depName, boolean isDep, boolean transitive) {
+	public static MuonLoaderText describe(MuonLoaderText modFrom, VersionRange range, String depName, boolean isDep, boolean transitive) {
 		String titleKey = "error." + (isDep ? "dep." : "break.") + (transitive ? "transitive." : "direct.");
 
 		if (range.size() != 1) {
 			for (VersionInterval interval : range) {
 				// Handle the specific case of { [A,A] U [B,B] } (of any length)
 				if (interval.getMin() == null || !interval.getMin().equals(interval.getMax())) {
-					return QuiltLoaderText.translate(getTransKey(titleKey, "ranged"), modFrom, range, depName);
+					return MuonLoaderText.translate(getTransKey(titleKey, "ranged"), modFrom, range, depName);
 				}
 			}
 
 			VersionInterval finalV = range.last();
 			//noinspection DataFlowIssue -- we've confirmed that it can never be null above
 			String list = range.headSet(finalV).stream().map(i -> i.getMin().toString()).collect(Collectors.joining(", "));
-			return QuiltLoaderText.translate(getTransKey(titleKey, "exact_list"), modFrom, list, finalV.getMin(), depName);
+			return MuonLoaderText.translate(getTransKey(titleKey, "exact_list"), modFrom, list, finalV.getMin(), depName);
 		}
 
 		VersionInterval interval = range.first();
@@ -61,25 +61,25 @@ public class VersionRangeDescriber {
 		if (interval.getMin() == null) {
 			// Positive infinity
 			if (interval.getMax() == null) {
-				return QuiltLoaderText.translate(getTransKey(titleKey, "any"), modFrom, depName);
+				return MuonLoaderText.translate(getTransKey(titleKey, "any"), modFrom, depName);
 			} else {
-				return QuiltLoaderText.translate(getTransKey(titleKey, interval.isMaxInclusive() ? "lesser_equal" : "lesser"), modFrom, interval.getMax(), depName);
+				return MuonLoaderText.translate(getTransKey(titleKey, interval.isMaxInclusive() ? "lesser_equal" : "lesser"), modFrom, interval.getMax(), depName);
 			}
 		}
 
 		// positive infinity
 		if (interval.getMax() == null) {
-			return QuiltLoaderText.translate(getTransKey(titleKey, interval.isMinInclusive() ? "greater_equal" : "greater"), modFrom, interval.getMin(), depName);
+			return MuonLoaderText.translate(getTransKey(titleKey, interval.isMinInclusive() ? "greater_equal" : "greater"), modFrom, interval.getMin(), depName);
 		}
 
 		if (interval.getMax().equals(interval.getMin())) {
-			return QuiltLoaderText.translate(getTransKey(titleKey, "exact"), modFrom, interval.getMax(), depName);
+			return MuonLoaderText.translate(getTransKey(titleKey, "exact"), modFrom, interval.getMax(), depName);
 		}
 
 		// ranged
 		String extra = "range_" + (interval.isMinInclusive() ? "inc_" : "exc_") + (interval.isMaxInclusive() ? "inc" : "exc");
 
-		return QuiltLoaderText.translate(getTransKey(titleKey, extra), modFrom, interval.getMin(), interval.getMax(), depName);
+		return MuonLoaderText.translate(getTransKey(titleKey, extra), modFrom, interval.getMin(), interval.getMax(), depName);
 	}
 
 	private static String getTransKey(String titleKey, String extra) {

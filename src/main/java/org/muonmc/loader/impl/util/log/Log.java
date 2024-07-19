@@ -20,12 +20,13 @@ package org.muonmc.loader.impl.util.log;
 import java.util.Arrays;
 import java.util.IllegalFormatException;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.MuonConstants;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class Log {
-	public static final String NAME = "Quilt Loader";
+	public static final String NAME = MuonConstants.NAME;
 	private static final boolean CHECK_FOR_BRACKETS = true;
 
 	private static LogHandler handler = new BuiltinLogHandler();

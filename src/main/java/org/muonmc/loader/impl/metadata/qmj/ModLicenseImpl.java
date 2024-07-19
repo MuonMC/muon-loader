@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Nullable;
 import org.quiltmc.json5.JsonReader;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.ModLicense;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ModLicenseImpl implements ModLicense {
 	private final String name;
 	private final String id;

@@ -18,12 +18,12 @@ package org.muonmc.loader.impl.plugin;
 
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode.WarningLevel;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** Indicates that a plugin has added a node with a {@link WarningLevel} of {@link WarningLevel#ERROR} to the tree, so
  * the current tree should be shown as-is. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class TreeContainsModError extends ModResolutionException {
 
 }

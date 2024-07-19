@@ -32,24 +32,24 @@ import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
-import org.muonmc.loader.api.gui.QuiltBasicWindow;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
-import org.muonmc.loader.api.gui.QuiltGuiTab;
-import org.muonmc.loader.api.gui.QuiltGuiTreeTab;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonBasicWindow;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonGuiTab;
+import org.muonmc.loader.api.gui.MuonGuiTreeTab;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 import org.muonmc.loader.impl.FormattedException;
 import org.muonmc.loader.impl.gui.PluginIconImpl;
-import org.muonmc.loader.impl.gui.QuiltStatusNode;
+import org.muonmc.loader.impl.gui.MuonStatusNode;
 
-/** @deprecated Replaced by the public APIs {@link QuiltLoaderGui}, notably {@link QuiltLoaderGui#createBasicWindow()}
- *             and {@link QuiltLoaderGui#createTreeNode()} */
+/** @deprecated Replaced by the public APIs {@link MuonLoaderGui}, notably {@link MuonLoaderGui#createBasicWindow()}
+ *             and {@link MuonLoaderGui#createTreeNode()} */
 @Deprecated
 public final class FabricStatusTree {
-	/** @deprecated Replaced by {@link QuiltWarningLevel} */
+	/** @deprecated Replaced by {@link MuonWarningLevel} */
 	@Deprecated
 	public enum FabricTreeWarningLevel {
 		ERROR,
@@ -150,12 +150,12 @@ public final class FabricStatusTree {
 		}
 	}
 
-	public QuiltBasicWindow<?> toQuiltWindow() {
-		QuiltBasicWindow<?> window = QuiltLoaderGui.createBasicWindow();
-		window.title(QuiltLoaderText.of(title));
-		window.mainText(QuiltLoaderText.of(mainText));
+	public MuonBasicWindow<?> toQuiltWindow() {
+		MuonBasicWindow<?> window = MuonLoaderGui.createBasicWindow();
+		window.title(MuonLoaderText.of(title));
+		window.mainText(MuonLoaderText.of(mainText));
 		for (FabricStatusTab ftab : this.tabs) {
-			window.addTreeTab(QuiltLoaderText.of(ftab.node.name), ftab.node.toQuilt(null));
+			window.addTreeTab(MuonLoaderText.of(ftab.node.name), ftab.node.toQuilt(null));
 		}
 		for (FabricStatusButton button : this.buttons) {
 			button.toQuilt(window);
@@ -213,17 +213,17 @@ public final class FabricStatusTree {
 			}
 		}
 
-		public void toQuilt(QuiltBasicWindow<?> window) {
+		public void toQuilt(MuonBasicWindow<?> window) {
 			final QuiltErrorButton button;
 			if (clipboard != null) {
-				button = window.addCopyTextToClipboardButton(QuiltLoaderText.of(text), clipboard);
+				button = window.addCopyTextToClipboardButton(MuonLoaderText.of(text), clipboard);
 			} else {
 				button = window.addContinueButton();
 			}
 
 			if (shouldClose) {
-				button.icon(QuiltLoaderGui.iconLevelError());
-				button.text(QuiltLoaderText.translate("button.exit"));
+				button.icon(MuonLoaderGui.iconLevelError());
+				button.text(MuonLoaderText.translate("button.exit"));
 			}
 		}
 
@@ -243,7 +243,7 @@ public final class FabricStatusTree {
 		}
 	}
 
-	/** @deprecated Replaced by {@link QuiltGuiTab} and (more directly) by {@link QuiltGuiTreeTab} */
+	/** @deprecated Replaced by {@link MuonGuiTab} and (more directly) by {@link MuonGuiTreeTab} */
 	@Deprecated
 	public static final class FabricStatusTab {
 		public final FabricStatusNode node;
@@ -270,7 +270,7 @@ public final class FabricStatusTree {
 		}
 	}
 
-	/** @deprecated Replaced by {@link QuiltTreeNode} */
+	/** @deprecated Replaced by {@link MuonTreeNode} */
 	@Deprecated
 	public static final class FabricStatusNode {
 		private FabricStatusNode parent;
@@ -320,30 +320,30 @@ public final class FabricStatusTree {
 			}
 		}
 
-		public QuiltTreeNode toQuilt(QuiltTreeNode qParent) {
-			QuiltTreeNode node = qParent == null ? QuiltLoaderGui.createTreeNode() : qParent.addChild();
-			node.text(QuiltLoaderText.of(name));
-			final QuiltWarningLevel level;
+		public MuonTreeNode toQuilt(MuonTreeNode qParent) {
+			MuonTreeNode node = qParent == null ? MuonLoaderGui.createTreeNode() : qParent.addChild();
+			node.text(MuonLoaderText.of(name));
+			final MuonWarningLevel level;
 			switch (warningLevel) {
 				case NONE:
-					level = QuiltWarningLevel.NONE;
+					level = MuonWarningLevel.NONE;
 					break;
 				case INFO:
-					level = QuiltWarningLevel.INFO;
+					level = MuonWarningLevel.INFO;
 					break;
 				case WARN:
-					level = QuiltWarningLevel.WARN;
+					level = MuonWarningLevel.WARN;
 					break;
 				case ERROR:
-					level = QuiltWarningLevel.ERROR;
+					level = MuonWarningLevel.ERROR;
 					break;
 				default:
-					level = QuiltWarningLevel.CONCERN;
+					level = MuonWarningLevel.CONCERN;
 					break;
 			}
 			node.level(level);
 			// Details?
-			((QuiltStatusNode) node).setExpandByDefault(expandByDefault);
+			((MuonStatusNode) node).setExpandByDefault(expandByDefault);
 
 			String[] splitIcon = iconType.split("\\+");
 			if (splitIcon.length == 1 && splitIcon[0].isEmpty()) {
@@ -351,7 +351,7 @@ public final class FabricStatusTree {
 			}
 
 			if (splitIcon.length > 0) {
-				QuiltLoaderIcon icon = PluginIconImpl.deprecatedForFabric(splitIcon[0]);
+				MuonLoaderIcon icon = PluginIconImpl.deprecatedForFabric(splitIcon[0]);
 
 				for (int i = 1; i < splitIcon.length && i < 3; i++) {
 					icon = icon.withDecoration(PluginIconImpl.deprecatedForFabric(splitIcon[i]));

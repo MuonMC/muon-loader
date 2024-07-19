@@ -29,7 +29,6 @@ import org.muonmc.loader.api.ModContainer;
  * EntrypointUtil.invoke("pre_launch", PreLaunchEntrypoint.class, PreLaunchEntrypoint::onPreLaunch);
  * </code> */
 public class EntrypointUtil {
-
 	/** Passes every entrypoint value with the given name to the consumer.
 	 * 
 	 * @throws EntrypointException if anything goes wrong while gathering entrypoints (for example if an entrypoint

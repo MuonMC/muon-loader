@@ -22,10 +22,10 @@ import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.List;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class InjectingURLClassLoader extends URLClassLoader {
 	private final List<String> exclusions;
 

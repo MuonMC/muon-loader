@@ -19,10 +19,10 @@ package org.muonmc.loader.impl.metadata.qmj;
 import com.unascribed.flexver.FlexVerComparator;
 
 import org.muonmc.loader.api.Version;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class GenericVersionImpl implements Version.Raw {
 	private final String raw;
 

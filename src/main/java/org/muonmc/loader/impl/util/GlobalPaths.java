@@ -25,7 +25,7 @@ import org.muonmc.loader.impl.util.log.LogCategory;
 import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class GlobalPaths {
 
 	private static Path config, cache;

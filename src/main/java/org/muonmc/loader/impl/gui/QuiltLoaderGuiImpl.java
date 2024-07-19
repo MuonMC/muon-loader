@@ -16,16 +16,16 @@
 
 package org.muonmc.loader.impl.gui;
 
-import org.muonmc.loader.api.gui.QuiltBasicWindow;
+import org.muonmc.loader.api.gui.MuonBasicWindow;
 
 public class QuiltLoaderGuiImpl {
 
-	public static <R> QuiltBasicWindow<R> createBasicWindow(R defaultReturnValue) {
+	public static <R> MuonBasicWindow<R> createBasicWindow(R defaultReturnValue) {
 		return new BasicWindow<>(defaultReturnValue);
 	}
 
-	public static QuiltStatusNode createTreeNode() {
-		return new QuiltStatusNode(null);
+	public static MuonStatusNode createTreeNode() {
+		return new MuonStatusNode(null);
 	}
 
 }

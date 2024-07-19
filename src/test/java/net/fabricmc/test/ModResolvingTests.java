@@ -28,10 +28,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
-import org.quiltmc.loader.impl.QuiltPluginManagerForTests;
+import org.muonmc.loader.impl.MuonConstants;
+import org.quiltmc.loader.impl.MuonPluginManagerForTests;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
-import org.muonmc.loader.impl.plugin.QuiltPluginManagerImpl;
-import org.muonmc.loader.impl.report.QuiltReportedError;
+import org.muonmc.loader.impl.plugin.MuonPluginManagerImpl;
+import org.muonmc.loader.impl.report.MuonReportedError;
 import org.muonmc.loader.impl.solver.ModSolveResultImpl;
 
 public final class ModResolvingTests {
@@ -163,8 +164,8 @@ public final class ModResolvingTests {
 	}
 
 	@Test
-	public void quilt() throws Exception {
-		ModSolveResult modSet = resolveModSet("valid", "quilt");
+	public void muon() throws Exception {
+		ModSolveResult modSet = resolveModSet("valid", MuonConstants.BRAND);
 
 		assertModPresent(modSet, "mod-resolving-tests-quilt", "1.0.0");
 		assertNoMoreMods(modSet);
@@ -345,7 +346,7 @@ public final class ModResolvingTests {
 		Path modRoot = testLocation.resolve(type).resolve(subpath);
 		final ModSolveResultImpl result;
 
-		QuiltPluginManagerImpl pluginManager = new QuiltPluginManagerForTests(game, config, modRoot, cache);
+		MuonPluginManagerImpl pluginManager = new MuonPluginManagerForTests(game, config, modRoot, cache);
 
 		try {
 			result = pluginManager.run(false);
@@ -357,7 +358,7 @@ public final class ModResolvingTests {
 				new HashMap<>(result.unknownRegularFiles), //
 				new HashMap<>(result.unknownFiles)//
 			);
-		} catch (QuiltReportedError error) {
+		} catch (MuonReportedError error) {
 			StringWriter writer = new StringWriter();
 			error.report.write(new PrintWriter(writer));
 			throw new ModResolutionException(writer.toString());

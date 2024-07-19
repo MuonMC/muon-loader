@@ -28,22 +28,22 @@ import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.MuonLoader;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
-import org.muonmc.loader.impl.filesystem.QuiltMapFileSystem;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.filesystem.MuonMapFileSystem;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 
 import net.fabricmc.accesswidener.AccessWidener;
 import net.fabricmc.accesswidener.AccessWidenerReader;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class TransformCacheGenerator {
 
 
 	static TransformCache generate(Path root, List<ModLoadOption> modList) throws ModResolutionException, IOException {
 		TransformCache cache = new TransformCache(root, modList);
-		QuiltMapFileSystem.dumpEntries(root.getFileSystem(), "after-copy");
+		MuonMapFileSystem.dumpEntries(root.getFileSystem(), "after-copy");
 
 		// Transform time!
 		// Load AWs
@@ -51,15 +51,15 @@ final class TransformCacheGenerator {
 		// game provider transformer and QuiltTransformer
 		cache.forEachClassFile((mod, name, file) -> {
 
-			byte[] classBytes = QuiltLauncherBase.getLauncher().getEntrypointTransformer().transform(name);
+			byte[] classBytes = MuonLauncherBase.getLauncher().getEntrypointTransformer().transform(name);
 
 			if (classBytes == null) {
 				classBytes = Files.readAllBytes(file);
 			}
 
-			return QuiltTransformer.transform(
+			return MuonTransformer.transform(
 					MuonLoader.isDevelopmentEnvironment(),
-					QuiltLauncherBase.getLauncher().getEnvironmentType(),
+					MuonLauncherBase.getLauncher().getEnvironmentType(),
 					cache,
 					accessWidener,
 					name,

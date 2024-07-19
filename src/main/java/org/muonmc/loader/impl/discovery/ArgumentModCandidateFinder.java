@@ -25,20 +25,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class ArgumentModCandidateFinder {
 
-	public static void addMods(QuiltPluginContext ctx, String list, String source) {
-		PluginGuiTreeNode argModsNode = ctx.manager().getRootGuiNode().addChild(QuiltLoaderText.translate("gui.text.arg_mods"));
+	public static void addMods(MuonPluginContext ctx, String list, String source) {
+		PluginGuiTreeNode argModsNode = ctx.manager().getRootGuiNode().addChild(MuonLoaderText.translate("gui.text.arg_mods"));
 		for (String pathStr : list.split(File.pathSeparator)) {
 			if (pathStr.isEmpty()) continue;
 
@@ -73,7 +73,7 @@ public class ArgumentModCandidateFinder {
 		}
 	}
 
-	private static void addMod(QuiltPluginContext ctx, String pathStr, String original, String source, PluginGuiTreeNode argModsNode) {
+	private static void addMod(MuonPluginContext ctx, String pathStr, String original, String source, PluginGuiTreeNode argModsNode) {
 
 		final boolean folder = pathStr.endsWith(File.separator + "*") || pathStr.endsWith("/*");
 
@@ -84,14 +84,14 @@ public class ArgumentModCandidateFinder {
 		Path path = Paths.get(pathStr).toAbsolutePath().normalize();
 
 		if (!FasterFiles.exists(path)) { // missing
-			QuiltDisplayedError error = ctx.reportError(
-				QuiltLoaderText.translate("error.arg_mods.missing.title", path.getFileName())
+			MuonDisplayedError error = ctx.reportError(
+				MuonLoaderText.translate("error.arg_mods.missing.title", path.getFileName())
 			);
 			if (source == null) {
-				error.appendDescription(QuiltLoaderText.translate("error.arg_mods.missing.desc", original, path));
+				error.appendDescription(MuonLoaderText.translate("error.arg_mods.missing.desc", original, path));
 			} else {
 				error.appendDescription(
-					QuiltLoaderText.translate("error.arg_mods.missing.by.desc", original, source, path)
+					MuonLoaderText.translate("error.arg_mods.missing.by.desc", original, source, path)
 				);
 			}
 			error.appendReportText("The file " + path + " is missing!");
@@ -107,14 +107,14 @@ public class ArgumentModCandidateFinder {
 				ctx.addFolderToScan(path);
 				return;
 			}
-			QuiltDisplayedError error = ctx.reportError(
-				QuiltLoaderText.translate("error.arg_mods.not_folder.title", path.getFileName())
+			MuonDisplayedError error = ctx.reportError(
+				MuonLoaderText.translate("error.arg_mods.not_folder.title", path.getFileName())
 			);
 			if (source == null) {
-				error.appendDescription(QuiltLoaderText.translate("error.arg_mods.not_folder.desc", original, path));
+				error.appendDescription(MuonLoaderText.translate("error.arg_mods.not_folder.desc", original, path));
 			} else {
 				error.appendDescription(
-					QuiltLoaderText.translate("error.arg_mods.not_folder.by.desc", original, source, path)
+					MuonLoaderText.translate("error.arg_mods.not_folder.by.desc", original, source, path)
 				);
 			}
 			error.appendReportText("The folder " + path + " is missing!");
@@ -123,7 +123,7 @@ public class ArgumentModCandidateFinder {
 				error.appendReportText(" (Inside the file " + source + ")");
 			}
 		} else {
-			ctx.addFileToScan(path, argModsNode.addChild(QuiltLoaderText.of(pathStr)), true);
+			ctx.addFileToScan(path, argModsNode.addChild(MuonLoaderText.of(pathStr)), true);
 		}
 	}
 }

@@ -19,7 +19,7 @@ package org.muonmc.loader.impl.util;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class ExposedByteArrayOutputStream extends ByteArrayOutputStream {
 	public byte[] getArray() {
 		return buf;

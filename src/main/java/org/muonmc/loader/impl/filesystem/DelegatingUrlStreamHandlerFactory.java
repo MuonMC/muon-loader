@@ -21,8 +21,8 @@ import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 
 import org.muonmc.loader.impl.filesystem.quilt.mfs.Handler;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 
 /** Holds the {@link URLStreamHandlerFactory} for all quilt filesystems. This is set to
@@ -30,7 +30,7 @@ import org.muonmc.loader.impl.util.SystemProperties;
  * <p>
  * Game providers for games other than minecraft are expected to append their games' factories to
  * {@link #appendFactory(URLStreamHandlerFactory)}, if their game actually needs this. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class DelegatingUrlStreamHandlerFactory implements URLStreamHandlerFactory {
 
 	public static final DelegatingUrlStreamHandlerFactory INSTANCE = new DelegatingUrlStreamHandlerFactory();

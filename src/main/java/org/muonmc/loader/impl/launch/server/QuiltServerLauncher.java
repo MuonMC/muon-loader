@@ -17,8 +17,8 @@
 
 package org.muonmc.loader.impl.launch.server;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 
 import java.io.*;
@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class QuiltServerLauncher {
 	private static final ClassLoader parentLoader = QuiltServerLauncher.class.getClassLoader();
 	private static String mainClass = "net.fabricmc.loader.launch.knot.KnotServer";

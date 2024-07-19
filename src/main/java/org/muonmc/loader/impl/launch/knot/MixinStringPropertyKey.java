@@ -19,11 +19,11 @@ package org.muonmc.loader.impl.launch.knot;
 
 import java.util.Objects;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.spongepowered.asm.service.IPropertyKey;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class MixinStringPropertyKey implements IPropertyKey {
 	public final String key;
 

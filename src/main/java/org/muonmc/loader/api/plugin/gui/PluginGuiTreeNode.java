@@ -18,26 +18,26 @@ package org.muonmc.loader.api.plugin.gui;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 
-/** @deprecated Replaced / moved to public API: {@link QuiltTreeNode}. */
+/** @deprecated Replaced / moved to public API: {@link MuonTreeNode}. */
 
-@QuiltLoaderInternal(value = QuiltLoaderInternalType.PLUGIN_API, replacements = QuiltTreeNode.class)
+@MuonLoaderInternal(value = MuonLoaderInternalType.PLUGIN_API, replacements = MuonTreeNode.class)
 @Deprecated
 public interface PluginGuiTreeNode {
 
 	/** @return The newer API version of this node. */
-	QuiltTreeNode getNew();
+	MuonTreeNode getNew();
 
-	/** @deprecated Replaced / moved to public API: {@link QuiltWarningLevel}. */
+	/** @deprecated Replaced / moved to public API: {@link MuonWarningLevel}. */
 	@Deprecated
-	@QuiltLoaderInternal(value = QuiltLoaderInternalType.PLUGIN_API, replacements = QuiltWarningLevel.class)
+	@MuonLoaderInternal(value = MuonLoaderInternalType.PLUGIN_API, replacements = MuonWarningLevel.class)
 	public enum WarningLevel {
 
 		/** A serious error that forces loading to halt immediately, and display the current state of loading.
@@ -73,7 +73,7 @@ public interface PluginGuiTreeNode {
 		DEBUG_ONLY;
 	}
 
-	@QuiltLoaderInternal(value = QuiltLoaderInternalType.PLUGIN_API, replacements = QuiltTreeNode.SortOrder.class)
+	@MuonLoaderInternal(value = MuonLoaderInternalType.PLUGIN_API, replacements = MuonTreeNode.SortOrder.class)
 	@Deprecated
 	public enum SortOrder {
 		ADDITION_ORDER,
@@ -86,17 +86,17 @@ public interface PluginGuiTreeNode {
 	PluginGuiTreeNode addChild(SortOrder sortOrder);
 
 	@Contract("_, _ -> new")
-	PluginGuiTreeNode addChild(QuiltLoaderText text, SortOrder sortOrder);
+	PluginGuiTreeNode addChild(MuonLoaderText text, SortOrder sortOrder);
 
 	@Contract("_ -> new")
-	default PluginGuiTreeNode addChild(QuiltLoaderText text) {
+	default PluginGuiTreeNode addChild(MuonLoaderText text) {
 		return addChild(text, SortOrder.ADDITION_ORDER);
 	}
 
-	QuiltLoaderText text();
+	MuonLoaderText text();
 
 	@Contract("_ -> this")
-	PluginGuiTreeNode text(QuiltLoaderText text);
+	PluginGuiTreeNode text(MuonLoaderText text);
 
 	String sortPrefix();
 
@@ -125,9 +125,9 @@ public interface PluginGuiTreeNode {
 	}
 
 	/** Sets the {@link WarningLevel} of this node to {@link WarningLevel#ERROR}, and associates it with the given
-	 * {@link QuiltDisplayedError}. */
+	 * {@link MuonDisplayedError}. */
 	@Contract("_ -> this")
-	default PluginGuiTreeNode setError(Throwable exception, QuiltDisplayedError reportedError) {
+	default PluginGuiTreeNode setError(Throwable exception, MuonDisplayedError reportedError) {
 		setDirectLevel(WarningLevel.ERROR);
 		setException(exception);
 		assert reportedError != null;
@@ -152,16 +152,16 @@ public interface PluginGuiTreeNode {
 	/** @return The number of nodes (or sub-nodes) which have a {@link #getDirectLevel()} equal to the given level. */
 	int countOf(WarningLevel level);
 
-	QuiltLoaderIcon mainIcon();
+	MuonLoaderIcon mainIcon();
 
 	@Contract("_ -> this")
-	PluginGuiTreeNode mainIcon(QuiltLoaderIcon icon);
+	PluginGuiTreeNode mainIcon(MuonLoaderIcon icon);
 
 	@Nullable
-	QuiltLoaderIcon subIcon();
+	MuonLoaderIcon subIcon();
 
 	@Contract("_ -> this")
-	PluginGuiTreeNode subIcon(QuiltLoaderIcon icon);
+	PluginGuiTreeNode subIcon(MuonLoaderIcon icon);
 
 	/** Whether the node is automatically expanded in the GUI. Defaults to {@code true} when {@link #getMaximumLevel()}
 	 * is {@link WarningLevel#CONCERN CONCERN} or higher, and {@code false} otherwise. */

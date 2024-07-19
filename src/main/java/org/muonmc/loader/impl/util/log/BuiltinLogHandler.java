@@ -17,8 +17,8 @@
 package org.muonmc.loader.impl.util.log;
 
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ import java.util.List;
  * - option to relay previous log output to another log handler if requested through Log.init
  * - dumps previous log output to a log file if not closed/relayed yet
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class BuiltinLogHandler extends ConsoleLogHandler {
 	private static final String DEFAULT_LOG_FILE = "quiltloader.log";
 

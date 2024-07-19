@@ -27,13 +27,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.api.plugin.QuiltLoaderPlugin;
+import org.muonmc.loader.api.plugin.MuonLoaderPlugin;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
-import org.muonmc.loader.impl.gui.QuiltStatusNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.gui.MuonStatusNode;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class PathLoadState {
 
 	final Path path;
@@ -43,8 +43,8 @@ abstract class PathLoadState {
 	/** Set if this path is an exact duplicate of another mandatory mod, and we're on the classpath, and we're in a dev
 	 * environment
 	 * 
-	 * @see QuiltPluginManagerImpl#addSingleModOption0(ModLoadOption, BasePluginContext, boolean,
-	 *      QuiltStatusNode) */
+	 * @see MuonPluginManagerImpl#addSingleModOption0(ModLoadOption, BasePluginContext, boolean,
+	 *      MuonStatusNode) */
 	boolean isDuplicate = false;
 
 	/** Map of plugin ID to list of {@link ModLoadOption} which was loaded by that plugin. This contains empty lists
@@ -53,7 +53,7 @@ abstract class PathLoadState {
 
 	private String currentHighestPriority;
 
-	/** Caches the return value of {@link QuiltLoaderPlugin#isHigherPriorityThan(Path, List, String)} to ensure we don't
+	/** Caches the return value of {@link MuonLoaderPlugin#isHigherPriorityThan(Path, List, String)} to ensure we don't
 	 * call this multiple times. */
 	private final Map<PluginPriorityComparison, Boolean> pluginPriorities = new HashMap<>();
 
@@ -62,7 +62,7 @@ abstract class PathLoadState {
 		this.location = location;
 	}
 
-	void add(QuiltPluginManagerImpl manager, BasePluginContext plugin, List<ModLoadOption> mods) {
+	void add(MuonPluginManagerImpl manager, BasePluginContext plugin, List<ModLoadOption> mods) {
 		String pluginId = plugin.pluginId;
 		List<ModLoadOption> list = loadedByPlugin.computeIfAbsent(pluginId, p -> new ArrayList<>());
 		list.addAll(mods);
@@ -173,7 +173,7 @@ abstract class PathLoadState {
 		return Collections.unmodifiableMap(map);
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class PluginPriorityComparison {
 		final String pluginFrom;
 		final String pluginTo;
@@ -204,28 +204,28 @@ abstract class PathLoadState {
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class ExtraMod extends PathLoadState {
 		ExtraMod(Path path) {
 			super(path, null);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class UnknownFile extends PathLoadState {
 		UnknownFile(Path path, ModLocationImpl location) {
 			super(path, location);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class Folder extends PathLoadState {
 		Folder(Path path, ModLocationImpl location) {
 			super(path, location);
 		}
 	}
 
-	@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+	@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 	static final class Zip extends PathLoadState {
 		final Path insideZipRoot;
 

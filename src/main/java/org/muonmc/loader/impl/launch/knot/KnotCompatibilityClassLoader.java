@@ -20,9 +20,10 @@ package org.muonmc.loader.impl.launch.knot;
 import net.fabricmc.api.EnvType;
 
 import org.muonmc.loader.api.ModContainer;
+import org.muonmc.loader.api.minecraft.Environment;
 import org.muonmc.loader.impl.game.GameProvider;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.UrlUtil;
 
 import java.io.IOException;
@@ -33,13 +34,13 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.security.CodeSource;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class KnotCompatibilityClassLoader extends URLClassLoader implements KnotClassLoaderInterface {
 	private final KnotClassDelegate delegate;
 
-	KnotCompatibilityClassLoader(boolean isDevelopment, EnvType envType, GameProvider provider) {
+	KnotCompatibilityClassLoader(boolean isDevelopment, Environment environment, GameProvider provider) {
 		super(new URL[0], KnotCompatibilityClassLoader.class.getClassLoader());
-		this.delegate = new KnotClassDelegate(isDevelopment, envType, this, provider);
+		this.delegate = new KnotClassDelegate(isDevelopment, environment, this, provider);
 	}
 
 	@Override

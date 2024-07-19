@@ -20,8 +20,8 @@ package net.fabricmc.loader.launch.common;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.launch.common.QuiltLauncherBase;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.util.UrlUtil;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Deprecated
 public class FabricLauncherBase implements FabricLauncher {
-	private final QuiltLauncher parent = QuiltLauncherBase.getLauncher();
+	private final MuonLauncher parent = MuonLauncherBase.getLauncher();
 
 	public static Class<?> getClass(String className) throws ClassNotFoundException {
 		return Class.forName(className, true, getLauncher().getTargetClassLoader());

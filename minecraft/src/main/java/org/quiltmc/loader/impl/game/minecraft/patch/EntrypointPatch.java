@@ -40,7 +40,7 @@ import org.muonmc.loader.impl.entrypoint.GamePatch;
 import org.muonmc.loader.impl.entrypoint.GamePatchContext;
 import org.muonmc.loader.impl.fabric.util.version.VersionPredicateParser;
 import org.quiltmc.loader.impl.game.minecraft.MinecraftGameProvider;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
@@ -73,7 +73,7 @@ public class EntrypointPatch extends GamePatch {
 	}
 
 	@Override
-	public void process(QuiltLauncher launcher, String namespace, GamePatchContext context) {
+	public void process(MuonLauncher launcher, String namespace, GamePatchContext context) {
 		EnvType type = launcher.getEnvironmentType();
 		String entrypoint = launcher.getEntrypoint();
 		Version gameVersion = getGameVersion();

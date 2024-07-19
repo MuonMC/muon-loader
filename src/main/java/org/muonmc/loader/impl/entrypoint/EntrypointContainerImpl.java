@@ -21,10 +21,10 @@ import java.util.function.Supplier;
 
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class EntrypointContainerImpl<T> implements EntrypointContainer<T> {
 	private final ModContainer container;
 	private final Supplier<T> entrypointSupplier;

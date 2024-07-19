@@ -47,12 +47,12 @@ import org.muonmc.loader.api.LoaderValue.LType;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.util.FileUtil;
 import org.muonmc.loader.impl.util.LoaderUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class ChasmInvoker {
 
 	static void applyChasm(TransformCache cache)

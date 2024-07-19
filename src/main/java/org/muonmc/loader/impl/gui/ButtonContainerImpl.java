@@ -19,21 +19,21 @@ package org.muonmc.loader.impl.gui;
 import java.nio.file.Path;
 
 import org.muonmc.loader.api.FasterFiles;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
-import org.muonmc.loader.api.gui.QuiltGuiButtonContainer;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonGuiButtonContainer;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 
-interface ButtonContainerImpl extends QuiltGuiButtonContainer {
+interface ButtonContainerImpl extends MuonGuiButtonContainer {
 
 	interface ButtonContainerListener {
 		default void onButtonAdded(QuiltJsonButton button) {}
 	}
 
-	default QuiltJsonButton button(QuiltLoaderText name, QuiltJsonButton.QuiltBasicButtonAction action) {
+	default QuiltJsonButton button(MuonLoaderText name, QuiltJsonButton.QuiltBasicButtonAction action) {
 		return button(name, action, null);
 	}
 
-	default QuiltJsonButton button(QuiltLoaderText name, QuiltJsonButton.QuiltBasicButtonAction action, Runnable run) {
+	default QuiltJsonButton button(MuonLoaderText name, QuiltJsonButton.QuiltBasicButtonAction action, Runnable run) {
 		return addButton(new QuiltJsonButton(getThis(), name.toString(), null, action, run));
 	}
 
@@ -42,22 +42,22 @@ interface ButtonContainerImpl extends QuiltGuiButtonContainer {
 	QuiltJsonButton addButton(QuiltJsonButton button);
 
 	@Override
-	default QuiltErrorButton addFileViewButton(QuiltLoaderText name, Path openedPath) {
+	default QuiltErrorButton addFileViewButton(MuonLoaderText name, Path openedPath) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.VIEW_FILE).arg("file", openedPath.toString());
 	}
 
 	@Override
-	default QuiltErrorButton addFileEditButton(QuiltLoaderText name, Path openedPath) {
+	default QuiltErrorButton addFileEditButton(MuonLoaderText name, Path openedPath) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.EDIT_FILE).arg("file", openedPath.toString());
 	}
 
 	@Override
-	default QuiltErrorButton addFileOpenButton(QuiltLoaderText name, Path openedPath) {
+	default QuiltErrorButton addFileOpenButton(MuonLoaderText name, Path openedPath) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.OPEN_FILE).arg("file", openedPath.toString());
 	}
 
 	@Override
-	default QuiltErrorButton addFolderViewButton(QuiltLoaderText name, Path openedFolder) {
+	default QuiltErrorButton addFolderViewButton(MuonLoaderText name, Path openedFolder) {
 		if (FasterFiles.isRegularFile(openedFolder)) {
 			return addFileViewButton(name, openedFolder);
 		} else {
@@ -67,7 +67,7 @@ interface ButtonContainerImpl extends QuiltGuiButtonContainer {
 	}
 
 	@Override
-	default QuiltErrorButton addOpenLinkButton(QuiltLoaderText name, String url) {
+	default QuiltErrorButton addOpenLinkButton(MuonLoaderText name, String url) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.OPEN_WEB_URL).arg("url", url);
 	}
 
@@ -77,25 +77,25 @@ interface ButtonContainerImpl extends QuiltGuiButtonContainer {
 	}
 
 	@Override
-	default QuiltErrorButton addCopyTextToClipboardButton(QuiltLoaderText name, String fullText) {
+	default QuiltErrorButton addCopyTextToClipboardButton(MuonLoaderText name, String fullText) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.PASTE_CLIPBOARD_TEXT).arg("text", fullText);
 	}
 
 	@Override
-	default QuiltErrorButton addCopyFileToClipboardButton(QuiltLoaderText name, Path openedFile) {
+	default QuiltErrorButton addCopyFileToClipboardButton(MuonLoaderText name, Path openedFile) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.PASTE_CLIPBOARD_FILE)//
 			.arg("file", openedFile.toString());
 	}
 
 	@Override
-	default QuiltErrorButton addOnceActionButton(QuiltLoaderText name, QuiltLoaderText disabledText, Runnable action) {
+	default QuiltErrorButton addOnceActionButton(MuonLoaderText name, MuonLoaderText disabledText, Runnable action) {
 		QuiltJsonButton button = button(name, QuiltJsonButton.QuiltBasicButtonAction.RETURN_SIGNAL_ONCE, action);
 		button.disabledText = disabledText.toString();
 		return button;
 	}
 
 	@Override
-	default QuiltErrorButton addActionButton(QuiltLoaderText name, Runnable action) {
+	default QuiltErrorButton addActionButton(MuonLoaderText name, Runnable action) {
 		return button(name, QuiltJsonButton.QuiltBasicButtonAction.RETURN_SIGNAL_MANY, action);
 	}
 }

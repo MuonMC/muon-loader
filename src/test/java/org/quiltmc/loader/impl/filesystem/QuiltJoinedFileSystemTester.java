@@ -31,8 +31,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.muonmc.loader.impl.filesystem.QuiltJoinedFileSystem;
-import org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonJoinedFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonMemoryFileSystem;
 
 public class QuiltJoinedFileSystemTester {
 	@ParameterizedTest
@@ -40,7 +40,7 @@ public class QuiltJoinedFileSystemTester {
 	public void test(Path rw1, Path rw2) throws IOException {
 		// note, rw2 is mounted at the "sub" subdirectory in the joined filesystem
 		try (
-				QuiltJoinedFileSystem jfs = new QuiltJoinedFileSystem(
+				MuonJoinedFileSystem jfs = new MuonJoinedFileSystem(
 				"jfs", Arrays.asList(rw1, rw2.resolve("sub"))
 		)) {
 			Assertions.assertFalse(Files.newDirectoryStream(rw1).iterator().hasNext());
@@ -89,7 +89,8 @@ public class QuiltJoinedFileSystemTester {
 	@ParameterizedTest
 	@MethodSource("getPaths")
 	public void testDirectoryStream(Path rw1, Path rw2) throws IOException {
-		try (QuiltJoinedFileSystem jfs = new QuiltJoinedFileSystem(
+		try (
+				MuonJoinedFileSystem jfs = new MuonJoinedFileSystem(
 				"jfs", Arrays.asList(rw1, rw2)
 		)) {
 			createTestFile(rw1, "a.txt");
@@ -108,7 +109,8 @@ public class QuiltJoinedFileSystemTester {
 	@ParameterizedTest
 	@MethodSource("getPaths")
 	public void testMismatchedDirectoryStream(Path rw1, Path rw2) throws IOException {
-		try (QuiltJoinedFileSystem jfs = new QuiltJoinedFileSystem(
+		try (
+				MuonJoinedFileSystem jfs = new MuonJoinedFileSystem(
 				"jfs", Arrays.asList(rw1, rw2)
 		)) {
 			// Create a directory in rw2 but not in rw1 and iterate it via the joined filesystem
@@ -135,8 +137,8 @@ public class QuiltJoinedFileSystemTester {
 	 * @return sets of two paths for testing joined filesystems
 	 */
 	public static Stream<Arguments> getPaths() throws IOException{
-		QuiltMemoryFileSystem.ReadWrite memoryFs1 = new QuiltMemoryFileSystem.ReadWrite("mem1", true);
-		QuiltMemoryFileSystem.ReadWrite memoryFs2 = new QuiltMemoryFileSystem.ReadWrite("mem2", true);
+		MuonMemoryFileSystem.ReadWrite memoryFs1 = new MuonMemoryFileSystem.ReadWrite("mem1", true);
+		MuonMemoryFileSystem.ReadWrite memoryFs2 = new MuonMemoryFileSystem.ReadWrite("mem2", true);
 
 		Path tempFs1 = Files.createTempDirectory("temp1");
 		Path tempFs2 = Files.createTempDirectory("temp2");

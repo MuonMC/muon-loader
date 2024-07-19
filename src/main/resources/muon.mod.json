@@ -5,7 +5,7 @@
     "id": "quilt_loader",
     "version": "${version}",
     "metadata": {
-      "name": "Quilt Loader",
+      "name": "Muon Loader",
       "description": "The mod-loader that cares.",
       "contributors": {
         "QuiltMC: Loader Team": "Owner"

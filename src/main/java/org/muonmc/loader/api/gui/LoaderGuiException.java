@@ -16,7 +16,7 @@
 
 package org.muonmc.loader.api.gui;
 
-/** Thrown by {@link QuiltLoaderGui#openErrorGui} if the error screen couldn't be opened. */
+/** Thrown by {@link MuonLoaderGui#openErrorGui} if the error screen couldn't be opened. */
 public class LoaderGuiException extends Exception {
 
 	public LoaderGuiException(Throwable cause) {

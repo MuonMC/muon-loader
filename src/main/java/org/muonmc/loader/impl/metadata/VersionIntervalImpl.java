@@ -24,10 +24,10 @@ import java.util.Objects;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionInterval;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class VersionIntervalImpl implements VersionInterval {
 	private final Version min;
 	private final boolean minInclusive;

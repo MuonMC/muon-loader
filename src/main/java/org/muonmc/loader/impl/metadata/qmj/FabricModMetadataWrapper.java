@@ -38,8 +38,8 @@ import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.muonmc.loader.impl.metadata.VersionIntervalImpl;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.metadata.CustomValue;
@@ -49,7 +49,7 @@ import net.fabricmc.loader.api.metadata.version.VersionInterval;
 
 import net.fabricmc.api.EnvType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class FabricModMetadataWrapper implements InternalModMetadata {
 	public static final String GROUP = "loader.fabric";
 	private static final String NO_LOCATION = "location not supported";

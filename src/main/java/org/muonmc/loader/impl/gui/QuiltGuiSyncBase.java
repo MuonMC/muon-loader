@@ -28,15 +28,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import org.muonmc.loader.impl.util.LoaderValueHelper;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.LoaderValue.LType;
 import org.muonmc.loader.api.plugin.LoaderValueFactory;
 
 /** Helper class for quilt gui objects which need to have state synced from client to server. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 abstract class QuiltGuiSyncBase {
 
 	static final AtomicInteger IDS;

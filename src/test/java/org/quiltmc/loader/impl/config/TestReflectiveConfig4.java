@@ -16,6 +16,7 @@
 
 package org.quiltmc.loader.impl.config;
 
+import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.WrappedConfig;
 import org.quiltmc.config.api.annotations.Comment;
 import org.quiltmc.config.api.annotations.IntegerRange;
@@ -23,7 +24,7 @@ import org.quiltmc.config.api.annotations.Matches;
 import org.quiltmc.config.api.values.ValueList;
 import org.quiltmc.config.api.values.ValueMap;
 
-public final class TestReflectiveConfig4 extends WrappedConfig {
+public final class TestReflectiveConfig4 extends ReflectiveConfig {
 	@Comment({"Comment one", "Comment two"})
 	public final int a = 0;
 
@@ -61,7 +62,7 @@ public final class TestReflectiveConfig4 extends WrappedConfig {
 			ValueMap.builder(0).put("a", 1).put("b", 2).put("c", 3).put("d", 4).build()
 	);
 
-	public static final class Nested implements Section {
+	public static final class Nested extends Section {
 		public final int a;
 		public final int b;
 		public final int c;

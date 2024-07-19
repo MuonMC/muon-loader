@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
+import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.metadata.qmj.AdapterLoadableClassEntry;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.ModContributor;
@@ -36,8 +38,8 @@ import org.muonmc.loader.api.plugin.ModMetadataExt.ModEntrypoint;
 import org.muonmc.loader.impl.fabric.metadata.CustomValueImpl;
 import org.muonmc.loader.impl.fabric.metadata.MapBackedContactInformation;
 import org.muonmc.loader.impl.fabric.metadata.SimplePerson;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -51,7 +53,7 @@ import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 
 import net.fabricmc.api.EnvType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 
 	final ModMetadataExt meta;
@@ -156,7 +158,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 	@Override
 	public String getType() {
 		if (container == null) {
-			return "quilt";
+			return MuonConstants.BRAND;
 		}
 		switch (container.getSourceType()) {
 			case BUILTIN:
@@ -164,7 +166,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 			case NORMAL_FABRIC:
 				return "fabric";
 			case NORMAL_QUILT:
-				return "quilt";
+				return MuonConstants.BRAND;
 			case OTHER:
 			default:
 				return "unknown";
@@ -329,7 +331,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 	}
 
 	@Override
-	public boolean loadsInEnvironment(EnvType type) {
+	public boolean loadsInEnvironment(Environment environment) {
 		throw internalError();
 	}
 

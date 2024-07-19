@@ -17,14 +17,13 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import net.fabricmc.api.EnvType;
-
-import org.muonmc.loader.impl.filesystem.QuiltClassPath;
+import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.impl.filesystem.MuonClassPath;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.DeferredInputStream;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.UrlUtil;
 
 import java.io.IOException;
@@ -41,7 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class KnotClassLoader extends SecureClassLoader implements KnotClassLoaderInterface {
 	private static class DynamicURLClassLoader extends URLClassLoader {
 		private DynamicURLClassLoader(URL[] urls) {
@@ -58,20 +57,20 @@ class KnotClassLoader extends SecureClassLoader implements KnotClassLoaderInterf
 		}
 	}
 
-	private final QuiltClassPath paths = new QuiltClassPath();
+	private final MuonClassPath paths = new MuonClassPath();
 	private final DynamicURLClassLoader fakeLoader;
 	private final DynamicURLClassLoader minimalLoader;
 	private final ClassLoader originalLoader;
 	private final KnotClassDelegate delegate;
 
-	KnotClassLoader(boolean isDevelopment, EnvType envType, GameProvider provider) {
+	KnotClassLoader(boolean isDevelopment, Environment environment, GameProvider provider) {
 		super(new DynamicURLClassLoader(new URL[0]));
 		this.originalLoader = getClass().getClassLoader();
-		// For compatibility we send all URLs to the fake loader
+		// For compatibility, we send all URLs to the fake loader
 		// but never ask it for resources
 		this.fakeLoader = (DynamicURLClassLoader) getParent();
 		this.minimalLoader = new DynamicURLClassLoader(new URL[0]);
-		this.delegate = new KnotClassDelegate(isDevelopment, envType, this, provider);
+		this.delegate = new KnotClassDelegate(isDevelopment, environment, this, provider);
 	}
 
 	@Override

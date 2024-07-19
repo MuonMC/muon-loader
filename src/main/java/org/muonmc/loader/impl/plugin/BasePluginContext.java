@@ -20,41 +20,41 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
-import org.muonmc.loader.api.gui.QuiltTreeNode.SortOrder;
-import org.muonmc.loader.api.plugin.QuiltPluginManager;
-import org.muonmc.loader.api.plugin.QuiltPluginTask;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
+import org.muonmc.loader.api.gui.MuonTreeNode.SortOrder;
+import org.muonmc.loader.api.plugin.MuonPluginManager;
+import org.muonmc.loader.api.plugin.MuonPluginTask;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
 import org.muonmc.loader.api.plugin.solver.RuleContext;
 import org.muonmc.loader.api.plugin.solver.TentativeLoadOption;
-import org.muonmc.loader.impl.gui.QuiltStatusNode;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.gui.MuonStatusNode;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-abstract class BasePluginContext implements QuiltPluginContext {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+abstract class BasePluginContext implements MuonPluginContext {
 
-	final QuiltPluginManagerImpl manager;
+	final MuonPluginManagerImpl manager;
 	final String pluginId;
 	final RuleContext ruleContext = new ModRuleContext();
 
-	QuiltStatusNode extraModsRoot;
+	MuonStatusNode extraModsRoot;
 	Collection<Rule> blameableRules = null;
 	Rule blamedRule = null;
 
-	public BasePluginContext(QuiltPluginManagerImpl manager, String pluginId) {
+	public BasePluginContext(MuonPluginManagerImpl manager, String pluginId) {
 		this.manager = manager;
 		this.pluginId = pluginId;
 	}
 
 	@Override
-	public QuiltPluginManager manager() {
+	public MuonPluginManager manager() {
 		return manager;
 	}
 
@@ -72,13 +72,13 @@ abstract class BasePluginContext implements QuiltPluginContext {
 	@Deprecated
 	public void addFileToScan(Path file, PluginGuiTreeNode guiNode, boolean direct) {
 		// TODO: Log / store / do something to store the plugin
-		manager.scanModFile(file, new ModLocationImpl(false, direct), (QuiltStatusNode) guiNode);
+		manager.scanModFile(file, new ModLocationImpl(false, direct), (MuonStatusNode) guiNode);
 	}
 
 	@Override
-	public void addFileToScan(Path file, QuiltTreeNode guiNode, boolean direct) {
+	public void addFileToScan(Path file, MuonTreeNode guiNode, boolean direct) {
 		// TODO: Log / store / do something to store the plugin
-		manager.scanModFile(file, new ModLocationImpl(false, direct), (QuiltStatusNode) guiNode);
+		manager.scanModFile(file, new ModLocationImpl(false, direct), (MuonStatusNode) guiNode);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ abstract class BasePluginContext implements QuiltPluginContext {
 	}
 
 	@Override
-	public QuiltDisplayedError reportError(QuiltLoaderText title) {
+	public MuonDisplayedError reportError(MuonLoaderText title) {
 		return manager.reportError(this, title);
 	}
 
@@ -103,12 +103,12 @@ abstract class BasePluginContext implements QuiltPluginContext {
 	}
 
 	@Override
-	public <V> QuiltPluginTask<V> submit(Callable<V> task) {
+	public <V> MuonPluginTask<V> submit(Callable<V> task) {
 		return manager.submit(this, task);
 	}
 
 	@Override
-	public <V> QuiltPluginTask<V> submitAfter(Callable<V> task, QuiltPluginTask<?>... deps) {
+	public <V> MuonPluginTask<V> submitAfter(Callable<V> task, MuonPluginTask<?>... deps) {
 		return manager.submitAfter(this, task, deps);
 	}
 
@@ -119,12 +119,12 @@ abstract class BasePluginContext implements QuiltPluginContext {
 
 	@Override
 	public void addModLoadOption(ModLoadOption mod, PluginGuiTreeNode guiNode) {
-		manager.addSingleModOption(mod, BasePluginContext.this, true, (QuiltStatusNode) guiNode);
+		manager.addSingleModOption(mod, BasePluginContext.this, true, (MuonStatusNode) guiNode);
 	}
 
 	@Override
-	public void addModLoadOption(ModLoadOption mod, QuiltTreeNode guiNode) {
-		manager.addSingleModOption(mod, BasePluginContext.this, true, (QuiltStatusNode) guiNode);
+	public void addModLoadOption(ModLoadOption mod, MuonTreeNode guiNode) {
+		manager.addSingleModOption(mod, BasePluginContext.this, true, (MuonStatusNode) guiNode);
 	}
 
 	@Override
@@ -165,10 +165,10 @@ abstract class BasePluginContext implements QuiltPluginContext {
 				ModLoadOption mod = (ModLoadOption) option;
 				if (extraModsRoot == null) {
 					extraModsRoot = manager.getModsFromPluginsGuiNode().addChild(SortOrder.ALPHABETICAL_ORDER);
-					extraModsRoot.text(QuiltLoaderText.translate("gui.text.plugin", pluginId));
+					extraModsRoot.text(MuonLoaderText.translate("gui.text.plugin", pluginId));
 				}
 
-				QuiltStatusNode guiNode = extraModsRoot.addChild(QuiltLoaderText.of(mod.id()));
+				MuonStatusNode guiNode = extraModsRoot.addChild(MuonLoaderText.of(mod.id()));
 				manager.addSingleModOption(mod, BasePluginContext.this, true, guiNode);
 			} else {
 				manager.addLoadOption(option, BasePluginContext.this);

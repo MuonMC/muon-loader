@@ -16,14 +16,14 @@
 
 package org.muonmc.loader.api.plugin.solver;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** {@link LoadOption}s can implement this if they must be processed before they can be used, if they are selected.
  * <p>
  * Unselected {@link TentativeLoadOption}s are left alone at the end of the cycle, and are not resolved.
  */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface TentativeLoadOption {
 
 }

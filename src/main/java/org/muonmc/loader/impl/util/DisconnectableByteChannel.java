@@ -23,7 +23,7 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SeekableByteChannel;
 
 /** A delegating {@link SeekableByteChannel} that doesn't {@link Closeable#close()} the underlying byte channel. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class DisconnectableByteChannel implements SeekableByteChannel {
 
 	private final SeekableByteChannel to;

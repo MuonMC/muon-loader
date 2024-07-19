@@ -24,18 +24,18 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-import org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonMemoryFileSystem;
 import org.muonmc.loader.impl.filesystem.QuiltMemoryFileSystemProvider;
-import org.muonmc.loader.impl.filesystem.QuiltMemoryPath;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.filesystem.MuonMemoryPath;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** {@link URLStreamHandler} for {@link QuiltMemoryFileSystem}. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+/** {@link URLStreamHandler} for {@link MuonMemoryFileSystem}. */
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class Handler extends URLStreamHandler {
 	@Override
 	protected URLConnection openConnection(URL u) throws IOException {
-		QuiltMemoryPath path;
+		MuonMemoryPath path;
 		try {
 			path = QuiltMemoryFileSystemProvider.instance().getPath(u.toURI());
 		} catch (URISyntaxException e) {

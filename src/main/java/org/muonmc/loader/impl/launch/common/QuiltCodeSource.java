@@ -21,11 +21,11 @@ import java.util.Optional;
 
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** For {@link CodeSource}s. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface QuiltCodeSource {
 	/** @return The mod that contains this class. (This is used to implement
 	 *         {@link MuonLoader#getModContainer(Class)}). */

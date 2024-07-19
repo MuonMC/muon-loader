@@ -24,18 +24,18 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-import org.muonmc.loader.impl.filesystem.QuiltZipFileSystem;
+import org.muonmc.loader.impl.filesystem.MuonZipFileSystem;
 import org.muonmc.loader.impl.filesystem.QuiltZipFileSystemProvider;
-import org.muonmc.loader.impl.filesystem.QuiltZipPath;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.filesystem.MuonZipPath;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** {@link URLStreamHandler} for {@link QuiltZipFileSystem}. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+/** {@link URLStreamHandler} for {@link MuonZipFileSystem}. */
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class Handler extends URLStreamHandler {
 	@Override
 	protected URLConnection openConnection(URL u) throws IOException {
-		QuiltZipPath path;
+		MuonZipPath path;
 		try {
 			path = QuiltZipFileSystemProvider.instance().getPath(u.toURI());
 		} catch (URISyntaxException e) {

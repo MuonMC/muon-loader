@@ -22,17 +22,17 @@ import java.nio.file.FileSystem;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-public class QuiltUnifiedFileSystemProvider extends QuiltMapFileSystemProvider<QuiltUnifiedFileSystem, QuiltUnifiedPath> {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public class QuiltUnifiedFileSystemProvider extends QuiltMapFileSystemProvider<MuonUnifiedFileSystem, MuonUnifiedPath> {
 	public QuiltUnifiedFileSystemProvider() {}
 
 	public static final String SCHEME = "quilt.ufs";
 
 	static final String READ_ONLY_EXCEPTION = "This FileSystem is read-only";
-	static final QuiltFSP<QuiltUnifiedFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
+	static final QuiltFSP<MuonUnifiedFileSystem> PROVIDER = new QuiltFSP<>(SCHEME);
 
 	public static QuiltUnifiedFileSystemProvider instance() {
 		for (FileSystemProvider provider : FileSystemProvider.installedProviders()) {
@@ -49,22 +49,22 @@ public class QuiltUnifiedFileSystemProvider extends QuiltMapFileSystemProvider<Q
 	}
 
 	@Override
-	protected QuiltFSP<QuiltUnifiedFileSystem> quiltFSP() {
+	protected QuiltFSP<MuonUnifiedFileSystem> quiltFSP() {
 		return PROVIDER;
 	}
 
 	@Override
-	protected Class<QuiltUnifiedFileSystem> fileSystemClass() {
-		return QuiltUnifiedFileSystem.class;
+	protected Class<MuonUnifiedFileSystem> fileSystemClass() {
+		return MuonUnifiedFileSystem.class;
 	}
 
 	@Override
-	protected Class<QuiltUnifiedPath> pathClass() {
-		return QuiltUnifiedPath.class;
+	protected Class<MuonUnifiedPath> pathClass() {
+		return MuonUnifiedPath.class;
 	}
 
 	@Override
-	public QuiltUnifiedPath getPath(URI uri) {
+	public MuonUnifiedPath getPath(URI uri) {
 		return PROVIDER.getFileSystem(uri).root.resolve(uri.getPath());
 	}
 

@@ -21,13 +21,13 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 import org.jetbrains.annotations.ApiStatus;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
-import org.muonmc.loader.api.plugin.QuiltPluginManager;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
+import org.muonmc.loader.api.plugin.MuonPluginManager;
 
 /** A file hash helper, which caches previously computed hashes for performance. */
 @ApiStatus.NonExtendable
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface QuiltFileHasher {
 
 	/** @return The length of the byte arrays that all hash related functions return. This is guaranteed to be at least 4. */
@@ -36,7 +36,7 @@ public interface QuiltFileHasher {
 	/** Computes the hash of the given path, suitable for {@link ModLoadOption#computeOriginHash(QuiltFileHasher)}.
 	 * <p>
 	 * The only guarantee is that, if the given path is a file (or contained within a file via
-	 * {@link QuiltPluginManager#getParent(Path)}) this will return a value that is stable over multiple launches on the
+	 * {@link MuonPluginManager#getParent(Path)}) this will return a value that is stable over multiple launches on the
 	 * same computer, if the original file is unchanged and the version of quilt-loader remains the same.
 	 * <p>
 	 * If the given path refers to a folder on the {@link FileSystems#getDefault() default file system} then this will

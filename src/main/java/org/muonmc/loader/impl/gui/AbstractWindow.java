@@ -29,12 +29,12 @@ import java.util.function.Supplier;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
 import org.muonmc.loader.api.gui.LoaderGuiException;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltLoaderWindow;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderWindow;
 
-abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements QuiltLoaderWindow<R> {
+abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements MuonLoaderWindow<R> {
 
 	interface WindowChangeListener extends Listener {
 		default void onTitleChanged() {}
@@ -42,7 +42,7 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements QuiltLoader
 	}
 
 	final CompletableFuture<Void> onClosedFuture = new CompletableFuture<>();
-	private QuiltLoaderText apiTitle = QuiltLoaderText.EMPTY;
+	private MuonLoaderText apiTitle = MuonLoaderText.EMPTY;
 	String title = "";
 	PluginIconImpl icon;
 	private R returnValue;
@@ -50,7 +50,7 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements QuiltLoader
 	public AbstractWindow(R defaultReturnValue) {
 		super(null);
 		this.returnValue = defaultReturnValue;
-		icon(QuiltLoaderGui.iconQuilt());
+		icon(MuonLoaderGui.iconQuilt());
 	}
 
 	public AbstractWindow(QuiltGuiSyncBase parent, LObject obj) throws IOException {
@@ -72,12 +72,12 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements QuiltLoader
 	// Public API
 
 	@Override
-	public QuiltLoaderText title() {
+	public MuonLoaderText title() {
 		return apiTitle;
 	}
 
 	@Override
-	public void title(QuiltLoaderText title) {
+	public void title(MuonLoaderText title) {
 		this.apiTitle = Objects.requireNonNull(title);
 		this.title = apiTitle.toString();
 		if (shouldSendUpdates()) {
@@ -88,12 +88,12 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements QuiltLoader
 	}
 
 	@Override
-	public QuiltLoaderIcon icon() {
+	public MuonLoaderIcon icon() {
 		return this.icon;
 	}
 
 	@Override
-	public void icon(QuiltLoaderIcon icon) {
+	public void icon(MuonLoaderIcon icon) {
 		this.icon = PluginIconImpl.fromApi(icon);
 		if (shouldSendUpdates()) {
 			Map<String, LoaderValue> map = new HashMap<>();

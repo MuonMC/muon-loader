@@ -18,17 +18,17 @@ package org.muonmc.loader.impl.transformer;
 
 import java.util.Map;
 
-import org.muonmc.loader.impl.filesystem.QuiltZipPath;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.filesystem.MuonZipPath;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class TransformCacheResult {
-	public final QuiltZipPath transformCacheRoot;
+	public final MuonZipPath transformCacheRoot;
 	public final boolean isNewlyGenerated;
 	public final Map<String, String> hiddenClasses;
 
-	TransformCacheResult(QuiltZipPath transformCacheRoot, boolean isNewlyGenerated, Map<String, String> hiddenClasses) {
+	TransformCacheResult(MuonZipPath transformCacheRoot, boolean isNewlyGenerated, Map<String, String> hiddenClasses) {
 		this.isNewlyGenerated = isNewlyGenerated;
 		this.transformCacheRoot = transformCacheRoot;
 		this.hiddenClasses = hiddenClasses;

@@ -26,12 +26,12 @@ import org.objectweb.asm.Type;
 import org.muonmc.loader.api.Requires;
 import org.muonmc.loader.api.minecraft.ClientOnly;
 import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.api.EnvType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class PackageStrippingData extends AbstractStripData {
 
 	private static final String CLIENT_ONLY_DESCRIPTOR = Type.getDescriptor(ClientOnly.class);

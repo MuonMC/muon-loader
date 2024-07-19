@@ -22,10 +22,10 @@ import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.FileStoreAttributeView;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class QuiltMemoryFileStore extends FileStore {
 
 	final String name;
@@ -94,9 +94,9 @@ public abstract class QuiltMemoryFileStore extends FileStore {
 	}
 
 	public static final class ReadWrite extends QuiltMemoryFileStore {
-		private final QuiltMemoryFileSystem.ReadWrite fs;
+		private final MuonMemoryFileSystem.ReadWrite fs;
 
-		public ReadWrite(String name, QuiltMemoryFileSystem.ReadWrite fs) {
+		public ReadWrite(String name, MuonMemoryFileSystem.ReadWrite fs) {
 			super(name);
 			this.fs = fs;
 		}

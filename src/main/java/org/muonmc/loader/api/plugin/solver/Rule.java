@@ -19,13 +19,13 @@ package org.muonmc.loader.api.plugin.solver;
 import java.util.Collection;
 import java.util.function.Consumer;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.ModDependency;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 
 /** Base definition of a link between one or more {@link LoadOption}s, that */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public abstract class Rule {
 
 	public Rule() {}
@@ -73,5 +73,5 @@ public abstract class Rule {
 
 	public abstract void fallbackErrorDescription(StringBuilder errors);
 
-	public abstract void appendRuleDescription(Consumer<QuiltLoaderText> to);
+	public abstract void appendRuleDescription(Consumer<MuonLoaderText> to);
 }

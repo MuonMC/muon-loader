@@ -25,14 +25,14 @@ import java.util.Objects;
 
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
-import org.muonmc.loader.api.gui.QuiltBasicWindow;
-import org.muonmc.loader.api.gui.QuiltDisplayedError.QuiltErrorButton;
-import org.muonmc.loader.api.gui.QuiltGuiMessagesTab;
-import org.muonmc.loader.api.gui.QuiltGuiTreeTab;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
-import org.muonmc.loader.api.gui.QuiltTreeNode;
+import org.muonmc.loader.api.gui.MuonBasicWindow;
+import org.muonmc.loader.api.gui.MuonDisplayedError.QuiltErrorButton;
+import org.muonmc.loader.api.gui.MuonGuiMessagesTab;
+import org.muonmc.loader.api.gui.MuonGuiTreeTab;
+import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.api.gui.MuonTreeNode;
 
-class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, ButtonContainerImpl {
+class BasicWindow<R> extends AbstractWindow<R> implements MuonBasicWindow<R>, ButtonContainerImpl {
 
 	interface BasicWindowChangeListener extends WindowChangeListener, ButtonContainerListener {
 		default void onMainTextChanged() {}
@@ -41,7 +41,7 @@ class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, B
 
 	String mainText = "";
 	boolean singleTabOnly = false;
-	private QuiltLoaderText apiMainText = QuiltLoaderText.EMPTY;
+	private MuonLoaderText apiMainText = MuonLoaderText.EMPTY;
 
 	final List<QuiltJsonButton> buttons = new ArrayList<>();
 	final List<AbstractTab> tabs = new ArrayList<>();
@@ -108,16 +108,16 @@ class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, B
 
 	@Override
 	public QuiltErrorButton addContinueButton() {
-		return button(QuiltLoaderText.translate("button.continue"), QuiltJsonButton.QuiltBasicButtonAction.CONTINUE);
+		return button(MuonLoaderText.translate("button.continue"), QuiltJsonButton.QuiltBasicButtonAction.CONTINUE);
 	}
 
 	@Override
-	public QuiltLoaderText mainText() {
+	public MuonLoaderText mainText() {
 		return apiMainText;
 	}
 
 	@Override
-	public void mainText(QuiltLoaderText text) {
+	public void mainText(MuonLoaderText text) {
 		this.apiMainText = Objects.requireNonNull(text);
 		mainText = apiMainText.toString();
 		if (shouldSendUpdates()) {
@@ -139,7 +139,7 @@ class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, B
 	}
 
 	@Override
-	public QuiltGuiMessagesTab addMessagesTab(QuiltLoaderText name) {
+	public MuonGuiMessagesTab addMessagesTab(MuonLoaderText name) {
 		if (singleTabOnly && tabs.size() < 2) {
 			throw new IllegalStateException("Cannot add tabs when we're in single tab now.");
 		}
@@ -147,7 +147,7 @@ class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, B
 	}
 
 	@Override
-	public QuiltGuiTreeTab addTreeTab(QuiltLoaderText name) {
+	public MuonGuiTreeTab addTreeTab(MuonLoaderText name) {
 		if (singleTabOnly && tabs.size() < 2) {
 			throw new IllegalStateException("Cannot add tabs when we're in single tab now.");
 		}
@@ -155,11 +155,11 @@ class BasicWindow<R> extends AbstractWindow<R> implements QuiltBasicWindow<R>, B
 	}
 
 	@Override
-	public QuiltGuiTreeTab addTreeTab(QuiltLoaderText name, QuiltTreeNode rootNode) {
+	public MuonGuiTreeTab addTreeTab(MuonLoaderText name, MuonTreeNode rootNode) {
 		if (singleTabOnly && tabs.size() < 2) {
 			throw new IllegalStateException("Cannot add tabs when we're in single tab now.");
 		}
-		return addTab(new TreeTab(this, name, (QuiltStatusNode) rootNode));
+		return addTab(new TreeTab(this, name, (MuonStatusNode) rootNode));
 	}
 
 	protected <T extends AbstractTab> T addTab(T tab) {

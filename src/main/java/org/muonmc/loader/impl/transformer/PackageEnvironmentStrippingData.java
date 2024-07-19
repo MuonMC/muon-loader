@@ -19,14 +19,14 @@ package org.muonmc.loader.impl.transformer;
 import java.util.HashMap;
 
 import org.objectweb.asm.AnnotationVisitor;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 import net.fabricmc.api.EnvType;
 
 /** Deprecated. All stuff were moved to {@link PackageStrippingData}. */
 @Deprecated
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class PackageEnvironmentStrippingData extends PackageStrippingData {
 
 	public PackageEnvironmentStrippingData(int api, EnvType envType) {

@@ -23,10 +23,10 @@ import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
 import org.muonmc.loader.api.FasterFiles;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.ModLocation;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode.SortOrder;
@@ -34,14 +34,14 @@ import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode.WarningLevel;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.fabric.metadata.FabricModMetadataReader;
 import org.muonmc.loader.impl.fabric.metadata.ParseMetadataException;
-import org.muonmc.loader.impl.plugin.BuiltinQuiltPlugin;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.plugin.BuiltinMuonPlugin;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-public class StandardFabricPlugin extends BuiltinQuiltPlugin {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public class StandardFabricPlugin extends BuiltinMuonPlugin {
 
 	@Override
 	public ModLoadOption[] scanZip(Path root, ModLocation location, PluginGuiTreeNode guiNode) throws IOException {
@@ -52,15 +52,15 @@ public class StandardFabricPlugin extends BuiltinQuiltPlugin {
 			return null;
 		}
 
-		return scan0(root, QuiltLoaderGui.iconJarFile(), location, true, guiNode);
+		return scan0(root, MuonLoaderGui.iconJarFile(), location, true, guiNode);
 	}
 
 	@Override
 	public ModLoadOption[] scanFolder(Path folder, ModLocation location, PluginGuiTreeNode guiNode) throws IOException {
-		return scan0(folder, QuiltLoaderGui.iconFolder(), location, false, guiNode);
+		return scan0(folder, MuonLoaderGui.iconFolder(), location, false, guiNode);
 	}
 
-	private ModLoadOption[] scan0(Path root, QuiltLoaderIcon fileIcon, ModLocation location, boolean isZip, PluginGuiTreeNode guiNode) throws IOException {
+	private ModLoadOption[] scan0(Path root, MuonLoaderIcon fileIcon, ModLocation location, boolean isZip, PluginGuiTreeNode guiNode) throws IOException {
 		Path fmj = root.resolve("fabric.mod.json");
 		if (!FasterFiles.isRegularFile(fmj)) {
 			return null;
@@ -90,14 +90,14 @@ public class StandardFabricPlugin extends BuiltinQuiltPlugin {
 
 				if (!FasterFiles.exists(inner)) {
 					Log.warn(LogCategory.DISCOVERY, "Didn't find nested jar " + inner + " in " + context().manager().describePath(from));
-					PluginGuiTreeNode missingJij = guiNode.addChild(QuiltLoaderText.of(inner.toString()), SortOrder.ALPHABETICAL_ORDER);
-					missingJij.mainIcon(QuiltLoaderGui.iconJarFile());
-					missingJij.addChild(QuiltLoaderText.translate("fabric.jar_in_jar.missing"))//
+					PluginGuiTreeNode missingJij = guiNode.addChild(MuonLoaderText.of(inner.toString()), SortOrder.ALPHABETICAL_ORDER);
+					missingJij.mainIcon(MuonLoaderGui.iconJarFile());
+					missingJij.addChild(MuonLoaderText.translate("fabric.jar_in_jar.missing"))//
 						.setDirectLevel(WarningLevel.CONCERN);
 					continue;
 				}
 
-				PluginGuiTreeNode jarNode = guiNode.addChild(QuiltLoaderText.of(jar), SortOrder.ALPHABETICAL_ORDER);
+				PluginGuiTreeNode jarNode = guiNode.addChild(MuonLoaderText.of(jar), SortOrder.ALPHABETICAL_ORDER);
 				context().addFileToScan(inner, jarNode, false);
 			}
 
@@ -107,18 +107,18 @@ public class StandardFabricPlugin extends BuiltinQuiltPlugin {
 			boolean requiresRemap = !location.onClasspath() && MuonLoader.isDevelopmentEnvironment();
 			return new ModLoadOption[] { new FabricModOption(context(), meta, from, fileIcon, root, mandatory, requiresRemap) };
 		} catch (ParseMetadataException parse) {
-			QuiltLoaderText title = QuiltLoaderText.translate("gui.text.invalid_metadata.title", "fabric.mod.json", parse.getMessage());
-			QuiltDisplayedError error = context().reportError(title);
+			MuonLoaderText title = MuonLoaderText.translate("gui.text.invalid_metadata.title", "fabric.mod.json", parse.getMessage());
+			MuonDisplayedError error = context().reportError(title);
 			String describedPath = context().manager().describePath(fmj);
 			error.appendReportText("Invalid 'fabric.mod.json' metadata file:" + describedPath);
-			error.appendDescription(QuiltLoaderText.translate("gui.text.invalid_metadata.desc.0", describedPath));
+			error.appendDescription(MuonLoaderText.translate("gui.text.invalid_metadata.desc.0", describedPath));
 			error.appendThrowable(parse);
 			context().manager().getRealContainingFile(root).ifPresent(real ->
-					error.addFileViewButton(QuiltLoaderText.translate("button.view_file"), real)
-					.icon(QuiltLoaderGui.iconJarFile().withDecoration(QuiltLoaderGui.iconFabric()))
+					error.addFileViewButton(MuonLoaderText.translate("button.view_file"), real)
+					.icon(MuonLoaderGui.iconJarFile().withDecoration(MuonLoaderGui.iconFabric()))
 			);
 
-			guiNode.addChild(QuiltLoaderText.translate("gui.text.invalid_metadata", parse.getMessage()))//TODO: translate
+			guiNode.addChild(MuonLoaderText.translate("gui.text.invalid_metadata", parse.getMessage()))//TODO: translate
 				.setError(parse, error);
 			return null;
 		}

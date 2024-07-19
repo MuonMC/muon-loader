@@ -3,19 +3,19 @@ package net.fabricmc.minecraft.test.plugin;
 import java.util.Map;
 
 import org.muonmc.loader.api.LoaderValue;
-import org.muonmc.loader.api.plugin.QuiltLoaderPlugin;
-import org.muonmc.loader.api.plugin.QuiltPluginContext;
+import org.muonmc.loader.api.plugin.MuonLoaderPlugin;
+import org.muonmc.loader.api.plugin.MuonPluginContext;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 
-public class TestLoaderPlugin implements QuiltLoaderPlugin {
+public class TestLoaderPlugin implements MuonLoaderPlugin {
 
-    private static boolean DISABLE_QFAPI = Boolean.getBoolean("quick_test_disable_qfapi");
+    private static final boolean DISABLE_QFAPI = Boolean.getBoolean("quick_test_disable_qfapi");
 
-    private QuiltPluginContext context;
+    private MuonPluginContext context;
 
     @Override
-    public void load(QuiltPluginContext ctx, Map<String, LoaderValue> dataOut) {
+    public void load(MuonPluginContext ctx, Map<String, LoaderValue> dataOut) {
         context = ctx;
     }
 

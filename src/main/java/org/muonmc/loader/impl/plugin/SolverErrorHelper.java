@@ -36,29 +36,29 @@ import java.util.Set;
 import org.muonmc.loader.api.ModDependencyIdentifier;
 import org.muonmc.loader.api.ModMetadata.ProvidedMod;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.api.gui.QuiltDisplayedError;
-import org.muonmc.loader.api.gui.QuiltLoaderGui;
-import org.muonmc.loader.api.gui.QuiltLoaderText;
+import org.muonmc.loader.api.gui.MuonDisplayedError;
+import org.muonmc.loader.api.gui.MuonLoaderGui;
+import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.plugin.solver.AliasedLoadOption;
 import org.muonmc.loader.api.plugin.solver.LoadOption;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.Rule;
-import org.muonmc.loader.impl.plugin.quilt.DisabledModIdDefinition;
-import org.muonmc.loader.impl.plugin.quilt.MandatoryModIdDefinition;
-import org.muonmc.loader.impl.plugin.quilt.OptionalModIdDefintion;
-import org.muonmc.loader.impl.plugin.quilt.QuiltRuleBreakOnly;
-import org.muonmc.loader.impl.plugin.quilt.QuiltRuleDepOnly;
+import org.muonmc.loader.impl.plugin.muon.DisabledModIdDefinition;
+import org.muonmc.loader.impl.plugin.muon.MandatoryModIdDefinition;
+import org.muonmc.loader.impl.plugin.muon.OptionalModIdDefintion;
+import org.muonmc.loader.impl.plugin.muon.MuonRuleBreakOnly;
+import org.muonmc.loader.impl.plugin.muon.MuonRuleDepOnly;
 import org.muonmc.loader.impl.util.FileUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 class SolverErrorHelper {
 
-	private final QuiltPluginManagerImpl manager;
+	private final MuonPluginManagerImpl manager;
 	private final List<SolverError> errors = new ArrayList<>();
 
-	SolverErrorHelper(QuiltPluginManagerImpl manager) {
+	SolverErrorHelper(MuonPluginManagerImpl manager) {
 		this.manager = manager;
 	}
 
@@ -229,8 +229,8 @@ class SolverErrorHelper {
 				}
 
 				RuleLink rule = link.to.get(0);
-				if (rule.rule instanceof QuiltRuleDepOnly) {
-					QuiltRuleDepOnly dep = (QuiltRuleDepOnly) rule.rule;
+				if (rule.rule instanceof MuonRuleDepOnly) {
+					MuonRuleDepOnly dep = (MuonRuleDepOnly) rule.rule;
 
 					ModDependencyIdentifier id = dep.publicDep.id();
 					if (groupOn == null) {
@@ -319,7 +319,7 @@ class SolverErrorHelper {
 				Set<ModLoadOption> allInvalidOptions = new HashSet<>();
 				for (OptionLink link : fullChain.get(fullChain.size() - 1)) {
 					// We validate all this earlier
-					QuiltRuleDepOnly dep = (QuiltRuleDepOnly) link.to.get(0).rule;
+					MuonRuleDepOnly dep = (MuonRuleDepOnly) link.to.get(0).rule;
 					fullRange = VersionRange.ofRanges(Arrays.asList(fullRange, dep.publicDep.versionRange()));
 					allInvalidOptions.addAll(dep.getWrongOptions());
 				}
@@ -335,8 +335,9 @@ class SolverErrorHelper {
 		}
 	}
 
-	private static void setIconFromMod(QuiltPluginManagerImpl manager, ModLoadOption mandatoryMod,
-		QuiltDisplayedError error) {
+	private static void setIconFromMod(
+			MuonPluginManagerImpl manager, ModLoadOption mandatoryMod,
+		MuonDisplayedError error) {
 		// TODO: Only upload a ModLoadOption's icon once!
 		Map<String, byte[]> images = new HashMap<>();
 		for (int size : new int[] { 16, 32 }) {
@@ -353,11 +354,11 @@ class SolverErrorHelper {
 		}
 
 		if (!images.isEmpty()) {
-			error.setIcon(QuiltLoaderGui.createIcon(images.values().toArray(new byte[0][])));
+			error.setIcon(MuonLoaderGui.createIcon(images.values().toArray(new byte[0][])));
 		}
 	}
 
-	private static String getDepName(QuiltRuleDepOnly dep) {
+	private static String getDepName(MuonRuleDepOnly dep) {
 		String id = dep.publicDep.id().id();
 		switch (id) {
 			case "fabric":
@@ -464,8 +465,8 @@ class SolverErrorHelper {
 
 		// With buttons to view each mod individually
 
-		QuiltLoaderText title = QuiltLoaderText.translate("error.duplicate_mandatory", bestName);
-		QuiltDisplayedError error = manager.theQuiltPluginContext.reportError(title);
+		MuonLoaderText title = MuonLoaderText.translate("error.duplicate_mandatory", bestName);
+		MuonDisplayedError error = manager.theMuonPluginContext.reportError(title);
 		error.appendReportText("Duplicate mandatory mod ids " + commonIds);
 		setIconFromMod(manager, firstMandatory, error);
 
@@ -473,14 +474,14 @@ class SolverErrorHelper {
 			String path = manager.describePath(option.from());
 			// Just in case
 			Optional<Path> container = manager.getRealContainingFile(option.from());
-			error.appendDescription(QuiltLoaderText.translate("error.duplicate_mandatory.mod", path));
-			container.ifPresent(value -> error.addFileViewButton(QuiltLoaderText.translate("button.view_file", value.getFileName()), value)
+			error.appendDescription(MuonLoaderText.translate("error.duplicate_mandatory.mod", path));
+			container.ifPresent(value -> error.addFileViewButton(MuonLoaderText.translate("button.view_file", value.getFileName()), value)
 					.icon(option.modCompleteIcon()));
 
 			error.appendReportText("- " + path);
 		}
 
-		error.appendDescription(QuiltLoaderText.translate("error.duplicate_mandatory.desc"));
+		error.appendDescription(MuonLoaderText.translate("error.duplicate_mandatory.desc"));
 
 		return true;
 	}
@@ -535,11 +536,11 @@ class SolverErrorHelper {
 
 		RuleLink linkE = linkD.to.get(0);
 
-		if (!(linkE.rule instanceof QuiltRuleBreakOnly)) {
+		if (!(linkE.rule instanceof MuonRuleBreakOnly)) {
 			return false;
 		}
 
-		QuiltRuleBreakOnly ruleE = (QuiltRuleBreakOnly) linkE.rule;
+		MuonRuleBreakOnly ruleE = (MuonRuleBreakOnly) linkE.rule;
 		if (linkE.to.size() != 1 || !linkE.to.contains(linkB)) {
 			return false;
 		}
@@ -565,7 +566,7 @@ class SolverErrorHelper {
 		 * @return True if the destination object was modified (and this was merged into it), false otherwise. */
 		abstract boolean mergeInto(SolverError into);
 
-		abstract void report(QuiltPluginManagerImpl manager);
+		abstract void report(MuonPluginManagerImpl manager);
 	}
 
 	static class UnhandledError extends SolverError {
@@ -582,18 +583,18 @@ class SolverErrorHelper {
 		}
 
 		@Override
-		void report(QuiltPluginManagerImpl manager) {
-			QuiltDisplayedError error = manager.theQuiltPluginContext.reportError(
-				QuiltLoaderText.translate("error.unhandled_solver")
+		void report(MuonPluginManagerImpl manager) {
+			MuonDisplayedError error = manager.theMuonPluginContext.reportError(
+				MuonLoaderText.translate("error.unhandled_solver")
 			);
-			error.appendDescription(QuiltLoaderText.translate("error.unhandled_solver.desc"));
+			error.appendDescription(MuonLoaderText.translate("error.unhandled_solver.desc"));
 			error.addOpenQuiltSupportButton();
 			error.appendReportText("Unhandled solver error involving the following rules:");
 
 			StringBuilder sb = new StringBuilder();
 			int number = 1;
 			for (Rule rule : rules) {
-				error.appendDescription(QuiltLoaderText.translate("error.unhandled_solver.desc.rule_n", number, rule.getClass()));
+				error.appendDescription(MuonLoaderText.translate("error.unhandled_solver.desc.rule_n", number, rule.getClass()));
 				rule.appendRuleDescription(error::appendDescription);
 				error.appendReportText("Rule " + number++ + ":");
 				sb.setLength(0);
@@ -634,7 +635,7 @@ class SolverErrorHelper {
 		}
 
 		@Override
-		void report(QuiltPluginManagerImpl manager) {
+		void report(MuonPluginManagerImpl manager) {
 
 			boolean transitive = false;
 			boolean missing = allInvalidOptions.isEmpty();
@@ -648,7 +649,7 @@ class SolverErrorHelper {
 			ModLoadOption mandatoryMod = from.iterator().next();
 			String rootModName = from.size() > 1 ? from.size() + " mods" : mandatoryMod.metadata().name();
 
-			QuiltLoaderText first = VersionRangeDescriber.describe(rootModName, versionsOn, modOn.id(), transitive);
+			MuonLoaderText first = VersionRangeDescriber.describe(rootModName, versionsOn, modOn.id(), transitive);
 
 			Object[] secondData = new Object[allInvalidOptions.size() == 1 ? 1 : 0];
 			String secondKey = "error.dep.";
@@ -660,9 +661,9 @@ class SolverErrorHelper {
 				secondKey += "single_mismatch";
 				secondData[0] = allInvalidOptions.iterator().next().version().toString();
 			}
-			QuiltLoaderText second = QuiltLoaderText.translate(secondKey + ".title", secondData);
-			QuiltLoaderText title = QuiltLoaderText.translate("error.dep.join.title", first, second);
-			QuiltDisplayedError error = manager.theQuiltPluginContext.reportError(title);
+			MuonLoaderText second = MuonLoaderText.translate(secondKey + ".title", secondData);
+			MuonLoaderText title = MuonLoaderText.translate("error.dep.join.title", first, second);
+			MuonDisplayedError error = manager.theMuonPluginContext.reportError(title);
 
 			setIconFromMod(manager, mandatoryMod, error);
 
@@ -670,7 +671,7 @@ class SolverErrorHelper {
 
 			for (ModLoadOption mod : from) {
 				Object[] modDescArgs = { mod.metadata().name(), manager.describePath(mod.from()) };
-				error.appendDescription(QuiltLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
+				error.appendDescription(MuonLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
 				manager.getRealContainingFile(mod.from()).ifPresent(p -> realPaths.putIfAbsent(p, mod));
 			}
 
@@ -680,7 +681,7 @@ class SolverErrorHelper {
 
 			String issuesUrl = mandatoryMod.metadata().contactInfo().get("issues");
 			if (issuesUrl != null) {
-				error.addOpenLinkButton(QuiltLoaderText.translate("button.mod_issue_tracker", mandatoryMod.metadata().name()), issuesUrl);
+				error.addOpenLinkButton(MuonLoaderText.translate("button.mod_issue_tracker", mandatoryMod.metadata().name()), issuesUrl);
 			}
 
 			StringBuilder report = new StringBuilder(rootModName);
@@ -730,7 +731,7 @@ class SolverErrorHelper {
 		}
 
 		@Override
-		void report(QuiltPluginManagerImpl manager) {
+		void report(MuonPluginManagerImpl manager) {
 
 			boolean transitive = false;
 
@@ -742,7 +743,7 @@ class SolverErrorHelper {
 			ModLoadOption mandatoryMod = from.iterator().next();
 			String rootModName = from.size() > 1 ? from.size() + " mods" : mandatoryMod.metadata().name();
 
-			QuiltLoaderText first = VersionRangeDescriber.describe(
+			MuonLoaderText first = VersionRangeDescriber.describe(
 				rootModName, versionsOn, modOn.id(), false, transitive
 			);
 
@@ -754,14 +755,14 @@ class SolverErrorHelper {
 				secondKey += "single_conflict";
 				secondData[0] = allBreakingOptions.iterator().next().version().toString();
 			}
-			QuiltLoaderText second = QuiltLoaderText.translate(secondKey + ".title", secondData);
-			QuiltLoaderText title = QuiltLoaderText.translate("error.break.join.title", first, second);
-			QuiltDisplayedError error = manager.theQuiltPluginContext.reportError(title);
+			MuonLoaderText second = MuonLoaderText.translate(secondKey + ".title", secondData);
+			MuonLoaderText title = MuonLoaderText.translate("error.break.join.title", first, second);
+			MuonDisplayedError error = manager.theMuonPluginContext.reportError(title);
 
 			setIconFromMod(manager, mandatoryMod, error);
 
 			if (!reason.isEmpty()) {
-				error.appendDescription(QuiltLoaderText.translate("error.reason", reason));
+				error.appendDescription(MuonLoaderText.translate("error.reason", reason));
 				// A newline after the reason was desired here, but do you think Swing loves nice things?
 			}
 
@@ -769,13 +770,13 @@ class SolverErrorHelper {
 
 			for (ModLoadOption mod : from) {
 				Object[] modDescArgs = { mod.metadata().name(), manager.describePath(mod.from()) };
-				error.appendDescription(QuiltLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
+				error.appendDescription(MuonLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
 				manager.getRealContainingFile(mod.from()).ifPresent(p -> realPaths.putIfAbsent(p, mod));
 			}
 
 			for (ModLoadOption mod : allBreakingOptions) {
 				Object[] modDescArgs = { mod.metadata().name(), manager.describePath(mod.from()) };
-				error.appendDescription(QuiltLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
+				error.appendDescription(MuonLoaderText.translate("info.root_mod_loaded_from", modDescArgs));
 				manager.getRealContainingFile(mod.from()).ifPresent(p -> realPaths.putIfAbsent(p, mod));
 			}
 
@@ -786,7 +787,7 @@ class SolverErrorHelper {
 			String issuesUrl = mandatoryMod.metadata().contactInfo().get("issues");
 			if (issuesUrl != null) {
 				error.addOpenLinkButton(
-					QuiltLoaderText.translate("button.mod_issue_tracker", mandatoryMod.metadata().name()), issuesUrl
+					MuonLoaderText.translate("button.mod_issue_tracker", mandatoryMod.metadata().name()), issuesUrl
 				);
 			}
 

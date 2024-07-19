@@ -34,12 +34,12 @@ import net.fabricmc.mapping.tree.TinyTree;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.ManifestUtil;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public final class MappingConfiguration {
 	private boolean initialized;
 
@@ -85,7 +85,7 @@ public final class MappingConfiguration {
 			return gameProvider.getNamespace();
 		// else
 		// If the game provider doesn't exist yet, use the development flag to set the namespace
-		return QuiltLauncherBase.getLauncher().isDevelopment() ? "named" : "intermediary";
+		return MuonLauncherBase.getLauncher().isDevelopment() ? "named" : "intermediary";
 	}
 
 	public boolean requiresPackageAccessHack() {

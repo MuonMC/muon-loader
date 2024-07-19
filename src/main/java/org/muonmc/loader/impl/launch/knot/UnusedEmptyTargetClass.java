@@ -16,13 +16,13 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 /** If the very first class transformed by mixin is also referenced by a mixin config then we'll crash due to an
  * "attempted duplicate class definition". To avoid this, {@link Knot} loads this class instead - since it's *very
  * unlikely* to be referenced by mixin plugin. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class UnusedEmptyTargetClass {
 
 }

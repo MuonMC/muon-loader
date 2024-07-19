@@ -18,9 +18,9 @@
 package org.muonmc.loader.impl.entrypoint;
 
 import org.objectweb.asm.ClassReader;
-import org.muonmc.loader.impl.launch.common.QuiltLauncher;
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.launch.common.MuonLauncher;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
@@ -31,7 +31,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.LEGACY_EXPOSED)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class GamePatch {
 	protected static ClassNode readClass(ClassReader reader) {
 		if (reader == null) return null;
@@ -128,17 +128,17 @@ public abstract class GamePatch {
 		return ((access & 0x0F) == (Opcodes.ACC_PUBLIC | 0 /* non-static */));
 	}
 
-	public void process(QuiltLauncher launcher, String namespace, Function<String, ClassReader> classSource, Consumer<ClassNode> classEmitter) {
+	public void process(MuonLauncher launcher, String namespace, Function<String, ClassReader> classSource, Consumer<ClassNode> classEmitter) {
 		throw new AbstractMethodError(getClass() + " must override one of the 'process' methods!");
 	}
-	public void process(QuiltLauncher launcher, Function<String, ClassReader> classSource, Consumer<ClassNode> classEmitter) {
+	public void process(MuonLauncher launcher, Function<String, ClassReader> classSource, Consumer<ClassNode> classEmitter) {
 		process(launcher, launcher.getTargetNamespace(), classSource, classEmitter);
 	}
 
-	public void process(QuiltLauncher launcher, String namespace, GamePatchContext context) {
+	public void process(MuonLauncher launcher, String namespace, GamePatchContext context) {
 		process(launcher, namespace, context::getClassSourceReader, context::addPatchedClass);
 	}
-	public void process(QuiltLauncher launcher, GamePatchContext context) {
+	public void process(MuonLauncher launcher, GamePatchContext context) {
 		process(launcher, launcher.getTargetNamespace(), context);
 	}
 }

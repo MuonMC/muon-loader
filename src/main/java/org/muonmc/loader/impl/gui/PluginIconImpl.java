@@ -23,20 +23,20 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LObject;
-import org.muonmc.loader.api.gui.QuiltLoaderIcon;
-import org.muonmc.loader.api.gui.QuiltWarningLevel;
+import org.muonmc.loader.api.gui.MuonLoaderIcon;
+import org.muonmc.loader.api.gui.MuonWarningLevel;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
-public final class PluginIconImpl extends QuiltGuiSyncBase implements QuiltLoaderIcon {
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
+public final class PluginIconImpl extends QuiltGuiSyncBase implements MuonLoaderIcon {
 
-	static final int BOTTOM_LEFT = QuiltLoaderIcon.SubIconPosition.BOTTOM_LEFT.ordinal();
-	static final int BOTTOM_RIGHT = QuiltLoaderIcon.SubIconPosition.BOTTOM_RIGHT.ordinal();
-	static final int TOP_RIGHT = QuiltLoaderIcon.SubIconPosition.TOP_RIGHT.ordinal();
-	static final int TOP_LEFT = QuiltLoaderIcon.SubIconPosition.TOP_LEFT.ordinal();
+	static final int BOTTOM_LEFT = MuonLoaderIcon.SubIconPosition.BOTTOM_LEFT.ordinal();
+	static final int BOTTOM_RIGHT = MuonLoaderIcon.SubIconPosition.BOTTOM_RIGHT.ordinal();
+	static final int TOP_RIGHT = MuonLoaderIcon.SubIconPosition.TOP_RIGHT.ordinal();
+	static final int TOP_LEFT = MuonLoaderIcon.SubIconPosition.TOP_LEFT.ordinal();
 
 	static final int[] LEVEL_ORDER = { BOTTOM_LEFT, BOTTOM_RIGHT, TOP_RIGHT, TOP_LEFT };
 	static final int[] REGULAR_ORDER = { BOTTOM_RIGHT, TOP_RIGHT, TOP_LEFT, BOTTOM_LEFT };
@@ -99,11 +99,11 @@ public final class PluginIconImpl extends QuiltGuiSyncBase implements QuiltLoade
 	}
 
 	@Deprecated
-	public static QuiltLoaderIcon deprecatedForFabric(String path) {
+	public static MuonLoaderIcon deprecatedForFabric(String path) {
 		return new PluginIconImpl(path);
 	}
 
-	public static PluginIconImpl fromApi(QuiltLoaderIcon icon) {
+	public static PluginIconImpl fromApi(MuonLoaderIcon icon) {
 		if (icon instanceof PluginIconImpl) {
 			return (PluginIconImpl) icon;
 		} else if (icon == null) {
@@ -114,12 +114,12 @@ public final class PluginIconImpl extends QuiltGuiSyncBase implements QuiltLoade
 	}
 
 	@Override
-	public QuiltLoaderIcon getDecoration(SubIconPosition position) {
+	public MuonLoaderIcon getDecoration(SubIconPosition position) {
 		return new PluginIconImpl(subIcons[position.ordinal()], new IconType[4]);
 	}
 
 	@Override
-	public PluginIconImpl withDecoration(SubIconPosition position, QuiltLoaderIcon subIcon) {
+	public PluginIconImpl withDecoration(SubIconPosition position, MuonLoaderIcon subIcon) {
 		PluginIconImpl impl = fromApi(subIcon);
 
 		if (impl == null) {
@@ -140,16 +140,16 @@ public final class PluginIconImpl extends QuiltGuiSyncBase implements QuiltLoade
 	}
 
 	@Override
-	public PluginIconImpl withDecoration(QuiltLoaderIcon subIcon) {
+	public PluginIconImpl withDecoration(MuonLoaderIcon subIcon) {
 		return withSub(REGULAR_ORDER, subIcon);
 	}
 
 	@Override
-	public PluginIconImpl withLevel(QuiltWarningLevel level) {
+	public PluginIconImpl withLevel(MuonWarningLevel level) {
 		return withSub(LEVEL_ORDER, level.icon());
 	}
 
-	private PluginIconImpl withSub(int[] order, QuiltLoaderIcon icon) {
+	private PluginIconImpl withSub(int[] order, MuonLoaderIcon icon) {
 		PluginIconImpl impl = fromApi(icon);
 		if (impl == null) {
 			return this;

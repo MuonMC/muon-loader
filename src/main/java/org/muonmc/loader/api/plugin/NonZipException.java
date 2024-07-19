@@ -16,11 +16,11 @@
 
 package org.muonmc.loader.api.plugin;
 
-import org.muonmc.loader.impl.util.QuiltLoaderInternal;
-import org.muonmc.loader.impl.util.QuiltLoaderInternalType;
+import org.muonmc.loader.impl.util.MuonLoaderInternal;
+import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-/** Thrown by {@link QuiltPluginManager#loadZip(java.nio.file.Path)} if a file couldn't be opened as a zip. */
-@QuiltLoaderInternal(QuiltLoaderInternalType.PLUGIN_API)
+/** Thrown by {@link MuonPluginManager#loadZip(java.nio.file.Path)} if a file couldn't be opened as a zip. */
+@MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public class NonZipException extends Exception {
 
 	public NonZipException(String message) {

@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 
-@QuiltLoaderInternal(QuiltLoaderInternalType.NEW_INTERNAL)
+@MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class FilePreloadHelper {
 
 	private static final AtomicInteger COUNT = new AtomicInteger();
