@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-package org.muonmc.loader.api.minecraft;
+package org.muonmc.loader.api.game.minecraft;
 
 import org.muonmc.loader.impl.MuonLoaderImpl;
-
-import net.fabricmc.api.EnvType;
 
 /** Public access for some minecraft-specific functionality in Muon loader. */
 public final class MinecraftMuonLoader {

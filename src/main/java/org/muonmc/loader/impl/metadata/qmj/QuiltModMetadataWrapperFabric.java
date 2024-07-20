@@ -17,7 +17,7 @@
 package org.muonmc.loader.impl.metadata.qmj;
 
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.api.plugin.ModContainerExt;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.GeneralExt2FabricMetadata;

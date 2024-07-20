@@ -17,8 +17,6 @@
 
 package org.muonmc.loader.impl.launch.common;
 
-import net.fabricmc.api.EnvType;
-
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -26,7 +24,7 @@ import net.fabricmc.loader.api.VersionParsingException;
 import net.fabricmc.loader.api.metadata.ModDependency;
 import net.fabricmc.loader.api.metadata.version.VersionInterval;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
 import org.muonmc.loader.api.ModContainer;

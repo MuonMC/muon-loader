@@ -16,13 +16,16 @@
 
 package net.fabricmc.api;
 
+import org.muonmc.loader.api.game.minecraft.ClientOnly;
+import org.muonmc.loader.api.game.minecraft.DedicatedServerOnly;
+
 /**
  * Represents a type of environment.
  *
  * <p>A type of environment is a jar file in a <i>Minecraft</i> version's json file's {@code download}
  * subsection, including the {@code client.jar} and the {@code server.jar}.</p>
  *
- * @deprecated use {@link org.muonmc.loader.api.minecraft.ClientOnly} and {@link org.muonmc.loader.api.minecraft.DedicatedServerOnly}
+ * @deprecated use {@link ClientOnly} and {@link DedicatedServerOnly}
  */
 @Deprecated
 public enum EnvType {

@@ -39,7 +39,7 @@ public class ModJsonParsingTests {
 				.resolve("resources")
 				.resolve("testing")
 				.resolve("parsing")
-				.resolve("quilt")
+				.resolve("muon")
 				.resolve("v1");
 
 		specPath = testLocation.resolve("spec");
@@ -50,7 +50,8 @@ public class ModJsonParsingTests {
 	Stream<DynamicTest> autoTests() throws IOException {
 		Path loc = testLocation.resolve("auto");
 		Stream<DynamicTest> spec = DynamicTest.stream(Files.walk(loc.resolve("spec")).filter(path -> !Files.isDirectory(path) && path.toString().endsWith(".json")),
-				p -> p.getFileName().toString(), p -> ModMetadataReader.read(p));
+				p -> p.getFileName().toString(), ModMetadataReader::read
+		);
 		Stream<DynamicTest> error =	DynamicTest.stream(Files.walk(loc.resolve("error")).filter(path -> !Files.isDirectory(path) && path.toString().endsWith(".json")),
 				p -> p.getFileName().toString(), p -> {
 					try {

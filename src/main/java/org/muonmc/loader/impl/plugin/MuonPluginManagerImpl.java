@@ -84,7 +84,7 @@ import org.muonmc.loader.api.gui.MuonLoaderText;
 import org.muonmc.loader.api.gui.MuonTreeNode;
 import org.muonmc.loader.api.gui.MuonTreeNode.SortOrder;
 import org.muonmc.loader.api.gui.MuonWarningLevel;
-import org.muonmc.loader.api.minecraft.MinecraftMuonLoader;
+import org.muonmc.loader.api.game.minecraft.MinecraftMuonLoader;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
 import org.muonmc.loader.api.plugin.NonZipException;
 import org.muonmc.loader.api.plugin.MuonLoaderPlugin;
@@ -123,6 +123,7 @@ import org.muonmc.loader.impl.util.HashUtil;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.impl.util.SystemProperties;
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 import org.muonmc.loader.impl.util.log.Log;
 import org.muonmc.loader.impl.util.log.LogCategory;
 import org.quiltmc.loader.util.sat4j.specs.TimeoutException;
@@ -676,7 +677,7 @@ public class MuonPluginManagerImpl implements MuonPluginManager {
 	@Deprecated
 	public EnvType getEnvironment() {
 		if (game != null) {
-			return MinecraftMuonLoader.getEnvironmentType();
+			return EnvTypeUtil.toEnvType(MinecraftMuonLoader.getEnvironmentType());
 		}
 		return EnvType.CLIENT;
 	}

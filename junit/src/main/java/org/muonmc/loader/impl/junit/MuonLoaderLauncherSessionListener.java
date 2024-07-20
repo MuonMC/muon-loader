@@ -2,7 +2,7 @@ package org.muonmc.loader.impl.junit;
 
 import org.junit.platform.launcher.LauncherSession;
 import org.junit.platform.launcher.LauncherSessionListener;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.launch.knot.Knot;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;

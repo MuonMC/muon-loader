@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
 import org.muonmc.loader.impl.MuonConstants;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
@@ -69,10 +70,10 @@ public class InternalsHiderTransform {
 	private static final String METHOD_OWNER = Type.getInternalName(MuonInternalExceptionUtil.class);
 
 	final Target target;
-	final Map<String, InternalValue> internalPackages = new HashMap<>();
-	final Map<String, InternalValue> internalClasses = new HashMap<>();
-	final Map<MethodKey, InternalValue> internalMethods = new HashMap<>();
-	final Map<FieldKey, InternalValue> internalFields = new HashMap<>();
+	final Map<String, InternalAccess> internalPackages = new HashMap<>();
+	final Map<String, InternalAccess> internalClasses = new HashMap<>();
+	final Map<MethodKey, InternalAccess> internalMethods = new HashMap<>();
+	final Map<FieldKey, InternalAccess> internalFields = new HashMap<>();
 
 	public InternalsHiderTransform(Target target) {
 		this.target = target;
@@ -158,6 +159,7 @@ public class InternalsHiderTransform {
 			}
 		};
 
+		// check if the current super and super-supers are illegal and add them to the list.
 		List<InternalSuper> illegalSupers = new ArrayList<>();
 		checkSuper(mod, reader.getSuperName(), false, illegalSupers);
 		for (String itf : reader.getInterfaces()) {
@@ -182,10 +184,9 @@ public class InternalsHiderTransform {
 				// we need to visit every method call, field read/write
 				// and check that against the definitions, to see if the package/class/method/field is marked as
 				// "@ModInternal"
-				// (and check that against quilt loader itself)
+				// (and check that against Muon loader itself)
 
 				return new MethodVisitor(api, sup) {
-
 					@Override
 					public void visitCode() {
 						super.visitCode();
@@ -208,16 +209,18 @@ public class InternalsHiderTransform {
 							return;
 						}
 
-						InternalValue set = internalFields.get(new FieldKey(owner, name, descriptor));
+						InternalAccess internalAccess = internalFields.get(new FieldKey(owner, name, descriptor));
 
-						if (set == null) {
-							set = getAnnotationSet(owner);
+						// define set if it isn't already defined
+						if (internalAccess == null) {
+							internalAccess = getInternalAccess(owner);
 						}
 
-						if (set != null && !set.isPermitted(mod)) {
-							super.visitLdcInsn(set.generateError(mod, "the field " + owner + "." + name, className + "." + mthName + mthDescriptor));
+						// by this point, set should not be null
+						if (internalAccess != null && !internalAccess.isPermitted(mod)) {
+							super.visitLdcInsn(internalAccess.generateError(mod, "the field " + owner + "." + name, className + "." + mthName + mthDescriptor));
 							super.visitMethodInsn(
-								Opcodes.INVOKESTATIC, METHOD_OWNER, set.getInvokeMethodName(), "(Ljava/lang/String;)V",
+								Opcodes.INVOKESTATIC, METHOD_OWNER, internalAccess.getInvokeMethodName(), "(Ljava/lang/String;)V",
 								false
 							);
 						}
@@ -235,10 +238,10 @@ public class InternalsHiderTransform {
 							return;
 						}
 
-						InternalValue set = internalMethods.get(new MethodKey(owner, name, descriptor));
+						InternalAccess set = internalMethods.get(new MethodKey(owner, name, descriptor));
 
 						if (set == null) {
-							set = getAnnotationSet(owner);
+							set = getInternalAccess(owner);
 						}
 
 						if (set != null && !set.isPermitted(mod)) {
@@ -271,17 +274,20 @@ public class InternalsHiderTransform {
 				super.visitEnd();
 			}
 
-			private void prefixClassInitErrors(MethodVisitor to) {
+			/**
+			 * @implNote Only called when there are illegal superclass calls.
+			 */
+			private void prefixClassInitErrors(MethodVisitor classInit) {
 				boolean onlyWarn = true;
 				StringBuilder msg = new StringBuilder();
 				for (InternalSuper value : illegalSupers) {
-					if (!(value.value instanceof WarnLoaderInternalValue)) {
+					if (!(value.access instanceof WarnLoaderInternalAccess)) {
 						onlyWarn = false;
 					}
 					msg.append(value.generateError(mod, className));
 				}
-				to.visitLdcInsn(msg.toString());
-				to.visitMethodInsn(
+				classInit.visitLdcInsn(msg.toString());
+				classInit.visitMethodInsn(
 					Opcodes.INVOKESTATIC, METHOD_OWNER, onlyWarn ? "warnInternalAccess" : "throwInternalAccess", "(Ljava/lang/String;)V", false
 				);
 			}
@@ -294,8 +300,13 @@ public class InternalsHiderTransform {
 
 	}
 
-	private InternalValue getAnnotationSet(String owner) {
-		InternalValue value = internalClasses.get(owner);
+	/**
+	 * Gets the type of {@link InternalAccess} that relates to the targeted owner class.
+	 * @param owner The internal JVM name of the owner class.
+	 * @return The {@link InternalAccess} corresponding to the owner's relationship.
+	 */
+	private InternalAccess getInternalAccess(String owner) {
+		InternalAccess value = internalClasses.get(owner);
 		if (value != null) {
 			return value;
 		}
@@ -304,40 +315,31 @@ public class InternalsHiderTransform {
 			try {
 				String name = owner.replace('/', '.');
 				Class<?> loaderClass = Class.forName(name);
-				MuonLoaderInternal internal = loaderClass.getAnnotation(MuonLoaderInternal.class);
-				MuonLoaderInternalType type;
+				MuonLoaderInternal internalAnnotation = loaderClass.getAnnotation(MuonLoaderInternal.class);
+				MuonLoaderInternalType internalType;
 				Class<?>[] replacements = {};
-				if (internal != null) {
-					type = internal.value();
-					replacements = internal.replacements();
-				} else if (name.startsWith("org.muonmc.loader.impl")) {
-					type = MuonLoaderInternalType.getLegacyExposed();
-					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @MuonLoaderInternal!");
+				//
+				if (internalAnnotation != null) {
+					internalType = internalAnnotation.value();
+					replacements = internalAnnotation.replacements();
 				} else if (name.startsWith("org.muonmc.loader.api.plugin")) {
-					type = MuonLoaderInternalType.PLUGIN_API;
+					internalType = MuonLoaderInternalType.PLUGIN_API;
 					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @MuonLoaderInternal!");
 				} else {
-					type = MuonLoaderInternalType.getLegacyNoWarn();
+					internalType = MuonLoaderInternalType.INTERNAL;
+					Log.warn(LogCategory.GENERAL, loaderClass + " isn't annotated with @MuonLoaderInternal!");
 				}
 
 				if (target == Target.MOD) {
-					if (type == MuonLoaderInternalType.getLegacyNoWarn()) {
-						value = PermittedLoaderInternalValue.INSTANCE;
-					} else {
-						if (type == MuonLoaderInternalType.getLegacyExposed()) {
-							value = new WarnLoaderInternalValue();
-						} else {
-							value = new LoaderInternalValue();
-						}
-						for (Class<?> cls : replacements) {
-							value.replacements.add(cls.toString());
-						}
+					value = LoaderInternalAccess.fromInternalType(internalType);
+					for (Class<?> cls : replacements) {
+						value.replacements.add(cls.toString());
 					}
 				} else if (target == Target.PLUGIN) {
 					if (name.startsWith("org.muonmc.loader.api.")) {
-						value = PermittedLoaderInternalValue.INSTANCE;
+						value = PermittedLoaderInternalAccess.INSTANCE;
 					} else {
-						value = new LoaderInternalValue();
+						value = new LoaderInternalAccess();
 					}
 				} else {
 					throw new IllegalStateException("Unknown Target " + target);
@@ -367,7 +369,7 @@ public class InternalsHiderTransform {
 		if (superName == null) {
 			return;
 		}
-		InternalValue annotationSet = getAnnotationSet(superName);
+		InternalAccess annotationSet = getInternalAccess(superName);
 		if (annotationSet == null || annotationSet.isPermitted(mod)) {
 			return;
 		}
@@ -428,8 +430,7 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static abstract class InternalValue {
-
+	static abstract class InternalAccess {
 		final List<String> replacements = new ArrayList<>();
 
 		abstract boolean isPermitted(ModLoadOption mod);
@@ -472,7 +473,20 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static class LoaderInternalValue extends InternalValue {
+	static class LoaderInternalAccess extends InternalAccess {
+		/**
+		 * Gets a {@link LoaderInternalAccess} from a {@link MuonLoaderInternalType}.
+		 * @param internalType the {@link MuonLoaderInternalType}
+		 * @return the correct {@link LoaderInternalAccess}
+		 */
+		public static LoaderInternalAccess fromInternalType(@NotNull MuonLoaderInternalType internalType) {
+			if (internalType == MuonLoaderInternalType.PLUGIN_API) {
+				return PermittedLoaderInternalAccess.INSTANCE;
+			}
+
+			throw new IllegalArgumentException("Unsupported internal type: " + internalType);
+		}
+
 		@Override
 		boolean isPermitted(ModLoadOption mod) {
 			return false;
@@ -484,8 +498,8 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static final class PermittedLoaderInternalValue extends LoaderInternalValue {
-		static final PermittedLoaderInternalValue INSTANCE = new PermittedLoaderInternalValue();
+	static final class PermittedLoaderInternalAccess extends LoaderInternalAccess {
+		static final PermittedLoaderInternalAccess INSTANCE = new PermittedLoaderInternalAccess();
 
 		@Override
 		boolean isPermitted(ModLoadOption mod) {
@@ -493,8 +507,17 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static final class WarnLoaderInternalValue extends LoaderInternalValue {
-		static final WarnLoaderInternalValue INSTANCE = new WarnLoaderInternalValue();
+	static final class WarnExperimentalLoaderAccess extends LoaderInternalAccess {
+		static final WarnExperimentalLoaderAccess INSTANCE = new WarnExperimentalLoaderAccess();
+
+		@Override
+		String getInvokeMethodName() {
+			return "warnExperimentalAccess";
+		}
+	}
+
+	static final class WarnLoaderInternalAccess extends LoaderInternalAccess {
+		static final WarnLoaderInternalAccess INSTANCE = new WarnLoaderInternalAccess();
 
 		@Override
 		String getInvokeMethodName() {
@@ -502,11 +525,11 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static final class ModInternalValue extends InternalValue {
+	static final class ModInternalAccess extends InternalAccess {
 		final ModLoadOption inMod;
 		final Set<String> permitted;
 
-		public ModInternalValue(ModLoadOption inMod, Set<String> permitted) {
+		public ModInternalAccess(ModLoadOption inMod, Set<String> permitted) {
 			this.inMod = inMod;
 			this.permitted = permitted;
 		}
@@ -525,16 +548,16 @@ public class InternalsHiderTransform {
 	static final class InternalSuper {
 		final String superName;
 		final boolean isInterface;
-		final InternalValue value;
+		final InternalAccess access;
 
-		public InternalSuper(String superName, boolean isInterface, InternalValue value) {
+		public InternalSuper(String superName, boolean isInterface, InternalAccess access) {
 			this.superName = superName;
 			this.isInterface = isInterface;
-			this.value = value;
+			this.access = access;
 		}
 
 		String generateError(ModLoadOption from, String site) {
-			return value.generateError(from, (isInterface ? "the interface " : "the class ") + superName, site);
+			return access.generateError(from, (isInterface ? "the interface " : "the class ") + superName, site);
 		}
 	}
 
@@ -578,13 +601,13 @@ public class InternalsHiderTransform {
 		@Override
 		public abstract void visitEnd();
 
-		protected final <K> void put(ModLoadOption mod, Map<K, InternalValue> map, K key) {
+		protected final <K> void put(ModLoadOption mod, Map<K, InternalAccess> map, K key) {
 			Set<String> set = new HashSet<>();
 			if (mod != null) {
 				set.add(mod.id());
 			}
 			set.addAll(exceptions);
-			ModInternalValue value = new ModInternalValue(mod, set);
+			ModInternalAccess value = new ModInternalAccess(mod, set);
 			value.replacements.addAll(classReplacements);
 			value.replacements.addAll(replacements);
 			map.put(key, value);

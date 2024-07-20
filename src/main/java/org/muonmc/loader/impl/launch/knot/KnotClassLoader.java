@@ -17,7 +17,7 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.filesystem.MuonClassPath;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.impl.game.GameProvider;

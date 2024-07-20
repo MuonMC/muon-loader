@@ -16,8 +16,6 @@
 
 package org.muonmc.loader.impl.launch.common;
 
-import net.fabricmc.api.EnvType;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -27,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.Manifest;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;

@@ -20,10 +20,9 @@ package net.fabricmc.loader.metadata;
 import java.util.Collection;
 import java.util.List;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 
 /**
  * @deprecated Use {@link ModMetadata} instead

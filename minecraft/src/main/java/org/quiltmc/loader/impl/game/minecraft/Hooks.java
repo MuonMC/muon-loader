@@ -66,6 +66,10 @@ public final class Hooks {
 		EntrypointUtils.invoke("server", DedicatedServerModInitializer.class, it -> it.onInitializeServer());
 	}
 
+	/**
+	 * @see MuonLoaderImpl#setGameInstance(Object)
+	 */
+	@Deprecated
 	public static void setGameInstance(Object gameInstance) {
 		MuonLoaderImpl.INSTANCE.setGameInstance(gameInstance);
 	}

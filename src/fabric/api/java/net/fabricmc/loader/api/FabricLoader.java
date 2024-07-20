@@ -31,7 +31,7 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.MuonLoader;
-import org.muonmc.loader.api.minecraft.MinecraftMuonLoader;
+import org.muonmc.loader.api.game.minecraft.MinecraftMuonLoader;
 
 /**
  * The public-facing FabricLoader instance.

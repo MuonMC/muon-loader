@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.Version;
 import net.fabricmc.loader.api.metadata.ContactInformation;
 import net.fabricmc.loader.api.metadata.CustomValue;
@@ -32,7 +31,7 @@ import net.fabricmc.loader.api.metadata.ModDependency;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
 import org.muonmc.loader.impl.metadata.NestedJarEntry;
@@ -263,10 +262,10 @@ final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 		List<String> mixinConfigs = new ArrayList<>(this.mixins.common);
 
 		switch (environment) {
-		case CLIENT:
+		case Environment.CLIENT:
 			mixinConfigs.addAll(this.mixins.client);
 			break;
-		case DEDICATED_SERVER:
+		case Environment.DEDICATED_SERVER:
 			mixinConfigs.addAll(this.mixins.server);
 			break;
 		}

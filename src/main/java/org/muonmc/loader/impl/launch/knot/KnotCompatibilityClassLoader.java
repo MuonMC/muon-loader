@@ -17,10 +17,8 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import net.fabricmc.api.EnvType;
-
 import org.muonmc.loader.api.ModContainer;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;

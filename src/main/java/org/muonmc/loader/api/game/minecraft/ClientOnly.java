@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.muonmc.loader.api.minecraft;
+package org.muonmc.loader.api.game.minecraft;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

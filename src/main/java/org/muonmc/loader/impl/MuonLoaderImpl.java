@@ -54,7 +54,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.muonmc.loader.api.ModContainer;
 import org.muonmc.loader.api.entrypoint.PreLaunchEntrypoint;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.discovery.ClasspathModCandidateFinder;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.impl.discovery.ModSolvingError;

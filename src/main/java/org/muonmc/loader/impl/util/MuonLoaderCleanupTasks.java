@@ -24,7 +24,6 @@ import org.muonmc.loader.impl.filesystem.MuonZipFileSystem;
 /** Repetitive cleanup tasks, run every 10 seconds. Used to manage cleaning up {@link MuonZipFileSystem}'s shared byte
  * channels, but might be used in the future for anything else which needs to perform cleanups. */
 public class MuonLoaderCleanupTasks {
-
 	private static final Map<Object, Runnable> TASKS = new HashMap<>();
 	private static int count;
 	private static Thread thread;

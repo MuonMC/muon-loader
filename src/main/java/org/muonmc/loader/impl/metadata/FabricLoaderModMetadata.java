@@ -20,7 +20,7 @@ package org.muonmc.loader.impl.metadata;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.metadata.qmj.ConvertibleModMetadata;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;

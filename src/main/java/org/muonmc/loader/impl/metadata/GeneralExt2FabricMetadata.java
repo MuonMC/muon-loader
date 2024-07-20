@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.metadata.qmj.AdapterLoadableClassEntry;
 import org.muonmc.loader.api.LoaderValue;
@@ -50,8 +50,6 @@ import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 import net.fabricmc.loader.api.metadata.version.VersionInterval;
 import net.fabricmc.loader.api.metadata.version.VersionPredicate;
-
-import net.fabricmc.api.EnvType;
 
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {

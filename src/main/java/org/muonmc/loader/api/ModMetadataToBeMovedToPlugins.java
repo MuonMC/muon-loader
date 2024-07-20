@@ -22,7 +22,7 @@ import java.util.Collection;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 
 import org.jetbrains.annotations.ApiStatus;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 
 /**
  * Holder interface for all fields that should be moved to a loader plugin.

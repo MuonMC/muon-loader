@@ -16,7 +16,7 @@
 
 package org.muonmc.loader.impl.launch.knot;
 
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
 import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.launch.common.MuonMixinBootstrap;

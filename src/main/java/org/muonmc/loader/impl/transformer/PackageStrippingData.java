@@ -24,8 +24,8 @@ import java.util.Map;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Type;
 import org.muonmc.loader.api.Requires;
-import org.muonmc.loader.api.minecraft.ClientOnly;
-import org.muonmc.loader.api.minecraft.DedicatedServerOnly;
+import org.muonmc.loader.api.game.minecraft.ClientOnly;
+import org.muonmc.loader.api.game.minecraft.DedicatedServerOnly;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 

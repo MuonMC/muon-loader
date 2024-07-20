@@ -33,7 +33,7 @@ import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModLicense;
 import org.muonmc.loader.api.Version;
 import org.muonmc.loader.api.VersionRange;
-import org.muonmc.loader.api.minecraft.Environment;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.fabric.metadata.ParseMetadataException;
 import org.muonmc.loader.impl.metadata.EntrypointMetadata;
 import org.muonmc.loader.impl.metadata.FabricLoaderModMetadata;
@@ -47,8 +47,6 @@ import net.fabricmc.loader.api.metadata.CustomValue;
 import net.fabricmc.loader.api.metadata.ModEnvironment;
 import net.fabricmc.loader.api.metadata.Person;
 import net.fabricmc.loader.api.metadata.version.VersionInterval;
-
-import net.fabricmc.api.EnvType;
 
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class FabricModMetadataWrapper implements InternalModMetadata {
