@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -163,7 +163,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 				return "builtin";
 			case NORMAL_FABRIC:
 				return "fabric";
-			case NORMAL_QUILT:
+			case NORMAL_MUON:
 				return MuonConstants.BRAND;
 			case OTHER:
 			default:
@@ -300,7 +300,7 @@ public class GeneralExt2FabricMetadata implements FabricLoaderModMetadata {
 	// Fabric's internal ModMetadata
 
 	private static UnsupportedOperationException internalError() {
-		throw new UnsupportedOperationException("Fabric-internal metadata is not exposed for quilt mods - since only quilt loader itself may use this.");
+		throw new UnsupportedOperationException("Fabric-internal metadata is not exposed for " + MuonConstants.CAPITAL_BRAND + " mods - since only " + MuonConstants.NAME + " itself may use this.");
 	}
 
 	@Override

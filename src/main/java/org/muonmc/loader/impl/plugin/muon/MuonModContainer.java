@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,6 @@ public class MuonModContainer extends InternalModContainerBase {
 
 	@Override
 	public BasicSourceType getSourceType() {
-		return BasicSourceType.NORMAL_QUILT;
+		return BasicSourceType.NORMAL_MUON;
 	}
 }

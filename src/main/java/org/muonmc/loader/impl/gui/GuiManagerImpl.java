@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ public class GuiManagerImpl implements PluginGuiManager {
 	public static MuonLoaderIcon allocateIcons(Map<Integer, BufferedImage> imageSizeMap) {
 		int index = NEXT_ICON_KEY.incrementAndGet();
 		ICON_MAP.put(index, imageSizeMap);
-		QuiltFork.uploadIcon(index, imageSizeMap);
+		MuonFork.uploadIcon(index, imageSizeMap);
 		return new PluginIconImpl(index);
 	}
 

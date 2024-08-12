@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -271,8 +271,8 @@ public final class MuonLoaderImpl {
 	/**
 	 * @return "{@link #getCacheDir()} / {@value #CACHE_DIR_NAME}"
 	 */
-	public Path getQuiltLoaderCacheDir() {
-		return ensureDirExists(getCacheDir().resolve(CACHE_DIR_NAME), "quilt loader cache");
+	public Path getLoaderCacheDir() {
+		return ensureDirExists(getCacheDir().resolve(CACHE_DIR_NAME), MuonConstants.NAME.toLowerCase(Locale.ROOT) + " cache");
 	}
 
 	/**
@@ -641,7 +641,7 @@ public final class MuonLoaderImpl {
 			}
 
 			MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
-			window.title(MuonLoaderText.of("Quilt Loader " + VERSION));
+			window.title(MuonLoaderText.of(MuonConstants.NAME + " " + VERSION));
 			window.mainText(msg);
 			window.addTreeTab(MuonLoaderText.translate("tab.file_list"), plugins.guiFileRoot);
 			window.addTreeTab(MuonLoaderText.translate("tab.mod_list"), plugins.guiModsRoot);
@@ -678,7 +678,7 @@ public final class MuonLoaderImpl {
 
 		String msg = "crash.during_setup." + provider.getGameId();
 		MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
-		window.title(MuonLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
+		window.title(MuonLoaderText.of(MuonConstants.NAME + " " + MuonLoaderImpl.VERSION));
 		window.mainText(MuonLoaderText.translate(msg));
 
 		MuonGuiMessagesTab messagesTab = window.addMessagesTab(MuonLoaderText.translate("tab.messages"));
@@ -732,7 +732,7 @@ public final class MuonLoaderImpl {
 
 		{
 			MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
-			window.title(MuonLoaderText.of("Quilt Loader " + MuonLoaderImpl.VERSION));
+			window.title(MuonLoaderText.of(MuonConstants.NAME + " " + MuonLoaderImpl.VERSION));
 			window.addFolderViewButton(MuonLoaderText.translate("button.open_mods_folder"), getModsDir());
 			window.addOpenQuiltSupportButton();
 			QuiltErrorButton continueButton = window.addContinueButton();

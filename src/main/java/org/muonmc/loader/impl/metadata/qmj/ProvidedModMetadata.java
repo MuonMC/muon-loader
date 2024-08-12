@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.muonmc.loader.api.ModContributor;
 import org.muonmc.loader.api.ModDependency;
 import org.muonmc.loader.api.ModLicense;
 import org.muonmc.loader.api.Version;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.api.plugin.ModMetadataExt;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
@@ -61,7 +62,7 @@ public class ProvidedModMetadata implements ModMetadataExt {
 	}
 
 	@Override
-	public Collection<String> mixins(EnvType env) {
+	public Collection<String> mixins(Environment env) {
 		return metadata.mixins(env);
 	}
 

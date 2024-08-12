@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import org.muonmc.loader.api.gui.LoaderGuiException;
 import org.muonmc.loader.api.gui.MuonLoaderGui;
 import org.muonmc.loader.api.gui.MuonLoaderText;
+import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.gui.MuonGuiEntry;
@@ -57,7 +58,7 @@ public class FabricGuiEntry {
 		GameProvider provider = MuonLoaderImpl.INSTANCE.tryGetGameProvider();
 
 		if ((provider == null || provider.canOpenGui()) && !GraphicsEnvironment.isHeadless()) {
-			FabricStatusTree tree = new FabricStatusTree("Quilt Loader " + MuonLoaderImpl.VERSION, mainText);
+			FabricStatusTree tree = new FabricStatusTree(MuonConstants.NAME + " " + MuonLoaderImpl.VERSION, mainText);
 			FabricStatusTab crashTab = tree.addTab(MuonLoaderText.translate("tab.messages").toString());
 
 			if (exception == null) {

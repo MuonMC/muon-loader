@@ -1,7 +1,7 @@
 apply plugin: "org.quiltmc.loom"
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 loom {
 	runConfigs.configureEach {
@@ -11,12 +11,19 @@ loom {
 
 repositories {
 	mavenCentral()
+
+	maven {
+		url = "https://maven.parchmentmc.org"
+	}
 }
 
 dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-	minecraft "com.mojang:minecraft:1.20.2"
-	mappings "org.quiltmc:quilt-mappings:1.20.2+build.1:intermediary-v2"
+	minecraft "com.mojang:minecraft:1.21"
+	mappings loom.layered {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.21:2024.07.28")
+	}
 
 	implementation project(":minecraft")
 	implementation project(":dependencies")
@@ -51,7 +58,7 @@ test {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	it.options.release.set(17)
+	it.options.release.set(21)
 }
 
 runClient {

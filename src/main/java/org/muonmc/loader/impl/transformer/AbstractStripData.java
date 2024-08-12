@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,29 +21,28 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.objectweb.asm.ClassVisitor;
 import org.muonmc.loader.api.Requires;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
-import net.fabricmc.api.EnvType;
-
 /** Contains string processing for both {@link PackageStrippingData} and {@link ClassStrippingData} */
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public abstract class AbstractStripData extends ClassVisitor {
 
-	protected final EnvType envType;
+	protected final Environment environment;
 	protected final Set<String> mods;
 
 	protected final List<String> denyLoadReasons = new ArrayList<>();
 
-	protected AbstractStripData(int api, EnvType envType, Set<String> mods) {
-		this(api, null, envType, mods);
+	protected AbstractStripData(int api, Environment environment, Set<String> mods) {
+		this(api, null, environment, mods);
 	}
 
-	protected AbstractStripData(int api, ClassVisitor classVisitor, EnvType envType, Set<String> mods) {
+	protected AbstractStripData(int api, ClassVisitor classVisitor, Environment environment, Set<String> mods) {
 		super(api, classVisitor);
-		this.envType = envType;
+		this.environment = environment;
 		this.mods = mods;
 	}
 

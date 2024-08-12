@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
-  "quilt_loader": {
-    "group": "org.quiltmc",
-    "id": "quilt_loader",
+  "muon_loader": {
+    "group": "org.muonmc",
+    "id": "muon_loader",
     "version": "${version}",
     "metadata": {
       "name": "Muon Loader",
-      "description": "The mod-loader that cares.",
+      "description": "The mod-loader that works.",
       "contributors": {
-        "QuiltMC: Loader Team": "Owner"
+        "MuonMC": "Owner"
       },
       "contact": {
-        "homepage": "https://quiltmc.org",
-        "issues": "https://github.com/QuiltMC/quilt-loader/issues",
-        "sources": "https://github.com/QuiltMC/quilt-loader"
+        "homepage": "https://muonmc.org",
+        "issues": "https://github.com/MuonMC/muon-loader/issues",
+        "sources": "https://github.com/MuonMC/muon-loader"
       },
       "license": "Apache-2.0",
-      "icon": "assets/quilt_loader/icon.png"
+      "icon": "assets/muon_loader/icon.png"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "provides": [

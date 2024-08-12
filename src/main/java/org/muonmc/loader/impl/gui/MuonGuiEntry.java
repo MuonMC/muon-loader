@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.muonmc.loader.impl.gui;
 import java.awt.GraphicsEnvironment;
 import java.nio.file.Path;
 
+import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.game.GameProvider;
 import org.muonmc.loader.impl.report.MuonReport;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
@@ -52,7 +53,7 @@ public final class MuonGuiEntry {
 			MuonReport report = new MuonReport("Crashed!");
 			// It's arguably the most important version - if anything goes wrong while writing this report
 			// at least we know what code was used to generate it.
-			report.overview("Quilt Loader Version: " + MuonLoaderImpl.VERSION);
+			report.overview(MuonConstants.NAME + " Version: " + MuonLoaderImpl.VERSION);
 			report.addStacktraceSection("Crash", 0, exception);
 			try {
 				MuonLoaderImpl.INSTANCE.appendModTable(report.addStringSection("Mods", 0)::lines);
@@ -68,7 +69,7 @@ public final class MuonGuiEntry {
 				crashReportText = e.fullReportText;
 			}
 
-			String title = "Quilt Loader " + MuonLoaderImpl.VERSION;
+			String title = MuonConstants.NAME + " " + MuonLoaderImpl.VERSION;
 			MuonBasicWindow<Void> window = MuonLoaderGui.createBasicWindow();
 			window.title(MuonLoaderText.of(title));
 			window.mainText(MuonLoaderText.of(mainText));
@@ -76,14 +77,14 @@ public final class MuonGuiEntry {
 			MuonGuiMessagesTab messages = window.addMessagesTab(MuonLoaderText.EMPTY);
 			window.restrictToSingleTab();
 
-			MuonJsonGuiMessage error = new MuonJsonGuiMessage(null, "quilt_loader", MuonLoaderText.translate("error.unhandled"));
+			MuonJsonGuiMessage error = new MuonJsonGuiMessage(null, MuonConstants.MOD_ID, MuonLoaderText.translate("error.unhandled"));
 			error.appendDescription(MuonLoaderText.translate("error.unhandled_launch.desc"));
 			error.setOrdering(-100);
 			error.addOpenQuiltSupportButton();
 			messages.addMessage(error);
 
 			if (crashReportText != null) {
-				error = new MuonJsonGuiMessage(null, "quilt_loader", MuonLoaderText.translate("error.failed_to_save_crash_report"));
+				error = new MuonJsonGuiMessage(null, MuonConstants.MOD_ID, MuonLoaderText.translate("error.failed_to_save_crash_report"));
 				error.setIcon(GuiManagerImpl.ICON_LEVEL_ERROR);
 				error.appendDescription(MuonLoaderText.translate("error.failed_to_save_crash_report.desc"));
 				error.appendAdditionalInformation(MuonLoaderText.translate("error.failed_to_save_crash_report.info"));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.api.plugin.solver.ModSolveResult;
 import org.muonmc.loader.impl.MuonConstants;
-import org.quiltmc.loader.impl.MuonPluginManagerForTests;
+import org.muonmc.loader.impl.MuonPluginManagerForTests;
 import org.muonmc.loader.impl.discovery.ModResolutionException;
 import org.muonmc.loader.impl.plugin.MuonPluginManagerImpl;
 import org.muonmc.loader.impl.report.MuonReportedError;

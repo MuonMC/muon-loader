@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import net.fabricmc.accesswidener.AccessWidener;
-import net.fabricmc.api.EnvType;
 
 import org.jetbrains.annotations.Nullable;
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
 import org.muonmc.loader.impl.MuonLoaderImpl;
 import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
@@ -36,7 +36,7 @@ import net.fabricmc.accesswidener.AccessWidenerClassVisitor;
 
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 final class MuonTransformer {
-	public static byte @Nullable [] transform(boolean isDevelopment, EnvType envType, TransformCache cache, AccessWidener accessWidener, String name, ModLoadOption mod, byte[] bytes) {
+	public static byte @Nullable [] transform(boolean isDevelopment, Environment environment, TransformCache cache, AccessWidener accessWidener, String name, ModLoadOption mod, byte[] bytes) {
 		boolean isGameClass = mod.id().equals(MuonLoaderImpl.INSTANCE.getGameProvider().getGameId());
 		boolean transformAccess = isGameClass && MuonLauncherBase.getLauncher().getMappingConfiguration().requiresPackageAccessHack();
 		boolean strip = !isGameClass || isDevelopment;
@@ -52,7 +52,7 @@ final class MuonTransformer {
 		int visitorCount = 0;
 
 		if (strip) {
-			ClassStrippingData data = new ClassStrippingData(MuonLoaderImpl.ASM_VERSION, envType, cache.getAllMods());
+			ClassStrippingData data = new ClassStrippingData(MuonLoaderImpl.ASM_VERSION, environment, cache.getAllMods());
 			classReader.accept(data, ClassReader.SKIP_CODE | ClassReader.SKIP_FRAMES);
 
 			if (data.stripEntireClass()) {

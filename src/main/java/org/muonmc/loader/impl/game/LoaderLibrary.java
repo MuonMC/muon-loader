@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.muonmc.loader.impl.game;
 import java.net.URL;
 import java.nio.file.Path;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.util.UrlConversionException;
 import org.muonmc.loader.impl.util.UrlUtil;
 import org.objectweb.asm.ClassReader;
@@ -53,7 +54,7 @@ enum LoaderLibrary {
 //
 //	SAT4J_CORE(ContradictionException.class),
 //	SAT4J_PB(SolverFactory.class),
-	SERVER_LAUNCH("quilt-server-launch.properties", EnvType.SERVER), // installer generated jar to run setup loader's class path
+	SERVER_LAUNCH("quilt-server-launch.properties", Environment.DEDICATED_SERVER), // installer generated jar to run setup loader's class path
 //	SERVER_LAUNCHER("net/fabricmc/installer/ServerLauncher.class", EnvType.SERVER); // installer based launch-through method
 	JUNIT_API("org/junit/jupiter/api/Test.class", null),
 	JUNIT_PLATFORM_ENGINE("org/junit/platform/engine/TestEngine.class", null),
@@ -69,7 +70,7 @@ enum LoaderLibrary {
 	SLF4J_API("org/slf4j/Logger.class", true);
 
 	final Path path;
-	final EnvType env;
+	final Environment env;
 	final boolean junitRunOnly;
 
 	LoaderLibrary(Class<?> cls) {
@@ -84,10 +85,10 @@ enum LoaderLibrary {
 		this.junitRunOnly = false;
 	}
 
-	LoaderLibrary(String file, EnvType env) {
+	LoaderLibrary(String file, Environment env) {
 		this(file, env, false);
 	}
-	LoaderLibrary(String file, EnvType env, boolean junitRunOnly) {
+	LoaderLibrary(String file, Environment env, boolean junitRunOnly) {
 		URL url = LoaderLibrary.class.getClassLoader().getResource(file);
 
 		try {
@@ -104,7 +105,7 @@ enum LoaderLibrary {
 		this(file, null, junitRunOnly);
 	}
 
-	boolean isApplicable(EnvType env, boolean junitRun) {
+	boolean isApplicable(Environment env, boolean junitRun) {
 		return (this.env == null || this.env == env) && (!junitRunOnly || junitRun);
 	}
 }

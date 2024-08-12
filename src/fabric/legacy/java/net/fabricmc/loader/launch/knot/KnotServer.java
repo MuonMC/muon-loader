@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package net.fabricmc.loader.launch.knot;
 
 import net.fabricmc.api.EnvType;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.launch.knot.KnotClient;
 import org.muonmc.loader.impl.launch.knot.Knot;
 
@@ -29,6 +30,6 @@ import org.muonmc.loader.impl.launch.knot.Knot;
 // Kept for old Quilt installs that still use this class
 public final class KnotServer {
 	public static void main(String[] args) {
-		Knot.launch(args, EnvType.SERVER);
+		Knot.launch(args, Environment.DEDICATED_SERVER);
 	}
 }

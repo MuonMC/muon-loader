@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,10 @@ public abstract class MuonLauncherBase implements MuonLauncher {
 
 	public static Class<?> getClass(String className) throws ClassNotFoundException {
 		return Class.forName(className, true, getLauncher().getTargetClassLoader());
+	}
+
+	public static Class<?> loadClass(String className) throws ClassNotFoundException {
+		return getLauncher().getTargetClassLoader().loadClass(className);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.muonmc.loader.api.gui;
 import org.jetbrains.annotations.ApiStatus;
 
 /** A displayable icon that can be shown in {@link MuonLoaderGui} related elements. These are created from
- * {@link MuonLoaderGui#createIcon(java.awt.image.BufferedImage)} (and related methods). */
+ * {@link MuonLoaderGui#createIcon(byte[][])} (and related methods). */
 @ApiStatus.NonExtendable
 public interface MuonLoaderIcon {
 	enum SubIconPosition {

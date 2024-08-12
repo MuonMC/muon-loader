@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ public interface ModContainer {
 
 	public enum BasicSourceType {
 		/** A regular muon mod, likely loaded from a mod jar file, but could be from the classpath instead. */
-		NORMAL_QUILT,
+		NORMAL_MUON,
 		/** A regular fabric mod, likely loaded from a mod jar file, but could be from the classpath instead. */
 		NORMAL_FABRIC,
 		/** A "mod" that only exists to expose some internal library or game itself - for example muon loader,

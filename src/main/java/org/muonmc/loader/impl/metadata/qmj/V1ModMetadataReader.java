@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import net.fabricmc.api.EnvType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.muonmc.loader.impl.MuonConstants;
 import org.quiltmc.json5.exception.ParseException;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.LoaderValue.LType;
@@ -72,14 +73,14 @@ public final class V1ModMetadataReader {
 
 	public static V1ModMetadataImpl read(JsonLoaderValue.ObjectImpl root, Path path, MuonPluginManager manager, PluginGuiTreeNode parentNode) {
 		// Read loader category
-		@Nullable JsonLoaderValue quiltLoader = root.get("quilt_loader");
+		@Nullable JsonLoaderValue loader = root.get(MuonConstants.MOD_ID);
 
-		if (quiltLoader == null) {
-			throw new ParseException("quilt_loader field is required");
+		if (loader == null) {
+			throw new ParseException(MuonConstants.MOD_ID + " field is required");
 		}
 
-		if (quiltLoader.type() != LoaderValue.LType.OBJECT) {
-			throw parseException(quiltLoader, "quilt_loader field must be an object");
+		if (loader.type() != LoaderValue.LType.OBJECT) {
+			throw parseException(loader, MuonConstants.MOD_ID + " field must be an object");
 		}
 
 		return new V1ModMetadataReader(path, manager, parentNode).readFields(root);
@@ -125,16 +126,16 @@ public final class V1ModMetadataReader {
 		V1ModMetadataBuilder builder = new V1ModMetadataBuilder();
 		builder.setRoot(root);
 
-		JsonLoaderValue.ObjectImpl quiltLoader = (JsonLoaderValue.ObjectImpl) root.get("quilt_loader");
+		JsonLoaderValue.ObjectImpl loader = (JsonLoaderValue.ObjectImpl) root.get(MuonConstants.MOD_ID);
 
-		if (quiltLoader == null) {
-			throw parseException(root, "quilt_loader is a required field");
+		if (loader == null) {
+			throw parseException(root, MuonConstants.MOD_ID + " is a required field");
 		}
 
 		if (MuonLoader.isDevelopmentEnvironment() && !Boolean.getBoolean(SystemProperties.DISABLE_STRICT_PARSING)) {
-			for (String s : quiltLoader.keySet()) {
+			for (String s : loader.keySet()) {
 				if (!QLKeys.VALID_KEYS.contains(s)) {
-					throw parseException(Objects.requireNonNull(quiltLoader.get(s)), "Invalid key " + s + " in the quilt_loader object! (To disable this message, " +
+					throw parseException(Objects.requireNonNull(loader.get(s)), "Invalid key " + s + " in the " + MuonConstants.MOD_ID + " object! (To disable this message, " +
 							"use the argument -D" + SystemProperties.DISABLE_STRICT_PARSING + "=true)");
 				}
 			}
@@ -143,24 +144,24 @@ public final class V1ModMetadataReader {
 		// Loader metadata
 		{
 			// Check if our required fields are here
-			builder.id = requiredString(quiltLoader, QLKeys.ID);
+			builder.id = requiredString(loader, QLKeys.ID);
 
 			if (!Patterns.VALID_MOD_ID.matcher(builder.id).matches()) {
 				// id must be non-null
-				throw parseException(Objects.requireNonNull(quiltLoader.get("id")), "Invalid mod id, likely one of the following errors:\n" +
+				throw parseException(Objects.requireNonNull(loader.get("id")), "Invalid mod id, likely one of the following errors:\n" +
 						"- Mod id contains invalid characters, the allowed characters are a-z 0-9 _-\n" +
 						"- The mod id is too short or long, the mod id must be between 2 and 63 characters");
 			}
 
-			builder.group = requiredString(quiltLoader, QLKeys.GROUP);
+			builder.group = requiredString(loader, QLKeys.GROUP);
 
 			if (!Patterns.VALID_MAVEN_GROUP.matcher(builder.group).matches()) {
 				// group must be non-null
-				throw parseException(Objects.requireNonNull(quiltLoader.get("id")), "Invalid mod maven group; the allowed characters are a-z A-Z 0-9 - _ and .");
+				throw parseException(Objects.requireNonNull(loader.get("id")), "Invalid mod maven group; the allowed characters are a-z A-Z 0-9 - _ and .");
 			}
 
 			// Versions
-			@Nullable JsonLoaderValue versionValue = quiltLoader.get(QLKeys.VERSION);
+			@Nullable JsonLoaderValue versionValue = loader.get(QLKeys.VERSION);
 
 			if (versionValue == null) {
 				throw new ParseException("version is a required field");
@@ -172,7 +173,7 @@ public final class V1ModMetadataReader {
 			// Now we reach optional fields
 
 			@Nullable
-			JsonLoaderValue entrypointsValue = quiltLoader.get(QLKeys.ENTRYPOINTS);
+			JsonLoaderValue entrypointsValue = loader.get(QLKeys.ENTRYPOINTS);
 
 			if (entrypointsValue != null) {
 				if (entrypointsValue.type() != LoaderValue.LType.OBJECT) {
@@ -183,7 +184,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue jarsValue = quiltLoader.get(QLKeys.JARS);
+			JsonLoaderValue jarsValue = loader.get(QLKeys.JARS);
 
 			if (jarsValue != null) {
 				if (jarsValue.type() != LoaderValue.LType.ARRAY) {
@@ -194,7 +195,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue languageAdaptersValue = quiltLoader.get(QLKeys.LANGUAGE_ADAPTERS);
+			JsonLoaderValue languageAdaptersValue = loader.get(QLKeys.LANGUAGE_ADAPTERS);
 
 			if (languageAdaptersValue != null) {
 				if (languageAdaptersValue.type() != LoaderValue.LType.OBJECT) {
@@ -204,14 +205,14 @@ public final class V1ModMetadataReader {
 				readStringMap((JsonLoaderValue.ObjectImpl) languageAdaptersValue, QLKeys.LANGUAGE_ADAPTERS, builder.languageAdapters);
 			}
 
-			@Nullable JsonLoaderValue dependsValue = assertType(quiltLoader, QLKeys.DEPENDS, LoaderValue.LType.ARRAY);
+			@Nullable JsonLoaderValue dependsValue = assertType(loader, QLKeys.DEPENDS, LoaderValue.LType.ARRAY);
 			if (dependsValue != null) {
 				for (LoaderValue v : dependsValue.asArray()) {
 					builder.depends.add(readDependencyObject(true, (JsonLoaderValue) v));
 				}
 			}
 
-			@Nullable JsonLoaderValue breaksValue = assertType(quiltLoader, QLKeys.BREAKS, LoaderValue.LType.ARRAY);
+			@Nullable JsonLoaderValue breaksValue = assertType(loader, QLKeys.BREAKS, LoaderValue.LType.ARRAY);
 			if (breaksValue != null) {
 				for (LoaderValue v : breaksValue.asArray()) {
 					builder.breaks.add(readDependencyObject(false, (JsonLoaderValue) v));
@@ -219,7 +220,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue repositoriesValue = quiltLoader.get(QLKeys.REPOSITORIES);
+			JsonLoaderValue repositoriesValue = loader.get(QLKeys.REPOSITORIES);
 
 			if (repositoriesValue != null) {
 				if (repositoriesValue.type() != LoaderValue.LType.ARRAY) {
@@ -230,7 +231,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue loadTypeValue = quiltLoader.get(QLKeys.LOAD_TYPE);
+			JsonLoaderValue loadTypeValue = loader.get(QLKeys.LOAD_TYPE);
 
 			if (loadTypeValue != null) {
 				if (loadTypeValue.type() != LoaderValue.LType.STRING) {
@@ -241,7 +242,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue providesValue = quiltLoader.get(QLKeys.PROVIDES);
+			JsonLoaderValue providesValue = loader.get(QLKeys.PROVIDES);
 
 			if (providesValue != null) {
 				if (providesValue.type() != LoaderValue.LType.ARRAY) {
@@ -283,7 +284,7 @@ public final class V1ModMetadataReader {
 			}
 
 			@Nullable
-			JsonLoaderValue intermediateMappingsValue = quiltLoader.get(QLKeys.INTERMEDIATE_MAPPINGS);
+			JsonLoaderValue intermediateMappingsValue = loader.get(QLKeys.INTERMEDIATE_MAPPINGS);
 
 			String[] supported_mappings = { "org.quiltmc:hashed", "net.fabricmc:intermediary" };
 			String mappings = "org.quiltmc:hashed";
@@ -306,13 +307,13 @@ public final class V1ModMetadataReader {
 
 			// Until Loader supports hashed mappings
 			if (mappings.equals("org.quiltmc:hashed")) {
-				throw new ParseException("Oh no! This version of Quilt Loader doesn't support hashed mappings, please update Quilt Loader to use this mod.");
+				throw new ParseException("Oh no! This version of " + MuonConstants.NAME + " doesn't support hashed mappings, please update " + MuonConstants.NAME + " to use this mod.");
 			}
 
 			builder.intermediateMappings = mappings;
 
 			// Metadata
-			JsonLoaderValue metadataValue = quiltLoader.get(QLKeys.METADATA);
+			JsonLoaderValue metadataValue = loader.get(QLKeys.METADATA);
 
 			if (metadataValue != null) {
 				if (metadataValue.type() != LoaderValue.LType.OBJECT) {

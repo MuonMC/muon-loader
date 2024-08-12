@@ -4,34 +4,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrassBlock;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.muonmc.loader.api.MuonLoader;
 
 import net.fabricmc.loader.api.FabricLoader;
 
-import net.minecraft.Bootstrap;
+import net.minecraft.server.Bootstrap;
 import net.minecraft.SharedConstants;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 
 public class JunitTest {
 	@BeforeAll
 	public static void setup() {
 		System.out.println("Initializing Minecraft");
 		MixinExtrasBootstrap.init();
-		SharedConstants.createGameVersion();
-		Bootstrap.initialize();
+		SharedConstants.tryDetectVersion();
+		Bootstrap.bootStrap();
 		System.out.println("Minecraft initialized");
 	}
 
 	@Test
 	public void testItems() {
-		Identifier id = Registries.ITEM.getId(Items.DIAMOND);
+		ResourceLocation id = BuiltInRegistries.ITEM.getKey(Items.DIAMOND);
 		assertEquals(id.toString(), "minecraft:diamond");
 
 		System.out.println(id);
@@ -41,7 +41,7 @@ public class JunitTest {
 	public void testMixin() {
 		// MixinGrassBlock sets canGrow to false
 		GrassBlock grassBlock = (GrassBlock) Blocks.GRASS_BLOCK;
-		boolean canGrow = grassBlock.canFertilize(null, null, null, null);
+		boolean canGrow = grassBlock.isBonemealSuccess(null, null, null, null);
 		assertFalse(canGrow);
 	}
 
@@ -50,7 +50,7 @@ public class JunitTest {
 		// MixinGrassBlock sets isFertilizable to true
 		GrassBlock grassBlock = (GrassBlock) Blocks.GRASS_BLOCK;
 		System.out.println("Grass Block = " + grassBlock);
-		boolean isFertilizable = grassBlock.isFertilizable(null, BlockPos.ORIGIN, null);
+		boolean isFertilizable = grassBlock.isValidBonemealTarget(null, BlockPos.ZERO, null);
 		assertTrue(isFertilizable);
 	}
 

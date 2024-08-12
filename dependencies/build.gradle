@@ -3,7 +3,7 @@ plugins {
 	id 'java'
 }
 
-base.archivesName.set 'quilt-loader-dependencies'
+base.archivesName.set 'muon-loader-dependencies'
 version = rootProject.version
 group = rootProject.group
 

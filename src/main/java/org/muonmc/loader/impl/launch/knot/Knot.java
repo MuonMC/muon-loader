@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package org.muonmc.loader.impl.launch.knot;
 
 import org.muonmc.loader.api.game.minecraft.Environment;
+import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
 import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
 import org.muonmc.loader.impl.launch.common.MuonMixinBootstrap;
@@ -127,7 +128,7 @@ public final class Knot extends MuonLauncherBase {
 		}
 
 		provider = createGameProvider(args);
-		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with Quilt Loader %s", provider.getGameName(), provider.getRawGameVersion(), MuonLoaderImpl.VERSION);
+		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with " + MuonConstants.NAME + " %s", provider.getGameName(), provider.getRawGameVersion(), MuonLoaderImpl.VERSION);
 
 		isDevelopment = Boolean.parseBoolean(System.getProperty(SystemProperties.DEVELOPMENT, "false"));
 
@@ -162,7 +163,7 @@ public final class Knot extends MuonLauncherBase {
 			// If the very first class transformed by mixin is also referenced by a mixin config
 			// then we'll crash due to an "attempted duplicate class definition"
 			// Since this target class is *very unlikely* to be referenced by mixin we forcibly load it.
-			classLoader.loadIntoTarget("org.quiltmc.loader.impl.launch.knot.UnusedEmptyTargetClass");
+			classLoader.loadIntoTarget("org.muonmc.loader.impl.launch.knot.UnusedEmptyTargetClass");
 		} catch (ClassNotFoundException cnfe) {
 			Log.warn(LogCategory.KNOT, "Early non-mixin-config related class failed to load!");
 			Log.warn(LogCategory.KNOT, "If you get a 'LinkageError' of 'attempted duplicated * definition' after this then this error is the cause!", cnfe);

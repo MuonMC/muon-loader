@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package org.muonmc.loader.impl.transformer;
 
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -235,11 +236,11 @@ public class ClassStrippingData extends AbstractStripData {
 			return new FabricEnvironmentAnnotationVisitor(api, onMismatch);
 		}
 
-		if (CLIENT_ONLY_DESCRIPTOR.equals(descriptor) && envType == EnvType.SERVER) {
+		if (CLIENT_ONLY_DESCRIPTOR.equals(descriptor) && environment == org.muonmc.loader.api.game.minecraft.Environment.DEDICATED_SERVER) {
 			return new QuiltEnvironmentAnnotationVisitor(api, onMismatch, onMismatchLambdas);
 		}
 
-		if (SERVER_ONLY_DESCRIPTOR.equals(descriptor) && envType == EnvType.CLIENT) {
+		if (SERVER_ONLY_DESCRIPTOR.equals(descriptor) && environment == org.muonmc.loader.api.game.minecraft.Environment.CLIENT) {
 			return new QuiltEnvironmentAnnotationVisitor(api, onMismatch, onMismatchLambdas);
 		}
 
@@ -250,9 +251,9 @@ public class ClassStrippingData extends AbstractStripData {
 		return null;
 	}
 
-	public ClassStrippingData(int api, EnvType envType, List<ModLoadOption> mods) {
-		super(api, envType, mods.stream().map(ModLoadOption::id).collect(Collectors.toSet()));
-		this.envTypeString = envType.name();
+	public ClassStrippingData(int api, org.muonmc.loader.api.game.minecraft.Environment environment, List<ModLoadOption> mods) {
+		super(api, environment, mods.stream().map(ModLoadOption::id).collect(Collectors.toSet()));
+		this.envTypeString = environment.name();
 	}
 
 	@Override
@@ -282,11 +283,11 @@ public class ClassStrippingData extends AbstractStripData {
 	@Override
 	public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
 		if (CLIENT_ONLY_DESCRIPTOR.equals(descriptor)) {
-			if (envType == EnvType.SERVER) {
+			if (environment == org.muonmc.loader.api.game.minecraft.Environment.DEDICATED_SERVER) {
 				denyClientOnlyLoad();
 			}
 		} else if (SERVER_ONLY_DESCRIPTOR.equals(descriptor)) {
-			if (envType == EnvType.CLIENT) {
+			if (environment == org.muonmc.loader.api.game.minecraft.Environment.CLIENT) {
 				denyDediServerOnlyLoad();
 			}
 		} else if (REQUIRES_DESCRIPTOR.equals(descriptor)) {
@@ -346,7 +347,7 @@ public class ClassStrippingData extends AbstractStripData {
 			return null;
 		}
 
-		if (annotationEnv != envType) {
+		if (annotationEnv != EnvTypeUtil.toEnvType(environment)) {
 			stripInterfaces.add(interfaces[interfaceIdx]);
 		}
 
@@ -378,7 +379,7 @@ public class ClassStrippingData extends AbstractStripData {
 	}
 
 	public boolean stripEntireClass() {
-		return denyLoadReasons.size() > 0;
+		return !denyLoadReasons.isEmpty();
 	}
 
 	public Collection<String> getStripInterfaces() {

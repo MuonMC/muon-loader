@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import net.fabricmc.api.EnvType;
 
 import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.launch.common.MuonLauncherBase;
+import org.muonmc.loader.impl.util.deprecated.EnvTypeUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +64,7 @@ public class FabricLauncherBase implements FabricLauncher {
 
 	@Override
 	public EnvType getEnvironmentType() {
-		return delegate.getEnvironmentType();
+		return EnvTypeUtil.toEnvType(delegate.getEnvironmentType());
 	}
 
 	@Override

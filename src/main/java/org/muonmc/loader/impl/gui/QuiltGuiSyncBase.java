@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ abstract class QuiltGuiSyncBase {
 	static final Map<Integer, QuiltGuiSyncBase> ALL_OBJECTS = new ConcurrentHashMap<>();
 
 	static {
-		if (QuiltForkComms.isServer()) {
+		if (MuonForkComms.isServer()) {
 			IDS = new AtomicInteger(Integer.MIN_VALUE);
 		} else {
 			IDS = new AtomicInteger();
@@ -162,7 +162,7 @@ abstract class QuiltGuiSyncBase {
 		map.put("syncType", lvf().string(syncType()));
 		map.put("data", data);
 
-		QuiltForkComms comms = QuiltForkComms.getCurrentComms();
+		MuonForkComms comms = MuonForkComms.getCurrentComms();
 		if (comms != null) {
 			comms.send(lvf().object(map));
 		}
@@ -183,7 +183,7 @@ abstract class QuiltGuiSyncBase {
 		map.put("__TYPE", lvf().string(ForkCommNames.ID_GUI_OBJECT_CREATE));
 		map.put("class", lvf().string(getClass().getName()));
 		map.put("data", write());
-		QuiltForkComms comms = QuiltForkComms.getCurrentComms();
+		MuonForkComms comms = MuonForkComms.getCurrentComms();
 		if (comms != null) {
 			comms.send(lvf().object(map));
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.muonmc.loader.impl.transformer;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -33,8 +34,8 @@ import net.fabricmc.api.EnvType;
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public class EnvironmentStrippingData extends ClassStrippingData {
 
-	public EnvironmentStrippingData(int api, EnvType envType) {
-		super(api, envType, new ArrayList<>());
+	public EnvironmentStrippingData(int api, Environment environment) {
+		super(api, environment, new ArrayList<>());
 	}
 
 	@Override

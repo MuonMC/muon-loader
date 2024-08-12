@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.plugin.gui.PluginGuiManager;
 import org.muonmc.loader.api.plugin.gui.PluginGuiTreeNode;
 import org.muonmc.loader.api.plugin.solver.ModLoadOption;
+import org.muonmc.loader.impl.MuonConstants;
 import org.muonmc.loader.impl.util.MuonLoaderInternal;
 import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 import org.muonmc.loader.api.ModContainer;
@@ -42,8 +43,8 @@ import net.fabricmc.api.EnvType;
 @MuonLoaderInternal(MuonLoaderInternalType.PLUGIN_API)
 public interface MuonPluginManager {
 
-	/** The {@link MuonPluginContext#pluginId()} for Quilt Loader itself. */
-	String MUON_LOADER = "muon_loader";
+	/** The {@link MuonPluginContext#pluginId()} for Muon Loader itself. */
+	String MUON_LOADER = MuonConstants.MOD_ID;
 
 	/** The {@link MuonPluginContext#pluginId()} for the fabric plugin loader. */
 	String QUILTED_FABRIC_LOADER = "quilted_fabric_loader";

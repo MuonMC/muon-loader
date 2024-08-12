@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,7 +134,7 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements MuonLoaderW
 					onClosedFuture.get(1, TimeUnit.SECONDS);
 					break;
 				} catch (TimeoutException e) {
-					if (QuiltForkComms.getCurrentComms() == null) {
+					if (MuonForkComms.getCurrentComms() == null) {
 						Error error = errorChecker.get();
 						if (error == null) {
 							throw new LoaderGuiException("Forked communication failure; check the log for details!", e);
@@ -158,7 +158,7 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements MuonLoaderW
 	void handleUpdate(String name, LObject data) throws IOException {
 		switch (name) {
 			case "open": {
-				if (!QuiltForkComms.isServer()) {
+				if (!MuonForkComms.isServer()) {
 					throw new IOException("Can only open on the server!");
 				}
 
@@ -166,7 +166,7 @@ abstract class AbstractWindow<R> extends QuiltGuiSyncBase implements MuonLoaderW
 				return;
 			}
 			case "closed": {
-				if (!QuiltForkComms.isClient()) {
+				if (!MuonForkComms.isClient()) {
 					throw new IOException("Can only receive 'closed' on the client!");
 				}
 				onClosedFuture.complete(null);

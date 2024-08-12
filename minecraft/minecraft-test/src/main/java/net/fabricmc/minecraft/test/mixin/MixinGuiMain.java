@@ -16,6 +16,9 @@
 
 package net.fabricmc.minecraft.test.mixin;
 
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,20 +27,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.fabricmc.minecraft.test.server_only.TestMixinGuiHelper;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
 
 @Mixin(value = TitleScreen.class, remap = false)
 public abstract class MixinGuiMain extends Screen {
-	protected MixinGuiMain(Text textComponent_1) {
+	protected MixinGuiMain(Component textComponent_1) {
 		super(textComponent_1);
 	}
 
 	@Inject(method = "render", at = @At("RETURN"))
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo info) {
-		graphics.drawShadowedText(textRenderer, "Quilt Test Mod", 2, this.height - 30, -1);
+		graphics.drawString(font, "Muon Test Mod", 2, this.height - 30, -1);
 		TestMixinGuiHelper.help();
 	}
 }

@@ -32,8 +32,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.quiltmc.json5.JsonReader;
-import org.quiltmc.loader.impl.game.minecraft.McVersion;
-import org.quiltmc.loader.impl.game.minecraft.McVersionLookup;
+import org.muonmc.loader.impl.game.minecraft.McVersion;
+import org.muonmc.loader.impl.game.minecraft.McVersionLookup;
 
 public final class McVersionLookupTest {
 	public static void main(String[] args) throws IOException {

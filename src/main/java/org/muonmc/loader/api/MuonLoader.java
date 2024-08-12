@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.Optional;
 import net.fabricmc.loader.api.ObjectShare;
 
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.muonmc.loader.api.entrypoint.EntrypointContainer;
 import org.muonmc.loader.api.entrypoint.EntrypointException;
@@ -197,6 +198,15 @@ public final class MuonLoader {
 	 */
 	public static String getRawGameVersion() {
 		return impl().getGameProvider().getRawGameVersion();
+	}
+
+	/**
+	 * Gets the game ID. This corresponds to the lowercase mod ID of the game as muon-loader sees it.
+	 *
+	 * @return A valid mod ID corresponding to the game's built-in mod.
+	 */
+	public static @NotNull String getGameId() {
+		return impl().getGameProvider().getGameId();
 	}
 
 	/**

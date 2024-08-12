@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package org.muonmc.loader.impl.metadata.qmj;
 
 import org.jetbrains.annotations.Nullable;
+import org.muonmc.loader.impl.MuonConstants;
 import org.quiltmc.json5.JsonReader;
 import org.muonmc.loader.api.LoaderValue;
 import org.muonmc.loader.api.ModLicense;
@@ -39,7 +40,7 @@ public final class ModLicenseImpl implements ModLicense {
 	private static final Map<String, ModLicense> LICENSES = new HashMap<>();
 
 	static {
-		try (JsonReader reader = JsonReader.json(new InputStreamReader(ModLicenseImpl.class.getClassLoader().getResourceAsStream("quilt_loader/licenses.json")))) {
+		try (JsonReader reader = JsonReader.json(new InputStreamReader(ModLicenseImpl.class.getClassLoader().getResourceAsStream(MuonConstants.MOD_ID + "/licenses.json")))) {
 			JsonLoaderValue object = JsonLoaderValue.read(reader);
 
 			if (object.type() == LoaderValue.LType.OBJECT) {

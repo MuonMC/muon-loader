@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.muonmc.loader.impl.game;
 
 import net.fabricmc.api.EnvType;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.launch.common.MappingConfiguration;
 import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.util.log.Log;
@@ -68,8 +69,8 @@ public final class GameProviderHelper {
 		return getGameJar(SystemProperties.GAME_JAR_PATH);
 	}
 
-	public static Path getEnvGameJar(EnvType env) {
-		return getGameJar(env == EnvType.CLIENT ? SystemProperties.GAME_JAR_PATH_CLIENT : SystemProperties.GAME_JAR_PATH_SERVER);
+	public static Path getEnvGameJar(Environment env) {
+		return getGameJar(env == Environment.CLIENT ? SystemProperties.GAME_JAR_PATH_CLIENT : SystemProperties.GAME_JAR_PATH_SERVER);
 	}
 
 	private static Path getGameJar(String property) {

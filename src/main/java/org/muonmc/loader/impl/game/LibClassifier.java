@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2023 QuiltMC
+ * Copyright 2023-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import java.util.zip.ZipFile;
 
 import net.fabricmc.api.EnvType;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.muonmc.loader.impl.util.LoaderUtil;
 import org.muonmc.loader.impl.util.ManifestUtil;
 import org.muonmc.loader.impl.util.SystemProperties;
@@ -57,7 +58,7 @@ public final class LibClassifier<L extends Enum<L> & LibClassifier.LibraryType> 
 	private final Set<Path> systemLibraries = new HashSet<>();
 	private final List<Path> unmatchedOrigins = new ArrayList<>();
 
-	public LibClassifier(Class<L> cls, EnvType env, GameProvider gameProvider) throws IOException {
+	public LibClassifier(Class<L> cls, Environment env, GameProvider gameProvider) throws IOException {
 		L[] libs = cls.getEnumConstants();
 
 		this.libs = new ArrayList<>(libs.length);
@@ -131,7 +132,7 @@ public final class LibClassifier<L extends Enum<L> & LibClassifier.LibraryType> 
 		processManifestClassPath(LoaderLibrary.SERVER_LAUNCH, env, junitRun); // not used by fabric itself, but others add Log4J this way
 	}
 
-	private void processManifestClassPath(LoaderLibrary lib, EnvType env, boolean junitRun) throws IOException {
+	private void processManifestClassPath(LoaderLibrary lib, Environment env, boolean junitRun) throws IOException {
 		if (lib.path == null || !lib.isApplicable(env, junitRun) || !Files.isRegularFile(lib.path)) return;
 
 		Manifest manifest;
@@ -291,7 +292,7 @@ public final class LibClassifier<L extends Enum<L> & LibClassifier.LibraryType> 
 	}
 
 	public interface LibraryType {
-		boolean isApplicable(EnvType env);
+		boolean isApplicable(Environment env);
 		String[] getPaths();
 	}
 }

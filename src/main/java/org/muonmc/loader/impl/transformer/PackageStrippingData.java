@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.muonmc.loader.api.game.minecraft.Environment;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Type;
 import org.muonmc.loader.api.Requires;
@@ -38,18 +39,18 @@ public class PackageStrippingData extends AbstractStripData {
 	private static final String SERVER_ONLY_DESCRIPTOR = Type.getDescriptor(DedicatedServerOnly.class);
 	private static final String REQUIRES_DESCRIPTOR = Type.getDescriptor(Requires.class);
 
-	public PackageStrippingData(int api, EnvType envType, Map<String, String> modCodeSourceMap) {
-		super(api, envType, new HashSet<>(modCodeSourceMap.keySet()));
+	public PackageStrippingData(int api, Environment environment, Map<String, String> modCodeSourceMap) {
+		super(api, environment, new HashSet<>(modCodeSourceMap.keySet()));
 	}
 
 	@Override
 	public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
 		if (CLIENT_ONLY_DESCRIPTOR.equals(descriptor)) {
-			if (envType == EnvType.SERVER) {
+			if (environment == Environment.DEDICATED_SERVER) {
 				denyClientOnlyLoad();
 			}
 		} else if (SERVER_ONLY_DESCRIPTOR.equals(descriptor)) {
-			if (envType == EnvType.CLIENT) {
+			if (environment == Environment.CLIENT) {
 				denyDediServerOnlyLoad();
 			}
 		} else if (REQUIRES_DESCRIPTOR.equals(descriptor)) {

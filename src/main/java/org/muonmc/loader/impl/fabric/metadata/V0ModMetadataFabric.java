@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 
 	// Optional (Environment)
 	private Collection<ModDependency> dependencies;
-	private final String languageAdapter = "org.quiltmc.loader.impl.language.JavaLanguageAdapter"; // TODO: Constants class?
+	private final String languageAdapter = "org.muonmc.loader.impl.language.JavaLanguageAdapter"; // TODO: Constants class?
 	private final Mixins mixins;
 	private final ModEnvironment environment; // REMOVEME: Replacing Side in old metadata with this
 	private final String initializer;
@@ -262,10 +262,10 @@ final class V0ModMetadataFabric extends AbstractModMetadata implements FabricLoa
 		List<String> mixinConfigs = new ArrayList<>(this.mixins.common);
 
 		switch (environment) {
-		case Environment.CLIENT:
+		case CLIENT:
 			mixinConfigs.addAll(this.mixins.client);
 			break;
-		case Environment.DEDICATED_SERVER:
+		case DEDICATED_SERVER:
 			mixinConfigs.addAll(this.mixins.server);
 			break;
 		}

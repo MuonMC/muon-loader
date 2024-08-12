@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ import org.muonmc.loader.api.plugin.LoaderValueFactory;
 public class QuiltForkServerMain {
 
 	static {
-		QuiltForkComms.setServer();
+		MuonForkComms.setServer();
 	}
 
 	private static final Map<Integer, NavigableMap<Integer, BufferedImage>> ICONS = new ConcurrentHashMap<>();
@@ -111,11 +111,11 @@ public class QuiltForkServerMain {
 	 * - Change the current error gui window to open via this instead
 	 */
 
-	final QuiltForkComms comms;
+	final MuonForkComms comms;
 
 	private QuiltForkServerMain(Socket connection) {
 		currentConnection = this;
-		comms = new QuiltForkComms(connection, this::handleMessage);
+		comms = new MuonForkComms(connection, this::handleMessage);
 	}
 
 	private void handleMessage(LoaderValue msg) {

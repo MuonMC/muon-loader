@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ public interface ModSolveResult {
 	 *         be loaded. This doesn't contain any {@link Path}s in {@link #getUnknownFiles()} */
 	Map<String, String> getIrregularUnknownFiles();
 
-	public interface SpecificLoadOptionResult<O> {
+	interface SpecificLoadOptionResult<O> {
 		Collection<O> getOptions();
 
 		boolean isPresent(O option);

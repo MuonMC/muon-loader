@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.muonmc.loader.impl.gui.GuiManagerImpl;
-import org.muonmc.loader.impl.gui.QuiltFork;
+import org.muonmc.loader.impl.gui.MuonFork;
 import org.muonmc.loader.impl.gui.MuonJsonGuiMessage;
 import org.muonmc.loader.impl.gui.QuiltLoaderGuiImpl;
 import org.muonmc.loader.api.ModContainer;
@@ -67,7 +67,7 @@ public class MuonLoaderGui {
 	/** @throws LoaderGuiException if something went wrong while opening the gui
 	 * @throws LoaderGuiClosed if the gui was closed without fixing the errors. */
 	public static void openErrorGui(List<MuonDisplayedError> errors) throws LoaderGuiException, LoaderGuiClosed {
-		QuiltFork.openErrorGui(errors);
+		MuonFork.openErrorGui(errors);
 	}
 
 	/** @return A new {@link MuonBasicWindow}. This hasn't been displayed yet.
@@ -92,12 +92,12 @@ public class MuonLoaderGui {
 	 * 
 	 * @throws LoaderGuiException if something went wrong while opening the gui */
 	public static <R> R open(MuonLoaderWindow<R> window) throws LoaderGuiException {
-		return QuiltFork.open(window);
+		return MuonFork.open(window);
 	}
 
 	/** @throws LoaderGuiException if something went wrong while opening the gui */
 	public static void open(MuonLoaderWindow<?> window, boolean shouldWait) throws LoaderGuiException {
-		QuiltFork.open(window, shouldWait);
+		MuonFork.open(window, shouldWait);
 	}
 
 	// Icons

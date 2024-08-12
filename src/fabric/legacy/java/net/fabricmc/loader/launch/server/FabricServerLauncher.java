@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, 2023 QuiltMC
+ * Copyright 2022, 2023, 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 package net.fabricmc.loader.launch.server;
 
 
-import org.muonmc.loader.impl.launch.server.QuiltServerLauncher;
+import org.muonmc.loader.impl.launch.server.MuonServerLauncher;
 
 /**
- * @deprecated Use {@link QuiltServerLauncher} instead
+ * @deprecated Use {@link MuonServerLauncher} instead
  */
 @Deprecated
 // Kept for old Quilt installs that still use this class
 public final class FabricServerLauncher {
 	public static void main(String[] args) {
-		QuiltServerLauncher.main(args);
+		MuonServerLauncher.main(args);
 	}
 }

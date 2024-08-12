@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 QuiltMC
+ * Copyright 2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,25 @@
 
 package org.muonmc.loader.impl.transformer;
 
+import java.lang.instrument.IllegalClassFormatException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
+import org.muonmc.loader.api.ModContainer;
+import org.muonmc.loader.api.MuonLoader;
+import org.muonmc.loader.api.horoscope.ExperimentalApi;
+import org.muonmc.loader.api.horoscope.muon.MuonFeatures;
 import org.muonmc.loader.impl.MuonConstants;
+import org.muonmc.loader.impl.launch.knot.Knot;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -111,7 +119,6 @@ public class InternalsHiderTransform {
 			@Override
 			public MethodVisitor visitMethod(int access, String name, String descriptor, String signature,
 				String[] exceptions) {
-
 				return new MethodVisitor(api) {
 					@Override
 					public AnnotationVisitor visitAnnotation(String aDesc, boolean visible) {
@@ -209,14 +216,15 @@ public class InternalsHiderTransform {
 							return;
 						}
 
+						// check if a mod has already declared this internal
 						InternalAccess internalAccess = internalFields.get(new FieldKey(owner, name, descriptor));
 
-						// define set if it isn't already defined
+						// define internalAccess if it isn't already defined
 						if (internalAccess == null) {
 							internalAccess = getInternalAccess(owner);
 						}
 
-						// by this point, set should not be null
+						// by this point, internalAccess should not be null
 						if (internalAccess != null && !internalAccess.isPermitted(mod)) {
 							super.visitLdcInsn(internalAccess.generateError(mod, "the field " + owner + "." + name, className + "." + mthName + mthDescriptor));
 							super.visitMethodInsn(
@@ -238,6 +246,7 @@ public class InternalsHiderTransform {
 							return;
 						}
 
+						// check if a mod has already declared this internal
 						InternalAccess set = internalMethods.get(new MethodKey(owner, name, descriptor));
 
 						if (set == null) {
@@ -301,7 +310,7 @@ public class InternalsHiderTransform {
 	}
 
 	/**
-	 * Gets the type of {@link InternalAccess} that relates to the targeted owner class.
+	 * Gets the type of {@link InternalAccess} that relates to the targeted owner class. This is called if the internal access hasn't already been declared.
 	 * @param owner The internal JVM name of the owner class.
 	 * @return The {@link InternalAccess} corresponding to the owner's relationship.
 	 */
@@ -311,9 +320,10 @@ public class InternalsHiderTransform {
 			return value;
 		}
 
-		if (owner.startsWith("org/muonmc/loader/")) {
-			try {
-				String name = owner.replace('/', '.');
+		try {
+			String name = owner.replace('/', '.');
+
+			if (owner.startsWith("org/muonmc/loader/")) {
 				Class<?> loaderClass = Class.forName(name);
 				MuonLoaderInternal internalAnnotation = loaderClass.getAnnotation(MuonLoaderInternal.class);
 				MuonLoaderInternalType internalType;
@@ -347,14 +357,44 @@ public class InternalsHiderTransform {
 				internalClasses.put(owner, value);
 
 				return value;
+			} else { // if this is a mod class, check for @ExperimentalApi
+				Class<?> experimentalClass;
+				try {
+					experimentalClass = Knot.loadClass(name);
+				} catch (ClassNotFoundException e) {
+					// not illegal, this class does not belong to Knot
+					return PermittedAccess.INSTANCE;
+				}
+				ExperimentalApi experimentalApi = experimentalClass.getAnnotation(ExperimentalApi.class);
+				Optional<ModContainer> modContainer = MuonLoader.getModContainer(experimentalClass);
+				if (!modContainer.isPresent()) {
+					// if the class does not come from a mod, this access is allowed.
+					return PermittedAccess.INSTANCE;
+				}
 
-			} catch (ClassNotFoundException e) {
-				Log.warn(LogCategory.GENERAL, "Failed to load " + owner, e);
-				// Not illegal
-			} catch (NoClassDefFoundError e) {
-				Log.warn(LogCategory.GENERAL, "Failed to load " + owner, e);
-				throw e;
+				if (experimentalApi == null) {
+					throw new IllegalClassFormatException(name + " is internal, but it is not marked with @ExperimentalApi!");
+				}
+
+				List<String> features = Arrays.asList(experimentalApi.value());
+
+				if (features.isEmpty()) {
+					Log.warn(LogCategory.GENERAL, name + " has no defined features it belongs to.");
+					value = new WarnExperimentalAccess(modContainer.get().metadata().id());
+				} else if (features.contains(MuonFeatures.NONE)) {
+					value = new IllegalExperimentalAccess(modContainer.get().metadata().id());
+				}
+
+				return value;
 			}
+		} catch (ClassNotFoundException e) {
+			Log.warn(LogCategory.GENERAL, "Failed to load " + owner, e);
+			// Not illegal
+		} catch (NoClassDefFoundError e) {
+			Log.warn(LogCategory.GENERAL, "Failed to load " + owner, e);
+			throw e;
+		} catch (IllegalClassFormatException e) {
+			throw new RuntimeException(e);
 		}
 
 		int lastSlash = owner.lastIndexOf('/');
@@ -369,11 +409,11 @@ public class InternalsHiderTransform {
 		if (superName == null) {
 			return;
 		}
-		InternalAccess annotationSet = getInternalAccess(superName);
-		if (annotationSet == null || annotationSet.isPermitted(mod)) {
+		InternalAccess access = getInternalAccess(superName);
+		if (access == null || access.isPermitted(mod)) {
 			return;
 		}
-		illegalSupers.add(new InternalSuper(superName, isInterface, annotationSet));
+		illegalSupers.add(new InternalSuper(superName, isInterface, access));
 	}
 
 	static final class MethodKey {
@@ -473,6 +513,20 @@ public class InternalsHiderTransform {
 		}
 	}
 
+	static class PermittedAccess extends InternalAccess {
+		public static final PermittedAccess INSTANCE = new PermittedAccess();
+
+		@Override
+		boolean isPermitted(ModLoadOption mod) {
+			return true;
+		}
+
+		@Override
+		String modFrom() {
+			return "unknown";
+		}
+	}
+
 	static class LoaderInternalAccess extends InternalAccess {
 		/**
 		 * Gets a {@link LoaderInternalAccess} from a {@link MuonLoaderInternalType}.
@@ -482,6 +536,10 @@ public class InternalsHiderTransform {
 		public static LoaderInternalAccess fromInternalType(@NotNull MuonLoaderInternalType internalType) {
 			if (internalType == MuonLoaderInternalType.PLUGIN_API) {
 				return PermittedLoaderInternalAccess.INSTANCE;
+			} else if (internalType == MuonLoaderInternalType.INTERNAL) {
+				return new LoaderInternalAccess();
+			} else if (internalType == MuonLoaderInternalType.INTERNAL_HOOK) {
+				return PermittedLoaderHookInternalAccess.INSTANCE;
 			}
 
 			throw new IllegalArgumentException("Unsupported internal type: " + internalType);
@@ -498,6 +556,15 @@ public class InternalsHiderTransform {
 		}
 	}
 
+	static final class PermittedLoaderHookInternalAccess extends LoaderInternalAccess {
+		static final PermittedLoaderHookInternalAccess INSTANCE = new PermittedLoaderHookInternalAccess();
+
+		@Override
+		boolean isPermitted(ModLoadOption mod) {
+			return mod.metadata().id().equals(MuonLoader.getGameId());
+		}
+	}
+
 	static final class PermittedLoaderInternalAccess extends LoaderInternalAccess {
 		static final PermittedLoaderInternalAccess INSTANCE = new PermittedLoaderInternalAccess();
 
@@ -507,12 +574,59 @@ public class InternalsHiderTransform {
 		}
 	}
 
-	static final class WarnExperimentalLoaderAccess extends LoaderInternalAccess {
-		static final WarnExperimentalLoaderAccess INSTANCE = new WarnExperimentalLoaderAccess();
+	static abstract class ExperimentalAccess extends InternalAccess {
+		private final String sourceModId;
+
+		protected ExperimentalAccess(String sourceModId) {
+			this.sourceModId = sourceModId;
+		}
+
+		@Override
+		String modFrom() {
+			return sourceModId;
+		}
+	}
+
+	static final class PermittedExperimentalAccess extends ExperimentalAccess {
+		public PermittedExperimentalAccess(String sourceModId) {
+			super(sourceModId);
+		}
+
+		@Override
+		boolean isPermitted(ModLoadOption mod) {
+			return true;
+		}
+	}
+
+	static final class WarnExperimentalAccess extends ExperimentalAccess {
+		public WarnExperimentalAccess(String sourceModId) {
+			super(sourceModId);
+		}
+
+		@Override
+		boolean isPermitted(ModLoadOption mod) {
+			return true;
+		}
 
 		@Override
 		String getInvokeMethodName() {
 			return "warnExperimentalAccess";
+		}
+	}
+
+	static final class IllegalExperimentalAccess extends ExperimentalAccess {
+		public IllegalExperimentalAccess(String sourceModId) {
+			super(sourceModId);
+		}
+
+		@Override
+		boolean isPermitted(ModLoadOption mod) {
+			return false;
+		}
+
+		@Override
+		String getInvokeMethodName() {
+			return "throwExperimentalAccess";
 		}
 	}
 

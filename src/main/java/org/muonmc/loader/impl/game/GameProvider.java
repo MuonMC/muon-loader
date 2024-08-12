@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 FabricMC
- * Copyright 2022-2023 QuiltMC
+ * Copyright 2022-2024 QuiltMC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import org.jetbrains.annotations.NotNull;
 import org.muonmc.loader.impl.entrypoint.GameTransformer;
 import org.muonmc.loader.impl.launch.common.MuonLauncher;
 import org.muonmc.loader.impl.metadata.qmj.InternalModMetadata;
@@ -32,7 +33,7 @@ import org.muonmc.loader.impl.util.MuonLoaderInternalType;
 
 @MuonLoaderInternal(MuonLoaderInternalType.INTERNAL)
 public interface GameProvider {
-	String getGameId();
+	@NotNull String getGameId();
 	String getGameName();
 	String getRawGameVersion();
 	String getNormalizedGameVersion();
